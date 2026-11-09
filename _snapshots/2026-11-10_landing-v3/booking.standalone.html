@@ -1,0 +1,1555 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>預約接送｜華誼租車 新竹店</title>
+<meta name="description" content="線上預約桃園、松山機場接送，即時試算車資，送出後由專人以 LINE 或電話確認。">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   華誼租車 新竹店 — 黑金版型（Hoya 式排版）
+   版型語言：置中金色標題條、圖文交錯、圓角卡片、淺色價目表。
+   所有頁面共用；class 名稱與 JS 綁定保持不變。
+   ========================================================= */
+
+/* ---------- 1. Tokens ---------- */
+:root {
+  color-scheme: dark;
+  /* 底色 */
+  --bg: #0A0A0A;
+  --bg-2: #12100D;
+  --panel: #1A1712;
+  --panel-2: #231F18;
+  --line: #3A3122;
+  --line-strong: #8A7448;   /* 控制項外框，≥3:1 */
+
+  /* 金色 */
+  --gold: #D9B45A;
+  --gold-hi: #F2D98C;
+  --gold-lo: #A8823A;
+  --on-gold: #1A1408;
+
+  /* 文字 */
+  --fg: #F5EFE2;
+  --fg-2: #C9BFA8;
+  --fg-3: #A39A86;
+
+  /* 淺色表格（價目表） */
+  --paper: #FBF6EA;
+  --paper-2: #F3EAD3;
+  --paper-line: #E2D3AE;
+  --ink: #1A1408;
+  --ink-2: #5A4A2A;
+
+  /* 語意色 */
+  --danger: #FF8A75;
+  --line-green: #06793A;
+  --line-green-hover: #088A43;
+
+  /* 字型 */
+  --font-sans: "Noto Sans TC", -apple-system, "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-num: "Noto Sans TC", -apple-system, system-ui, sans-serif;
+
+  /* 字級 */
+  --fs-small: 14px;
+  --fs-body: 16px;
+  --fs-lead: 18px;
+  --fs-h3: 22px;
+  --fs-bar: 36px;
+  --fs-page: 36px;
+  --fs-display: 56px;
+  --fs-price-l: 52px;
+  --fs-price-m: 22px;
+  --lh-body: 1.75;
+  --lh-head: 1.3;
+
+  /* 間距 */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 72px; --s-9: 104px;
+
+  /* 形狀與版面 */
+  --radius: 16px;
+  --radius-s: 10px;
+  --container: 1160px;
+  --margin: 20px;
+  --header-h: 68px;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+}
+@media (min-width: 640px) { :root { --margin: 32px; } }
+@media (min-width: 1024px) { :root { --margin: 40px; } }
+@media (max-width: 639px) { :root { --fs-display: 38px; --fs-bar: 26px; --fs-page: 28px; --fs-h3: 20px; --fs-price-l: 42px; } }
+
+/* ---------- 2. Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 16px); }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: var(--font-sans); font-size: var(--fs-body); line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--bg); }
+::selection { background: var(--gold); color: var(--on-gold); }
+img { max-width: 100%; display: block; }
+h1, h2, h3, p, dl, dd, ol, ul, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: var(--gold-hi); text-underline-offset: 4px; text-decoration-thickness: 1px; }
+a:hover { color: #FFFFFF; }
+:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
+
+.data { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.price { color: var(--gold); font-weight: 900; }
+.muted { color: var(--fg-2); }
+.hint { font-size: var(--fs-small); color: var(--fg-2); text-wrap: pretty; }
+.nobr { display: inline-block; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--gold); color: var(--on-gold); padding: 8px 16px; }
+.skip:focus { left: 8px; }
+.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.i-s { width: 16px; height: 16px; }
+
+/* ---------- 3. Layout ---------- */
+.wrap {
+  max-width: var(--container); margin: 0 auto;
+  padding-left: max(var(--margin), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--margin), env(safe-area-inset-right, 0px));
+}
+.section { padding-block: var(--s-8); position: relative; }
+@media (min-width: 1024px) { .section { padding-block: var(--s-9); } }
+.section-alt { background: var(--bg-2); }
+/* 金色光暈：版型的底色層次 */
+.glow-l { background: radial-gradient(55% 60% at 0% 40%, rgba(217, 180, 90, .13), transparent 70%), var(--bg); }
+.glow-r { background: radial-gradient(55% 60% at 100% 50%, rgba(217, 180, 90, .12), transparent 70%), var(--bg-2); }
+
+/* 置中金色標題條 */
+.title-bar {
+  display: block; width: fit-content; max-width: 100%; margin: 0 auto var(--s-7);
+  padding: 8px clamp(28px, 6vw, 72px);
+  background: var(--gold); color: var(--on-gold);
+  font-size: var(--fs-bar); font-weight: 900; line-height: 1.35; letter-spacing: .08em; text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}
+.title-bar small { display: block; font-size: var(--fs-small); font-weight: 700; letter-spacing: .1em; opacity: .75; }
+.sec-intro { max-width: 40em; margin: calc(var(--s-7) * -1 + var(--s-4)) auto var(--s-7); text-align: center; color: var(--fg-2); text-wrap: pretty; }
+
+/* 卡片 */
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.card-head {
+  padding: var(--s-4) var(--s-5); background: linear-gradient(90deg, var(--gold-lo), var(--gold) 40%, var(--gold-hi));
+  color: var(--on-gold); font-size: 20px; font-weight: 900; text-align: center; letter-spacing: .04em;
+}
+.card-head small { display: block; font-size: var(--fs-small); font-weight: 700; }
+.card-body { padding: var(--s-5); }
+@media (min-width: 640px) { .card-body { padding: var(--s-6) var(--s-7); } }
+
+/* ---------- 4. Components ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  min-height: 50px; padding: 0 var(--s-6);
+  border: 1px solid transparent; border-radius: 999px;
+  font-size: var(--fs-body); font-weight: 900; line-height: 1.2; letter-spacing: .04em; text-decoration: none; white-space: nowrap;
+  cursor: pointer; transition: background-color .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease), transform .15s var(--ease);
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; transform: none; }
+.btn-primary { background: var(--gold); color: var(--on-gold); box-shadow: 0 6px 18px rgba(217, 180, 90, .25); }
+.btn-primary:hover:not(:disabled) { background: var(--gold-hi); color: var(--on-gold); }
+.btn-secondary { background: transparent; border-color: var(--gold); color: var(--gold-hi); }
+.btn-secondary:hover:not(:disabled) { background: rgba(217, 180, 90, .12); color: var(--gold-hi); }
+.btn-line { background: var(--line-green); color: #FFFFFF; }
+.btn-line:hover { background: var(--line-green-hover); color: #FFFFFF; }
+.btn-sm { min-height: 44px; padding: 0 var(--s-5); font-size: 15px; }
+.btn-lg { min-height: 60px; padding: 0 var(--s-7); font-size: 18px; }
+.btn-block { width: 100%; }
+.btn-text {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0;
+  background: none; border: 0; cursor: pointer; font-weight: 700; color: var(--gold-hi);
+  text-decoration: underline; text-underline-offset: 4px;
+}
+.btn-text:hover { color: #FFFFFF; }
+
+.tag {
+  display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px;
+  border-radius: 999px; background: rgba(217, 180, 90, .15); color: var(--gold-hi);
+  font-size: var(--fs-small); font-weight: 700; white-space: nowrap;
+}
+.tag-amber, .tag-muted { }
+
+/* 表單 */
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field-label { font-size: var(--fs-small); color: var(--fg-2); font-weight: 500; }
+.req { margin-left: 6px; color: var(--gold); font-weight: 400; }
+.input, .select, .textarea {
+  width: 100%; min-height: 50px; padding: 0 14px;
+  background: #0F0D0A; color: var(--fg);
+  border: 1px solid var(--line-strong); border-radius: var(--radius-s);
+  font-size: 16px; color-scheme: dark; caret-color: var(--gold);
+  transition: border-color .15s var(--ease), box-shadow .15s var(--ease);
+}
+.select {
+  appearance: none; -webkit-appearance: none; padding-right: 42px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D9B45A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; background-size: 18px;
+}
+.textarea { padding: 12px 14px; min-height: 100px; resize: vertical; line-height: 1.6; }
+.input::placeholder, .textarea::placeholder { color: var(--fg-3); }
+.input:hover, .select:hover, .textarea:hover { border-color: var(--gold-lo); }
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(217, 180, 90, .25); }
+.select:disabled { opacity: .6; cursor: not-allowed; }
+[aria-invalid="true"] { border-color: var(--danger) !important; }
+.field-error { display: flex; gap: 6px; align-items: flex-start; font-size: var(--fs-small); color: var(--danger); }
+.field-error .i { margin-top: 3px; }
+
+/* 選項組（原生 radio） */
+.seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-2); }
+.seg-wide { grid-template-columns: 1fr; }
+@media (min-width: 640px) { .seg-wide { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.seg-opt { position: relative; display: flex; cursor: pointer; }
+.seg-opt input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.seg-opt > span {
+  flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2px;
+  min-height: 60px; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-s);
+  background: #0F0D0A; font-weight: 700; transition: background-color .15s var(--ease), border-color .15s var(--ease);
+}
+.seg-opt small { font-size: var(--fs-small); font-weight: 400; color: var(--fg-2); }
+.seg-opt:hover > span { border-color: var(--gold); }
+.seg-opt input:checked + span { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
+.seg-opt input:checked + span small { color: #4A3A1A; }
+.seg-opt input:focus-visible + span { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+
+/* 數量加減 */
+.stepper { display: inline-flex; align-items: stretch; border: 1px solid var(--line-strong); border-radius: 999px; overflow: hidden; }
+.stepper button { width: 48px; min-height: 48px; display: flex; align-items: center; justify-content: center; background: #0F0D0A; border: 0; color: var(--gold); cursor: pointer; }
+.stepper button:hover:not(:disabled) { background: var(--panel-2); }
+.stepper button:disabled { color: var(--fg-3); opacity: .45; cursor: not-allowed; }
+.stepper output { min-width: 52px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.stepper-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
+
+.notice {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--s-4);
+  padding: var(--s-3) var(--s-4); background: rgba(217, 180, 90, .1); border: 1px solid var(--gold-lo); border-radius: var(--radius-s);
+  font-size: 15px;
+}
+
+/* 規格列表 */
+.spec { display: grid; }
+.spec > div { display: grid; gap: 2px; padding: var(--s-4) 0; border-bottom: 1px solid var(--line); }
+.spec > div:last-child { border-bottom: 0; }
+@media (min-width: 640px) { .spec > div { grid-template-columns: 170px minmax(0, 1fr); gap: var(--s-5); } }
+.spec dt { color: var(--gold); font-weight: 700; font-size: 15px; }
+.spec dd { min-width: 0; text-wrap: pretty; }
+
+/* ---------- 5. Header ---------- */
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: rgba(10, 10, 10, .96); border-bottom: 1px solid var(--line); }
+.header-row { display: flex; align-items: center; gap: var(--s-6); min-height: var(--header-h); }
+.brand { display: flex; align-items: baseline; gap: var(--s-2); text-decoration: none; flex: none; }
+.brand-name { font-size: 24px; font-weight: 900; letter-spacing: .1em; color: var(--gold); }
+.brand-sub { font-size: var(--fs-small); color: var(--fg-2); }
+.nav { display: flex; gap: var(--s-5); flex: 1 1 auto; }
+.nav a { padding: var(--s-3) 0; font-size: 15px; font-weight: 500; color: var(--fg); text-decoration: none; }
+.nav a:hover { color: var(--gold-hi); }
+.header-actions { display: flex; align-items: center; gap: var(--s-4); margin-left: auto; }
+.header-phone { padding: var(--s-3) 0; font-size: 16px; font-weight: 900; color: var(--gold-hi); text-decoration: none; }
+.lang { display: flex; }
+.lang button { min-width: 44px; min-height: 44px; padding: 0 6px; background: none; border: 0; color: var(--fg-3); font-size: var(--fs-small); cursor: pointer; }
+.lang button:hover { color: var(--fg); }
+.lang button[aria-pressed="true"] { color: var(--gold-hi); font-weight: 700; }
+.menu-btn { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; background: none; border: 1px solid var(--gold-lo); border-radius: var(--radius-s); color: var(--gold); cursor: pointer; }
+.mobile-menu { border-top: 1px solid var(--line); padding-bottom: var(--s-4); }
+.mobile-menu nav { display: flex; flex-direction: column; }
+.mobile-menu nav a { padding: var(--s-3) 0; border-bottom: 1px solid var(--line); font-size: 17px; color: var(--fg); text-decoration: none; }
+.mobile-menu .lang { margin-top: var(--s-3); }
+@media (max-width: 1023px) {
+  .nav, .header-phone, .header-actions .lang, .header-cta { display: none; }
+  .menu-btn { display: inline-flex; }
+}
+@media (min-width: 1024px) { .mobile-menu { display: none !important; } }
+
+/* 底部操作列 */
+.mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; background: rgba(18, 16, 13, .97); border-top: 1px solid var(--gold-lo); padding-bottom: env(safe-area-inset-bottom); }
+.mbar-row { display: flex; align-items: center; gap: var(--s-3); padding: var(--s-3) max(var(--margin), env(safe-area-inset-right, 0px)) var(--s-3) max(var(--margin), env(safe-area-inset-left, 0px)); }
+.mbar-home .mbar-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-2); }
+.mbar-home .btn { padding: 0 var(--s-2); min-height: 48px; }
+@media (min-width: 1024px) { .mbar { display: none; } }
+@media (max-width: 1023px) { body.has-mbar { padding-bottom: 80px; } html { scroll-padding-bottom: 140px; } }
+.mbar-home { transition: transform .2s var(--ease); }
+body.quote-in-view .mbar-home { transform: translateY(110%); }
+body.actions-in-view .mbar-booking .js-submit { display: none; }
+
+/* ---------- 6. Footer ---------- */
+.site-footer { background: #050505; border-top: 1px solid var(--gold-lo); padding-block: var(--s-7) var(--s-8); color: var(--fg-2); font-size: 15px; }
+.footer-grid { display: grid; gap: var(--s-6); }
+@media (min-width: 640px) { .footer-grid { grid-template-columns: 1.3fr 1fr 1fr; } }
+.footer-brand { font-size: 32px; font-weight: 900; letter-spacing: .12em; color: var(--gold); line-height: 1.2; }
+.footer-title { margin-bottom: var(--s-2); font-size: 16px; font-weight: 900; color: var(--gold); }
+.footer-grid ul { display: grid; gap: 0; }
+.footer-grid li a { display: inline-flex; align-items: center; min-height: 44px; color: var(--fg); text-decoration: none; }
+.footer-grid li a:hover { color: var(--gold-hi); }
+
+/* ---------- 7. Home ---------- */
+/* 主視覺 */
+.hero { padding-block: var(--s-6) var(--s-8); background: radial-gradient(70% 80% at 85% 20%, rgba(217, 180, 90, .16), transparent 65%), var(--bg); }
+@media (min-width: 1024px) { .hero { padding-block: var(--s-8) var(--s-9); } }
+.hero-grid { display: grid; gap: var(--s-6); align-items: center; }
+@media (min-width: 1024px) { .hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: var(--s-2) var(--s-7); align-items: stretch; } }
+.hero-kicker { grid-column: 1 / -1; }
+.hero-kicker { font-size: var(--fs-lead); font-weight: 700; color: var(--fg); letter-spacing: .3em; }
+.h-display { margin-top: 0; font-size: var(--fs-display); font-weight: 900; line-height: 1.15; letter-spacing: .04em; color: var(--gold); text-shadow: 0 4px 24px rgba(217, 180, 90, .25); }
+.hero-tagline { margin-top: var(--s-3); font-size: var(--fs-lead); letter-spacing: .5em; color: var(--gold-hi); }
+@media (max-width: 639px) { .hero-tagline { letter-spacing: .25em; } }
+.hero-sub { margin-top: var(--s-4); max-width: 34em; color: var(--fg-2); text-wrap: pretty; }
+.hero-photo { position: relative; display: none; margin: 0; }
+@media (min-width: 1024px) { .hero-photo { display: block; } .hero-photo img { position: absolute; inset: 0; height: 100% !important; aspect-ratio: auto !important; } }
+.hero-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--gold-lo); box-shadow: 0 30px 60px rgba(0, 0, 0, .5); }
+.hero-photo figcaption { position: absolute; left: -24px; bottom: 28px; padding: var(--s-3) var(--s-5); background: var(--gold); color: var(--on-gold); font-weight: 900; border-radius: var(--radius-s); box-shadow: 0 10px 30px rgba(0, 0, 0, .4); }
+.hero-photo figcaption small { display: block; font-size: var(--fs-small); font-weight: 700; }
+
+/* 查價卡 */
+.quote { margin-top: var(--s-6); background: var(--panel); border: 1px solid var(--gold-lo); border-radius: var(--radius); overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, .45); }
+.quote-title { padding: var(--s-3) var(--s-5); background: linear-gradient(90deg, var(--gold-lo), var(--gold) 40%, var(--gold-hi)); color: var(--on-gold); font-size: 18px; font-weight: 900; letter-spacing: .06em; text-align: center; }
+.quote-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); padding: var(--s-4); }
+.quote-fields .field-airport { grid-column: 1 / -1; }
+@media (min-width: 640px) {
+  .quote-fields { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--s-4); padding: var(--s-5); }
+  .quote-fields .field-airport { grid-column: auto; }
+}
+.quote-result { display: grid; gap: var(--s-4); padding: var(--s-4); border-top: 1px solid var(--line); }
+@media (min-width: 640px) { .quote-result { grid-template-columns: minmax(0, 1fr) auto; align-items: end; padding: var(--s-5); } }
+.quote-route { display: flex; align-items: center; gap: var(--s-2); color: var(--fg-2); font-weight: 500; }
+.quote-route .i { color: var(--gold); }
+.quote-price { margin-top: 2px; font-size: var(--fs-price-l); font-weight: 900; line-height: 1.1; color: var(--gold); }
+.quote-price.is-quote { font-size: 26px; color: var(--fg); }
+.quote-note { margin-top: var(--s-1); font-size: var(--fs-small); color: var(--fg-2); text-wrap: pretty; }
+.hero-trust { margin-top: var(--s-5); color: var(--fg-2); font-size: 15px; }
+.hero-trust strong { color: var(--gold-hi); }
+
+/* 公司優勢條 */
+.promise { background: linear-gradient(90deg, var(--gold-lo), var(--gold) 50%, var(--gold-lo)); color: var(--on-gold); }
+.promise ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-2) var(--s-5); padding-block: var(--s-4); font-weight: 900; }
+@media (min-width: 1024px) { .promise ul { grid-template-columns: repeat(4, auto); justify-content: space-between; } }
+.promise li { display: flex; align-items: center; gap: var(--s-2); }
+
+/* 圖文交錯 */
+.feature { display: grid; gap: var(--s-5); align-items: center; }
+.feature + .feature { margin-top: var(--s-8); }
+@media (min-width: 768px) {
+  .feature { grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-6); }
+  .feature.reverse { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; }
+  .feature.reverse .feature-media { order: 2; }
+  .feature.reverse .feature-text { order: 1; }
+  .feature.reverse .feature-label { order: 3; }
+  .feature.no-label { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+.feature-label { writing-mode: vertical-rl; font-size: 34px; font-weight: 900; letter-spacing: .3em; color: var(--gold); line-height: 1; }
+.feature-label small { font-size: 20px; color: var(--gold-hi); letter-spacing: .2em; }
+@media (max-width: 767px) { .feature-label { writing-mode: horizontal-tb; font-size: 28px; letter-spacing: .12em; } }
+.feature-media img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--gold-lo); box-shadow: 0 20px 50px rgba(0, 0, 0, .5); }
+.feature-text { display: grid; gap: var(--s-5); }
+.feature-point { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: var(--s-3); }
+.feature-point .ico { width: 44px; height: 44px; border-radius: 50%; background: rgba(217, 180, 90, .14); color: var(--gold); display: flex; align-items: center; justify-content: center; }
+.feature-point h3 { font-size: var(--fs-h3); font-weight: 900; line-height: var(--lh-head); }
+.feature-point p { margin-top: 4px; color: var(--fg-2); text-wrap: pretty; }
+.feature-text .btn { justify-self: start; }
+
+/* 三步驟快速預約 */
+.steps-panel { display: grid; gap: var(--s-6); padding: var(--s-6); background: linear-gradient(135deg, var(--panel-2), var(--panel)); border: 1px solid var(--gold-lo); border-radius: var(--radius); }
+@media (min-width: 900px) { .steps-panel { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); padding: var(--s-7); align-items: center; } }
+.steps { display: grid; gap: var(--s-5); counter-reset: step; }
+.steps li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: var(--s-4); align-items: start; }
+.steps .n { width: 56px; height: 56px; border-radius: 50%; background: var(--gold); color: var(--on-gold); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; }
+.steps h3 { font-size: var(--fs-h3); font-weight: 900; color: var(--gold-hi); line-height: var(--lh-head); }
+.steps p { margin-top: 4px; color: var(--fg-2); text-wrap: pretty; }
+.contact-stack { display: grid; gap: var(--s-3); }
+.contact-stack .btn { width: 100%; justify-content: space-between; padding: 0 var(--s-5); }
+.contact-stack .btn span:last-child { font-weight: 700; opacity: .85; }
+.contact-ids { margin-top: var(--s-2); text-align: center; color: var(--fg-2); font-size: 15px; }
+
+/* 車款特色橫幅 */
+.banner-feats { display: grid; grid-template-columns: 1fr; gap: 2px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--gold-lo); }
+@media (min-width: 768px) { .banner-feats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.banner-feat { position: relative; min-height: 280px; display: flex; flex-direction: column; justify-content: flex-end; padding: var(--s-5); color: var(--fg); isolation: isolate; }
+.banner-feat img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.banner-feat::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 10, 10, .25) 0%, rgba(10, 10, 10, .9) 70%); }
+.banner-feat h3 { font-size: 28px; font-weight: 900; color: var(--gold); letter-spacing: .1em; }
+.banner-feat p { margin-top: var(--s-2); color: var(--fg); }
+.fleet-grid { display: grid; gap: var(--s-5); margin-top: var(--s-6); }
+@media (min-width: 900px) { .fleet-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.vehicle { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: var(--s-4); align-items: start; padding: var(--s-5); }
+@media (min-width: 640px) { .vehicle { grid-template-columns: 160px minmax(0, 1fr); } }
+.vehicle img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--radius-s); }
+.vehicle-body { display: grid; gap: var(--s-2); justify-items: start; }
+.vehicle h3 { font-size: var(--fs-h3); font-weight: 900; color: var(--gold); }
+.vehicle ul { list-style: disc; padding-left: 1.2em; color: var(--fg-2); }
+.vehicle ul li::marker { color: var(--gold); }
+
+/* 價目表（淺色表格） */
+.price-stack { display: grid; gap: var(--s-6); }
+.tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-2); margin-bottom: var(--s-5); }
+.tab {
+  min-height: 44px; min-width: 64px; padding: 0 var(--s-4); border-radius: 999px;
+  background: transparent; border: 1px solid var(--gold-lo); color: var(--gold-hi); font-weight: 700; cursor: pointer;
+}
+.tab:hover { background: rgba(217, 180, 90, .12); }
+.tab[aria-selected="true"] { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
+@media (max-width: 639px) { .tabs { gap: 6px; } .tab { min-width: 0; flex: 1 0 calc(25% - 6px); padding: 0 4px; } }
+.ptable { border-radius: var(--radius-s); overflow: hidden; border: 1px solid var(--paper-line); background: var(--paper); color: var(--ink); }
+.board-head, .board-row { display: grid; grid-template-columns: minmax(0, 1fr) 140px; }
+@media (max-width: 479px) { .board-head, .board-row { grid-template-columns: minmax(0, 1fr) 112px; } }
+.board-head { background: var(--gold); color: var(--on-gold); font-weight: 900; }
+.board-head span { padding: var(--s-3) var(--s-4); }
+.board-head span + span { text-align: center; }
+.board-row { border-top: 1px solid var(--paper-line); }
+.board-row:nth-child(even) { background: var(--paper-2); }
+.board-areas { padding: var(--s-4); font-weight: 500; text-wrap: pretty; }
+.board-price { padding: var(--s-4); display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--paper-line); font-size: var(--fs-price-m); font-weight: 900; color: var(--ink); }
+.board-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-4); margin-top: var(--s-5); }
+.board-foot .hint { color: var(--fg-2); }
+.ptable-simple .board-row { grid-template-columns: minmax(0, 1fr) 140px; }
+.charter-quote { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-4); }
+.charter-quote p { color: var(--fg-2); max-width: 32em; text-wrap: pretty; }
+
+/* 常見問題 */
+.faq { max-width: 880px; margin: 0 auto; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s-4);
+  min-height: 64px; padding: var(--s-3) 0; list-style: none; cursor: pointer; font-size: 17px; font-weight: 700;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--gold-hi); }
+.faq summary .i { color: var(--gold); transition: transform .2s var(--ease); }
+.faq details[open] summary .i { transform: rotate(45deg); }
+.faq details p { padding-bottom: var(--s-5); color: var(--fg-2); text-wrap: pretty; }
+
+/* 立即預約 */
+.cta-split { display: grid; border: 1px solid var(--gold-lo); border-radius: var(--radius); overflow: hidden; background: var(--panel); }
+@media (min-width: 768px) { .cta-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.cta-split img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+@media (min-width: 768px) { .cta-split img { height: 100%; max-height: 420px; aspect-ratio: auto; } }
+.cta-body { display: grid; gap: var(--s-4); align-content: center; padding: var(--s-6); }
+@media (min-width: 768px) { .cta-body { padding: var(--s-7); } }
+.cta-body h2 { font-size: 30px; font-weight: 900; color: var(--gold); line-height: var(--lh-head); }
+.cta-body p { color: var(--fg-2); }
+.cta-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
+
+/* ---------- 8. Booking ---------- */
+.booking { padding-block: var(--s-6) var(--s-8); }
+@media (max-width: 1023px) { .page-booking main { padding-bottom: 140px; } }
+.booking-head { text-align: center; }
+.booking-head .title-bar { margin-bottom: var(--s-4); }
+.h-page { font-size: var(--fs-page); font-weight: 900; line-height: var(--lh-head); }
+.booking-intro { max-width: 40em; margin: 0 auto; color: var(--fg-2); text-wrap: pretty; }
+.booking-head > .notice { margin-top: var(--s-4); text-align: left; }
+.booking-grid { display: grid; gap: var(--s-6); margin-top: var(--s-6); }
+@media (min-width: 1024px) { .booking-grid { grid-template-columns: minmax(0, 1fr) 360px; align-items: start; } }
+#booking-form { display: grid; gap: var(--s-5); }
+
+.fs-block { padding: var(--s-5); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
+@media (min-width: 640px) { .fs-block { padding: var(--s-6); } }
+.fs { min-width: 0; margin: 0; padding: 0; border: 0; }
+.fs > * + * { margin-top: var(--s-5); }
+.fs-legend { display: flex; align-items: center; gap: var(--s-3); padding: 0; font-size: var(--fs-h3); font-weight: 900; color: var(--gold-hi); line-height: var(--lh-head); }
+.fs-step { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 32px; padding: 0 10px; border-radius: 999px; background: var(--gold); color: var(--on-gold); font-size: var(--fs-small); font-weight: 900; }
+.grid-3, .grid-2 { display: grid; gap: var(--s-4); grid-template-columns: 1fr; }
+@media (min-width: 640px) { .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 640px) and (max-width: 819px), (min-width: 1024px) and (max-width: 1279px) {
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-3 > :last-child { grid-column: 1 / -1; }
+}
+.form-actions { padding: var(--s-5); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); display: grid; gap: var(--s-3); }
+@media (min-width: 1024px) { .form-actions { display: none; } }
+
+/* 行程單 */
+.ticket { display: none; }
+@media (min-width: 1024px) {
+  .ticket {
+    display: flex; flex-direction: column; gap: var(--s-4);
+    position: sticky; top: calc(var(--header-h) + 24px);
+    max-height: calc(100vh - var(--header-h) - 48px); overflow: auto;
+    padding: 0 var(--s-5) var(--s-5); background: var(--panel); border: 1px solid var(--gold-lo); border-radius: var(--radius);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .45);
+  }
+}
+.ticket-title { margin: 0 calc(var(--s-5) * -1); padding: var(--s-3) var(--s-5); background: linear-gradient(90deg, var(--gold-lo), var(--gold) 40%, var(--gold-hi)); color: var(--on-gold); font-size: 18px; font-weight: 900; letter-spacing: .06em; }
+.ticket-route { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); font-size: 20px; font-weight: 900; }
+.ticket-route .i { color: var(--gold); }
+.tl { display: grid; gap: var(--s-2); font-size: 15px; }
+.tl > div { display: flex; justify-content: space-between; gap: var(--s-3); }
+.tl dt { color: var(--fg-2); }
+.tl dd { text-align: right; font-weight: 700; }
+.ticket-total { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); padding-top: var(--s-4); border-top: 1px dashed var(--gold-lo); }
+.ticket-total .price { font-size: 34px; }
+.err-summary { display: grid; gap: 2px; padding: var(--s-3) var(--s-4); border: 1px solid var(--danger); border-radius: var(--radius-s); }
+.err-summary strong { color: var(--danger); font-size: 15px; }
+.err-summary a { padding: 6px 0; font-size: var(--fs-small); }
+
+/* 底部合計列 */
+.mbar-sheet { max-height: 45vh; overflow: auto; padding: var(--s-4) var(--margin); border-bottom: 1px solid var(--line); display: grid; gap: var(--s-3); }
+.mbar-err { padding: var(--s-2) var(--margin) 0; font-size: var(--fs-small); color: var(--danger); }
+.mbar-total { flex: 1; min-width: 0; min-height: 48px; padding: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; background: none; border: 0; text-align: left; cursor: pointer; }
+.mbar-total small { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-small); color: var(--fg-2); white-space: nowrap; }
+.mbar-total small .i { color: var(--gold); transition: transform .2s var(--ease); }
+.mbar-total[aria-expanded="true"] small .i { transform: rotate(180deg); }
+.mbar-total .price { font-size: 22px; line-height: 1.2; }
+.mbar-line { flex: none; width: 60px; padding: 0; font-size: var(--fs-small); }
+@media (max-width: 359px) { .mbar-row { gap: var(--s-2); } .mbar-row .btn-primary { padding: 0 var(--s-4); } .mbar-total .price { font-size: 18px; } }
+body.is-done .mbar { display: none; }
+
+/* 完成 */
+.done { max-width: 780px; margin: 0 auto; padding-block: var(--s-7) var(--s-8); }
+.done h1 { text-align: center; }
+.done h1:focus { outline: none; }
+.done-lead { margin-top: var(--s-3); text-align: center; color: var(--fg-2); text-wrap: pretty; }
+.ref-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s-2) var(--s-4); margin-top: var(--s-5); padding: var(--s-4); background: var(--panel); border: 1px solid var(--gold-lo); border-radius: var(--radius); }
+.ref-label { color: var(--fg-2); font-size: 15px; }
+.ref { font-size: 28px; font-weight: 900; color: var(--gold); letter-spacing: .04em; }
+.done .spec { margin-top: var(--s-5); padding: 0 var(--s-5); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
+.done-total { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-4); margin-top: var(--s-4); padding: var(--s-4) var(--s-5); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
+.done-total .price { font-size: 30px; }
+.next { display: grid; gap: var(--s-2); margin-top: var(--s-6); padding-left: 1.4em; list-style: decimal; color: var(--fg-2); }
+.next li::marker { color: var(--gold); font-weight: 900; }
+.next strong { color: var(--gold-hi); }
+.done-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s-3) var(--s-5); margin-top: var(--s-6); }
+
+/* =========================================================
+   9. 落地頁 v3（依客戶提供的設計稿）
+   深色主視覺＋白色查價列＋優勢條，下方淺色／深色區塊交錯。
+   ========================================================= */
+:root {
+  --lp-ink: #0B0D10;
+  --lp-ink-2: #13161B;
+  --lp-light: #F2EFE9;
+  --lp-white: #FFFFFF;
+  --lp-text: #1A1712;
+  --lp-text-2: #5B5346;
+  --lp-line: #E3DCCF;
+  --lp-gold-text: #8C6A26;   /* 白底上的金色文字（4.9:1） */
+  --font-serif: "Noto Serif TC", "Songti TC", serif;
+}
+
+/* 頁首：標誌＋兩行品牌名，電話含圖示 */
+.site-header { background: rgba(11, 13, 16, .97); }
+.brand { align-items: center; gap: var(--s-3); }
+.brand-mark { width: 44px; height: 30px; fill: none; stroke: var(--gold); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.brand-mark circle { fill: var(--gold); stroke: none; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-text .brand-name { font-family: var(--font-serif); font-size: 22px; letter-spacing: .12em; color: #FFFFFF; }
+.brand-text .brand-sub { font-size: 12.5px; letter-spacing: .14em; color: var(--gold); }
+.header-phone { display: inline-flex; align-items: center; gap: var(--s-2); color: #FFFFFF; }
+.header-phone .i { width: 22px; height: 22px; color: var(--gold); }
+.header-phone span { display: flex; flex-direction: column; line-height: 1.2; }
+.header-phone b { font-size: 18px; font-weight: 900; color: var(--gold-hi); }
+.header-phone small { font-size: 12.5px; font-weight: 500; color: var(--fg-2); }
+
+/* 主視覺 */
+.lp-hero { position: relative; isolation: isolate; overflow: hidden; background: var(--lp-ink); }
+.lp-hero-media { position: absolute; inset: 0 0 0 auto; width: min(60%, 820px); z-index: -2; }
+.lp-hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; filter: brightness(.8) saturate(.85); }
+.lp-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(90deg, var(--lp-ink) 38%, rgba(11, 13, 16, .75) 55%, rgba(11, 13, 16, .15) 80%),
+    linear-gradient(0deg, var(--lp-ink) 0%, rgba(11, 13, 16, 0) 30%);
+}
+.lp-hero-body { padding-block: 96px 150px; }
+.lp-hero-title { font-size: clamp(36px, 5.2vw, 60px); font-weight: 900; line-height: 1.15; letter-spacing: .04em; color: #FFFFFF; }
+.lp-hero-tagline { margin-top: var(--s-3); font-family: var(--font-serif); font-size: clamp(20px, 2.4vw, 28px); font-weight: 700; letter-spacing: .12em; color: var(--gold); }
+.lp-hero-sub { margin-top: var(--s-5); max-width: 30em; color: #E8E3D8; font-size: 17px; }
+.lp-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4) var(--s-6); margin-top: var(--s-6); }
+.lp-play { display: inline-flex; align-items: center; gap: var(--s-3); min-height: 48px; color: #FFFFFF; font-weight: 700; text-decoration: none; }
+.lp-play:hover { color: var(--gold-hi); }
+.lp-play-ico { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--gold); color: var(--gold); display: inline-flex; align-items: center; justify-content: center; }
+.lp-play-ico .i { fill: currentColor; stroke: none; }
+@media (max-width: 767px) {
+  .lp-hero-media { width: 100%; }
+  .lp-hero::before { background: linear-gradient(180deg, rgba(11, 13, 16, .55) 0%, rgba(11, 13, 16, .85) 55%, var(--lp-ink) 100%); }
+  .lp-hero-body { padding-block: 56px 120px; }
+}
+
+/* 白色查價列（疊在主視覺下緣） */
+.lp-quote-wrap { position: relative; z-index: 5; margin-top: -80px; }
+.lp-quote {
+  display: grid; gap: var(--s-3) var(--s-4); align-items: end;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: var(--s-5); background: var(--lp-white); color: var(--lp-text);
+  border-radius: var(--radius); box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+}
+.lp-quote .field-airport, .lp-quote-result, .lp-quote-btn { grid-column: 1 / -1; }
+@media (min-width: 1024px) {
+  .lp-quote { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1.25fr) auto; padding: var(--s-5) var(--s-6); }
+  .lp-quote .field-airport, .lp-quote-result, .lp-quote-btn { grid-column: auto; }
+}
+.lp-quote .field-label { color: var(--lp-text); font-weight: 700; }
+.lp-quote .select { background-color: var(--lp-white); color: var(--lp-text); border-color: #C9BFAA; color-scheme: light; min-height: 46px; }
+.lp-quote .select:hover { border-color: var(--gold-lo); }
+.lp-quote-result { min-width: 0; }
+.lp-quote-result .quote-route { color: var(--lp-text-2); font-size: var(--fs-small); }
+.lp-quote-result .quote-route .i { color: var(--gold-lo); }
+.lp-quote-result .quote-price { margin-top: 0; font-size: 30px; color: var(--lp-gold-text); line-height: 1.15; }
+.lp-quote-result .quote-price.is-quote { font-size: 20px; color: var(--lp-text); }
+.lp-quote-result .quote-note { color: var(--lp-text-2); font-size: 13px; }
+.lp-quote-btn { border-radius: var(--radius-s); min-height: 52px; padding: 0 var(--s-6); box-shadow: none; }
+
+/* 優勢條 */
+.lp-promise { margin-top: -40px; padding-top: 40px; background: var(--lp-ink-2); }
+.lp-promise ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding-block: var(--s-6); }
+@media (min-width: 768px) { .lp-promise ul { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.lp-promise li { display: flex; flex-direction: column; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-2); color: #FFFFFF; font-weight: 700; text-align: center; }
+.lp-promise li + li { border-left: 1px solid #2B2F36; }
+@media (max-width: 767px) { .lp-promise li:nth-child(3) { border-left: 0; } .lp-promise li:nth-child(n+3) { border-top: 1px solid #2B2F36; } }
+.lp-promise-ico { width: 36px; height: 36px; fill: none; stroke: var(--gold); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* 區塊 */
+.lp-section { padding-block: var(--s-8); }
+@media (min-width: 1024px) { .lp-section { padding-block: 96px; } }
+.lp-light { background: linear-gradient(180deg, var(--lp-light), #E9E5DD); color: var(--lp-text); }
+.lp-white { background: var(--lp-white); color: var(--lp-text); }
+.lp-dark { background: var(--lp-ink); color: var(--fg); }
+.lp-h2 { margin-bottom: var(--s-6); font-family: var(--font-serif); font-size: clamp(30px, 3.4vw, 40px); font-weight: 700; letter-spacing: .06em; line-height: 1.3; }
+.lp-dark .lp-h2 { color: #FFFFFF; }
+
+/* 服務項目卡 */
+.lp-svc-grid { display: grid; gap: var(--s-5); }
+@media (min-width: 768px) { .lp-svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.lp-svc { position: relative; isolation: isolate; min-height: 360px; display: flex; align-items: flex-end; border-radius: var(--radius); overflow: hidden; box-shadow: 0 16px 40px rgba(26, 20, 8, .18); }
+.lp-svc img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.lp-svc::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(11, 13, 16, .05) 20%, rgba(11, 13, 16, .88) 72%); }
+.lp-svc-body { padding: var(--s-6); color: #FFFFFF; display: grid; gap: var(--s-3); }
+.lp-svc h3 { display: flex; align-items: center; gap: var(--s-3); font-size: 28px; font-weight: 900; letter-spacing: .08em; }
+.lp-svc h3 .i { width: 30px; height: 30px; }
+.lp-svc p { color: #ECE7DC; }
+.lp-svc a { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 44px; color: #FFFFFF; font-weight: 700; text-decoration: none; justify-self: start; }
+.lp-svc a:hover { color: var(--gold-hi); }
+.lp-also { margin-top: var(--s-5); color: var(--lp-text-2); }
+
+/* 精選車種 */
+.lp-fleet-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s-4) var(--s-6); margin-bottom: var(--s-6); }
+.lp-fleet-head .lp-h2 { margin-bottom: 0; }
+.lp-fleet-tabs { display: flex; flex: 1 1 520px; max-width: 640px; border-bottom: 1px solid var(--lp-line); overflow-x: auto; }
+.lp-fleet-tabs button {
+  flex: 1 0 auto; min-height: 48px; padding: 0 var(--s-4); margin-bottom: -1px;
+  background: none; border: 0; border-bottom: 3px solid transparent; color: var(--lp-text-2); font-size: 16px; font-weight: 500; cursor: pointer; white-space: nowrap;
+}
+.lp-fleet-tabs button:hover { color: var(--lp-text); }
+.lp-fleet-tabs button[aria-selected="true"] { color: var(--lp-text); font-weight: 900; border-bottom-color: var(--gold); }
+.lp-fleet-tabs button:focus-visible { outline-color: var(--gold-lo); outline-offset: -3px; }
+.lp-fleet-panel { display: grid; gap: var(--s-5); align-items: center; }
+@media (min-width: 768px) { .lp-fleet-panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s-6); } }
+.lp-fleet-car, .lp-fleet-in { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+.lp-fleet-ph { aspect-ratio: 4 / 3; border-radius: var(--radius); background: #F2EFE9; border: 1px dashed #C9BFAA; display: flex; align-items: center; justify-content: center; color: var(--lp-text-2); text-align: center; padding: var(--s-4); }
+.lp-fleet-panel:not(:has(.lp-fleet-in)) { }
+@media (min-width: 768px) { .lp-fleet-panel:not(:has(.lp-fleet-in)) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); } }
+.lp-fleet-text { display: grid; gap: var(--s-3); justify-items: start; }
+.lp-fleet-text h3 { font-family: var(--font-serif); font-size: 30px; font-weight: 700; line-height: 1.25; }
+.lp-fleet-sub { color: var(--lp-text-2); font-size: 17px; margin-top: -6px; }
+.lp-check { display: grid; gap: 6px; }
+.lp-check li { display: flex; align-items: center; gap: var(--s-2); }
+.lp-check li::before { content: ""; width: 18px; height: 18px; flex: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231A1712' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat; }
+.lp-white .tag { background: #F3EAD3; color: var(--lp-gold-text); }
+.lp-dots { display: flex; justify-content: center; gap: var(--s-2); margin-top: var(--s-6); }
+.lp-dots span { width: 8px; height: 8px; border-radius: 50%; background: #CFC7B6; }
+.lp-dots span.on { background: var(--lp-text); }
+
+/* 淺色區塊裡的既有元件 */
+.lp-light .card { background: var(--lp-white); border-color: var(--lp-line); box-shadow: 0 12px 32px rgba(26, 20, 8, .08); }
+.lp-light .hint, .lp-light .charter-quote p, .lp-light .board-foot .hint { color: var(--lp-text-2); }
+.lp-light .spec > div { border-bottom-color: var(--lp-line); }
+.lp-light .spec dt { color: var(--lp-gold-text); }
+.lp-light .tab { border-color: #C9BFAA; color: var(--lp-text); }
+.lp-light .tab:hover { background: #F3EAD3; }
+.lp-light .tab[aria-selected="true"] { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
+.lp-light .btn-secondary { color: var(--lp-text); border-color: var(--lp-text); }
+.lp-light a:not(.btn) { color: var(--lp-gold-text); }
+.lp-light :focus-visible, .lp-white :focus-visible { outline-color: var(--lp-text); }
+.lp-price-row { display: grid; gap: var(--s-6); }
+@media (min-width: 900px) { .lp-price-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.lp-light .cta-split { background: var(--lp-ink); }
+.lp-dark .faq { max-width: none; }
+.lp-light .lp-svc a { color: #FFFFFF; }
+.lp-light .lp-svc a:hover { color: var(--gold-hi); }
+@media (max-width: 1023px) { .site-header .header-phone { display: none; } }
+
+/* 精選車種：6 個分頁，標題在上、分頁整排 */
+.lp-fleet-head { flex-direction: column; align-items: stretch; }
+.lp-fleet-tabs { flex: 1 1 auto; max-width: none; }
+.lp-fleet-head { flex-wrap: nowrap; min-width: 0; }
+.lp-fleet-tabs { min-width: 0; width: 100%; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.lp-fleet-tabs::-webkit-scrollbar { display: none; }
+
+</style>
+</head>
+<body class="page-booking">
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.standalone.html" aria-label="華誼租車 首頁">
+      <svg class="brand-mark" viewBox="0 0 48 32" aria-hidden="true"><path d="M3 26C10 10 26 3 45 5c-12 2-22 8-28 18"/><path d="M14 27h22l-3-6H19z"/><circle cx="19" cy="28" r="2.2"/><circle cx="31" cy="28" r="2.2"/></svg>
+      <span class="brand-text"><span class="brand-name">華誼租車</span><span class="brand-sub">華誼國際旅行社</span></span>
+    </a>
+    <nav class="nav" aria-label="主選單">
+      <a href="index.standalone.html#service">機場接送</a>
+      <a href="index.standalone.html#steps">我要預約</a>
+      <a href="index.standalone.html#fleet">車款介紹</a>
+      <a href="index.standalone.html#prices">計價方式</a>
+      <a href="index.standalone.html#charter">包車旅遊</a>
+      <a href="index.standalone.html#faq">常見問題</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang" role="group" aria-label="語言">
+        <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+      </div>
+      <a class="header-phone" href="tel:035550113">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        <span><b>03-5550113</b><small>24 小時訂車專線</small></span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="開啟選單">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="mobile-menu wrap" hidden>
+    <nav aria-label="主選單（行動版）">
+      <a href="index.standalone.html">首頁</a>
+      <a href="index.standalone.html#service">機場接送</a>
+      <a href="index.standalone.html#steps">我要預約</a>
+      <a href="index.standalone.html#fleet">車款介紹</a>
+      <a href="index.standalone.html#prices">計價方式</a>
+      <a href="index.standalone.html#charter">包車旅遊</a>
+      <a href="index.standalone.html#faq">常見問題</a>
+      <a href="tel:035550113">24 小時訂車專線 03-5550113</a>
+    </nav>
+    <div class="lang" role="group" aria-label="語言">
+      <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <!-- ===== 填寫 ===== -->
+  <div id="view-form" class="booking">
+    <div class="booking-head">
+      <h1 class="title-bar" id="form-title" tabindex="-1">線上預約</h1>
+      <p class="booking-intro">填好行程會即時試算車資。送出後由專人以 LINE 或電話確認，確認後才算完成預約。</p>
+      <div id="edit-banner" class="notice" role="status" hidden>
+        <span>正在修改預約 <b id="edit-ref" class="data"></b>，送出後會取代原本的內容，不會產生第二筆。</span>
+        <button type="button" class="btn-text" id="btn-cancel-edit">取消修改</button>
+      </div>
+      <div id="notice" class="notice" role="status" hidden>
+        <span id="notice-text"></span>
+        <button type="button" class="btn-text" id="notice-undo" hidden>復原</button>
+        <button type="button" class="btn-text" id="notice-close">知道了</button>
+      </div>
+    </div>
+
+    <div class="booking-grid">
+      <form id="booking-form" novalidate aria-label="預約表單">
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">1／4</span>行程</legend>
+            <div class="field">
+              <span class="field-label" id="lbl-type">服務類型</span>
+              <div class="seg" role="radiogroup" aria-labelledby="lbl-type">
+                <label class="seg-opt"><input type="radio" name="type" value="send"><span>送機<small>到機場</small></span></label>
+                <label class="seg-opt"><input type="radio" name="type" value="pick"><span>接機<small>從機場</small></span></label>
+                <label class="seg-opt"><input type="radio" name="type" value="round"><span>來回接送<small>送＋接</small></span></label>
+              </div>
+            </div>
+            <div class="field">
+              <span class="field-label" id="lbl-airport">機場</span>
+              <div class="seg" role="radiogroup" aria-labelledby="lbl-airport">
+                <label class="seg-opt"><input type="radio" name="airport" value="T1"><span>桃園 T1<small>第一航廈</small></span></label>
+                <label class="seg-opt"><input type="radio" name="airport" value="T2"><span>桃園 T2<small>第二航廈</small></span></label>
+                <label class="seg-opt"><input type="radio" name="airport" value="TSA"><span>松山<small>台北</small></span></label>
+              </div>
+            </div>
+            <div class="grid-3">
+              <div class="field">
+                <label class="field-label" for="f-date" id="l-date"></label>
+                <input class="input data" type="date" id="f-date" name="date">
+                <p class="field-error" id="e-date" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-time" id="l-time"></label>
+                <input class="input data" type="time" id="f-time" name="time">
+                <p class="field-error" id="e-time" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-flight" id="l-flight"></label>
+                <input class="input data" type="text" id="f-flight" name="flight" placeholder="例：CI 100" autocomplete="off" autocapitalize="characters">
+                <p class="field-error" id="e-flight" hidden></p>
+              </div>
+            </div>
+            <p class="hint" id="send-tip">上車時間怎麼抓？國際線一般建議起飛前 3 小時抵達機場，再加上車程。不確定的話，客服確認時會幫您抓時間。</p>
+            <div class="grid-3" id="return-fields" hidden>
+              <div class="field">
+                <label class="field-label" for="f-rdate">回程接機日期<span class="req">必填</span></label>
+                <input class="input data" type="date" id="f-rdate" name="rdate">
+                <p class="field-error" id="e-rdate" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-rtime">回程班機抵達時間<span class="req">必填</span></label>
+                <input class="input data" type="time" id="f-rtime" name="rtime">
+                <p class="field-error" id="e-rtime" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-rflight">回程航班編號<span class="req">必填</span></label>
+                <input class="input data" type="text" id="f-rflight" name="rflight" placeholder="例：CI 101" autocomplete="off" autocapitalize="characters">
+                <p class="field-error" id="e-rflight" hidden></p>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">2／4</span><span id="legend-place">上車地點</span></legend>
+            <div class="grid-2">
+              <div class="field">
+                <label class="field-label" for="f-county">縣市</label>
+                <select class="select" id="f-county" name="county"></select>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-area">鄉鎮區</label>
+                <select class="select" id="f-area" name="area"></select>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="f-addr" id="l-addr"></label>
+              <input class="input" type="text" id="f-addr" name="addr" autocomplete="street-address" placeholder="路名、門牌號碼、大樓名稱">
+              <p class="field-error" id="e-addr" hidden></p>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <span class="field-label" id="lbl-pax">乘客人數</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-pax">
+                    <button type="button" data-step="pax" data-dir="-1" aria-label="減少乘客人數"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-pax" aria-live="polite"></output>
+                    <button type="button" data-step="pax" data-dir="1" aria-label="增加乘客人數"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">最多 8 位</span>
+                </div>
+              </div>
+              <div class="field">
+                <span class="field-label" id="lbl-bags">行李件數</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-bags">
+                    <button type="button" data-step="bags" data-dir="-1" aria-label="減少行李件數"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-bags" aria-live="polite"></output>
+                    <button type="button" data-step="bags" data-dir="1" aria-label="增加行李件數"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">以 28 吋行李箱計</span>
+                </div>
+              </div>
+            </div>
+            <p class="notice" id="overcap" role="status" hidden>行李超過 8 件，一台九人座可能放不下。建議先 <a href="https://line.me/ti/p/~kiki939779">LINE 確認</a>，或在備註註明需要兩台車。</p>
+          </fieldset>
+        </div>
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">3／4</span>車種與加購</legend>
+            <div class="seg seg-wide" role="radiogroup" aria-label="車種">
+              <label class="seg-opt"><input type="radio" name="car" value="std"><span>精選九人座<small>福斯 T6・Hyundai Staria・賓士 Vito・賓士 Sprinter</small><small class="data">依價目表</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="v250"><span>賓士 V250D<small>頂級移動式頭等艙</small><small class="data">專人報價</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="nanny"><span>福斯 The New Crafter<small>VIP 高頂改裝・KTV</small><small class="data">專人報價</small></span></label>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <span class="field-label" id="lbl-seats">安全座椅或增高墊</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-seats">
+                    <button type="button" data-step="seats" data-dir="-1" aria-label="減少安全座椅"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-seats" aria-live="polite"></output>
+                    <button type="button" data-step="seats" data-dir="1" aria-label="增加安全座椅"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">每座 <span class="data price">+NT$100</span></span>
+                </div>
+              </div>
+              <div class="field">
+                <span class="field-label" id="lbl-stops">中途停靠</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-stops">
+                    <button type="button" data-step="stops" data-dir="-1" aria-label="減少中途停靠"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-stops" aria-live="polite"></output>
+                    <button type="button" data-step="stops" data-dir="1" aria-label="增加中途停靠"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">10 公里內每點 <span class="data price">+NT$100</span></span>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">4／4</span>聯絡資料</legend>
+            <div class="grid-2">
+              <div class="field">
+                <label class="field-label" for="f-name">姓名<span class="req">必填</span></label>
+                <input class="input" type="text" id="f-name" name="name" autocomplete="name">
+                <p class="field-error" id="e-name" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-phone">手機<span class="req">與 LINE ID 擇一必填</span></label>
+                <input class="input data" type="tel" id="f-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="0912-345-678">
+                <p class="hint">國外號碼請加國碼，例如 +81 90-1234-5678</p>
+                <p class="field-error" id="e-phone" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-line">LINE ID<span class="req">與手機擇一必填</span></label>
+                <input class="input" type="text" id="f-line" name="line" autocomplete="off" autocapitalize="off" placeholder="例：kiki939779">
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-email">Email<span class="req">選填</span></label>
+                <input class="input" type="email" id="f-email" name="email" autocomplete="email" inputmode="email">
+                <p class="field-error" id="e-email" hidden></p>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="f-note">備註<span class="req">選填</span></label>
+              <textarea class="textarea" id="f-note" name="note" rows="3" placeholder="例：嬰兒推車、大型行李、需要舉牌接機、指定車款"></textarea>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- 手機與平板：送出按鈕也放在表單最後，按 Enter 也能送出 -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block js-submit">送出預約</button>
+          <p class="hint">試算僅供參考，最終金額以專人確認為準。</p>
+        </div>
+      </form>
+
+      <!-- 桌機：行程單 -->
+      <aside class="ticket" aria-labelledby="ticket-h">
+        <h2 class="ticket-title" id="ticket-h">行程單</h2>
+        <p class="ticket-route data" id="t-route"></p>
+        <dl class="tl" id="t-lines"></dl>
+        <div class="ticket-total"><span class="muted">合計（每車）</span><span class="data price" id="t-total" aria-live="polite"></span></div>
+        <p class="hint" id="t-quote" hidden></p>
+        <div class="err-summary" id="t-errors" role="alert" hidden></div>
+        <button type="submit" form="booking-form" class="btn btn-primary btn-block js-submit">送出預約</button>
+        <p class="hint">試算僅供參考，最終金額以專人確認為準。</p>
+        <a class="btn-text" href="https://line.me/ti/p/~kiki939779">或直接 LINE：kiki939779</a>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ===== 完成 ===== -->
+  <section id="view-done" class="done" aria-labelledby="done-title" hidden>
+    <h1 class="title-bar" id="done-title" tabindex="-1">已收到您的預約</h1>
+    <p class="done-lead">專人會在 [回覆時間] 內以 LINE 或電話確認車輛與最終金額，確認後才算完成預約。</p>
+    <div class="ref-row">
+      <span class="ref-label">預約編號</span>
+      <span class="data ref" id="done-ref"></span>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-copy">複製編號</button>
+    </div>
+    <dl class="spec" id="done-summary"></dl>
+    <div class="done-total"><span class="muted">預估金額（每車）</span><span class="data price" id="done-total"></span></div>
+    <ol class="next">
+      <li>加 LINE <strong>kiki939779</strong> 並傳送預約編號，可以加快確認。</li>
+      <li>出發前一天，我們會傳送司機姓名與車牌。</li>
+      <li>[回覆時間] 內沒有收到聯絡，請撥 24 小時專線 <a class="data" href="tel:035550113">03-5550113</a>。</li>
+    </ol>
+    <div class="done-actions">
+      <a class="btn btn-line" href="https://line.me/ti/p/~kiki939779">加 LINE 傳送編號</a>
+      <button type="button" class="btn btn-secondary" id="btn-edit">修改預約內容</button>
+      <button type="button" class="btn-text" id="btn-reset">預約新的一筆</button>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="footer-brand">華誼租車</p>
+      <p>新竹店・華誼國際旅行社・甲級租賃公司</p>
+    </div>
+    <div>
+      <p class="footer-title">服務項目</p>
+      <ul>
+        <li><a href="index.standalone.html#service">機場接送</a></li>
+        <li><a href="index.standalone.html#charter">包車旅遊</a></li>
+        <li><a href="index.standalone.html#prices">計價方式</a></li>
+        <li><a href="booking.standalone.html">線上預約</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">聯絡我們</p>
+      <ul>
+        <li><a href="tel:035550113">訂車專線 03-5550113</a></li>
+        <li><a href="https://line.me/ti/p/~kiki939779">LINE／WeChat kiki939779</a></li>
+        <li><a href="https://maps.google.com/?q=新竹縣竹北市中華路340-8號">新竹縣竹北市<span class="nobr">中華路 340-8 號</span></a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- 手機與平板：行程合計列 -->
+<div class="mbar mbar-booking" id="mbar">
+  <div class="mbar-sheet" id="m-sheet" hidden>
+    <p class="ticket-route data" id="m-route"></p>
+    <dl class="tl" id="m-lines"></dl>
+    <p class="hint" id="m-quote" hidden></p>
+    <p class="hint">試算僅供參考，最終金額以專人確認為準。</p>
+  </div>
+  <p class="mbar-err" id="m-errors" role="alert" hidden></p>
+  <div class="mbar-row">
+    <button type="button" class="mbar-total" id="m-toggle" aria-expanded="false" aria-controls="m-sheet">
+      <small>合計・<span id="m-toggle-hint">看明細</span><svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></small>
+      <span class="data price" id="m-total"></span>
+    </button>
+    <a class="btn btn-line mbar-line" href="https://line.me/ti/p/~kiki939779" aria-label="改用 LINE 預約">LINE</a>
+    <button type="submit" form="booking-form" class="btn btn-primary js-submit">送出預約</button>
+  </div>
+</div>
+
+<script>
+/* 共用資料與工具：價目、機場、車種、格式化、送出（尚未串接後端） */
+window.HY = (function () {
+  'use strict';
+
+  /* 中南部 → 桃園機場，每車單趟（來源：店家價目表） */
+  var PRICES = {
+    '新竹': [[['新豐', '湖口', '新埔'], 1100], [['竹北', '關西', '芎林'], 1200], [['東區', '北區'], 1300], [['竹東', '寶山', '香山'], 1400]],
+    '苗栗': [[['頭份', '竹南'], 1700], [['造橋', '頭屋', '後龍', '公館', '苗栗市'], 2000], [['通霄', '銅鑼', '苑裡', '三義'], 2300]],
+    '台中': [[['大甲', '大安', '后里', '外埔'], 2500], [['清水', '神岡', '豐原'], 2600], [['梧棲', '沙鹿', '北屯', '大雅', '西屯', '潭子', '太平'], 2700], [['南屯', '西區', '北區', '中區'], 2800], [['南區', '大里', '大肚', '龍井', '烏日'], 2900]],
+    '彰化': [[['員林', '田中', '二林', '溪湖', '北斗'], 3300], [['彰化市', '鹿港', '和美'], 3400]],
+    '雲林': [[['麥寮', '崙背', '西螺', '莿桐', '二崙', '林內'], 3500], [['台西', '虎尾', '元長', '東勢', '土庫', '大埤', '褒忠', '斗南', '斗六'], 3700], [['四湖', '口湖', '水林', '古坑', '北港'], 3900]],
+    '嘉義': [[['新港', '民雄', '大林'], 4100], [['太保', '嘉義市'], 4300], [['水上', '中埔', '朴子', '布袋', '東石'], 4500]],
+    '台南': [[['下營', '鹽水', '柳營', '新營', '六甲', '麻豆', '安定', '官田', '新市', '善化', '山上'], 4900], [['安南', '北區', '永康', '安平', '中西區', '東區', '仁德', '歸仁'], 5100]]
+  };
+
+  var AIRPORTS = {
+    T1: { name: '桃園機場 第一航廈', short: '桃園 T1' },
+    T2: { name: '桃園機場 第二航廈', short: '桃園 T2' },
+    TSA: { name: '台北松山機場', short: '松山機場' }
+  };
+
+  var CARS = {
+    std: { name: '精選九人座', sub: '福斯 T6・Hyundai Staria・賓士 Vito・賓士 Sprinter', note: '依價目表' },
+    v250: { name: '賓士 V250D', sub: '頂級移動式頭等艙', note: '專人報價' },
+    nanny: { name: '福斯 The New Crafter 九人座（VIP）', sub: 'VIP 高頂改裝・KTV', note: '專人報價' }
+  };
+
+  function counties() { return Object.keys(PRICES); }
+  function areasOf(c) {
+    return PRICES[c] ? PRICES[c].reduce(function (a, r) { return a.concat(r[0]); }, []) : [];
+  }
+  function priceOf(c, area) {
+    var p = 0;
+    (PRICES[c] || []).forEach(function (r) { if (r[0].indexOf(area) >= 0) p = r[1]; });
+    return p;
+  }
+  function fmt(n) { return 'NT$' + Number(n).toLocaleString('en-US'); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  /* 一律以台灣時間判斷「今天／現在」，不受旅客手機時區影響 */
+  function twNow() {
+    try {
+      var parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+      }).formatToParts(new Date());
+      var o = {};
+      parts.forEach(function (p) { o[p.type] = p.value; });
+      return { date: o.year + '-' + o.month + '-' + o.day, hm: o.hour + ':' + o.minute };
+    } catch (e) {
+      var d = new Date(), pad = function (n) { return (n < 10 ? '0' : '') + n; };
+      return { date: d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()), hm: pad(d.getHours()) + ':' + pad(d.getMinutes()) };
+    }
+  }
+
+  /* 送出預約。上線前在這裡串接實際通知管道（Email／LINE／後端 API）。
+     目前模擬 900ms 後成功，回傳 Promise 以便替換。 */
+  function submitBooking(payload) {
+    return new Promise(function (resolve) { setTimeout(function () { resolve(payload); }, 900); });
+  }
+
+  var ICON = {
+    arrow: '<svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+    both: '<svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16l-4-4M20 15H4l4 4"/></svg>',
+    alert: '<svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>'
+  };
+
+  return {
+    PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, BAG_LIMIT: 8,
+    HANDOFF_KEY: 'hy-quote-handoff', DRAFT_KEY: 'hy-booking-draft',
+    LINE_URL: 'https://line.me/ti/p/~kiki939779',
+    counties: counties, areasOf: areasOf, priceOf: priceOf, fmt: fmt, esc: esc,
+    twNow: twNow, submitBooking: submitBooking, ICON: ICON
+  };
+})();
+
+</script>
+<script>
+/* 共用：手機選單、語言切換（翻譯尚未提供，暫時只切換狀態） */
+(function () {
+  'use strict';
+  var btn = document.querySelector('.menu-btn');
+  var menu = document.getElementById('mobile-menu');
+
+  function setMenu(open) {
+    if (!btn || !menu) return;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? '關閉選單' : '開啟選單');
+    menu.hidden = !open;
+  }
+  if (btn && menu) {
+    btn.addEventListener('click', function () { setMenu(btn.getAttribute('aria-expanded') !== 'true'); });
+    menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menu.hidden) { setMenu(false); btn.focus(); }
+    });
+    window.addEventListener('resize', function () { if (window.innerWidth >= 1024) setMenu(false); });
+  }
+
+  var langBtns = document.querySelectorAll('[data-lang]');
+  Array.prototype.forEach.call(langBtns, function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-lang');
+      Array.prototype.forEach.call(langBtns, function (x) {
+        x.setAttribute('aria-pressed', String(x.getAttribute('data-lang') === v));
+      });
+    });
+  });
+})();
+
+</script>
+<script>
+/* 預約頁：狀態、驗證、試算、送出、修改、帶入首頁查價 */
+(function () {
+  'use strict';
+  var HY = window.HY;
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $('booking-form');
+
+  var OTHER = '其他地區';
+  var TEXT = ['date', 'time', 'flight', 'rdate', 'rtime', 'rflight', 'addr', 'name', 'phone', 'line', 'email', 'note'];
+  var ERR_ORDER = ['date', 'time', 'flight', 'rdate', 'rtime', 'rflight', 'addr', 'name', 'phone', 'email'];
+  var NAMES = { date: '日期', time: '時間', flight: '航班編號', rdate: '回程日期', rtime: '回程時間', rflight: '回程航班編號', addr: '地址', name: '姓名', phone: '手機或 LINE ID', email: 'Email' };
+  var PERSIST = ['type', 'airport', 'county', 'area', 'pax', 'bags', 'car', 'seats', 'stops'].concat(TEXT, ['submitted', 'ref', 'updated', 'snapshot']);
+  var TTL = 48 * 60 * 60 * 1000;          /* 草稿與確認保留 48 小時 */
+  var HANDOFF_TTL = 30 * 60 * 1000;
+  var LIMITS = { pax: [1, 8], bags: [0, 12], stops: [0, 3] };
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var sheetOpen = false;
+  var handoffMsg = null;
+
+  function blank(keep) {
+    var b = {
+      type: 'send', airport: 'T1', county: '新竹', area: '竹北', pax: 2, bags: 2, car: 'std', seats: 0, stops: 0,
+      date: '', time: '', flight: '', rdate: '', rtime: '', rflight: '', addr: '',
+      name: '', phone: '', line: '', email: '', note: '',
+      tried: false, submitted: false, sending: false, ref: '', updated: false, snapshot: null
+    };
+    if (keep) ['name', 'phone', 'line', 'email'].forEach(function (k) { b[k] = keep[k] || ''; });
+    return b;
+  }
+
+  function load() {
+    var s = blank();
+    try {
+      var raw = localStorage.getItem(HY.DRAFT_KEY);
+      if (raw) {
+        var o = JSON.parse(raw);
+        if (o && o.data && Date.now() - o.savedAt < TTL) {
+          PERSIST.forEach(function (k) { if (o.data[k] !== undefined) s[k] = o.data[k]; });
+        }
+      }
+    } catch (e) { /* 無法讀取就用空白表單 */ }
+    s.sending = false; s.tried = false;
+    if (HY.counties().indexOf(s.county) < 0 && s.county !== OTHER) s.county = '新竹';
+    return s;
+  }
+  function save() {
+    try {
+      var d = {};
+      PERSIST.forEach(function (k) { d[k] = state[k]; });
+      localStorage.setItem(HY.DRAFT_KEY, JSON.stringify({ savedAt: Date.now(), data: d }));
+    } catch (e) { /* 私密模式：不保存 */ }
+  }
+  var state = load();
+  function set(patch) { for (var k in patch) state[k] = patch[k]; save(); render(); }
+
+  /* ---------- 衍生值 ---------- */
+  function areaOpts() { return state.county === OTHER ? ['（專人報價）'] : HY.areasOf(state.county); }
+  function currentArea() { var o = areaOpts(); return o.indexOf(state.area) >= 0 ? state.area : o[0]; }
+  function seatsMax() { return Math.min(4, state.pax); }
+  function toHalf(str) {
+    return String(str).replace(/[０-９＋－]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); });
+  }
+  function normPhone(p) { return toHalf(p).replace(/[\s\-().]/g, '').replace(/^\+8860/, '+886'); }
+
+  function validate() {
+    var s = state, E = {}, now = HY.twNow();
+    var isPick = s.type === 'pick', isRound = s.type === 'round';
+    if (!s.date) E.date = '請選擇日期';
+    else if (s.date < now.date) E.date = '日期不能早於今天';
+    if (!s.time) E.time = isPick ? '請填寫班機抵達時間' : '請填寫上車時間';
+    else if (s.date === now.date && s.time <= now.hm) E.time = '這個時間已經過了，請選擇稍晚的時間';
+    if (isPick && !s.flight.trim()) E.flight = '接機需要航班編號，司機才能掌握班機實際抵達時間';
+    if (isRound) {
+      if (!s.rdate) E.rdate = '請選擇回程日期';
+      else if (s.date && s.rdate < s.date) E.rdate = '回程日期不能早於去程';
+      if (!s.rtime) E.rtime = '請填寫回程班機抵達時間';
+      else if (s.rdate && s.rdate === s.date && s.time && s.rtime <= s.time) E.rtime = '回程時間要晚於去程上車時間';
+      if (!s.rflight.trim()) E.rflight = '回程接機需要航班編號，司機才能掌握班機抵達時間';
+    }
+    if (!s.addr.trim()) E.addr = '請填寫詳細地址，司機才找得到您';
+    if (!s.name.trim()) E.name = '請填寫姓名';
+    var digits = normPhone(s.phone);
+    if (!digits && !s.line.trim()) E.phone = '手機或 LINE ID 請至少填一項，客服才能聯絡您';
+    else if (digits) {
+      var tw = /^0\d{8,9}$/.test(digits) || /^\+886\d{8,9}$/.test(digits);
+      var intl = /^\+\d{8,15}$/.test(digits);
+      if (/^09/.test(digits) && digits.length !== 10) E.phone = '手機號碼是 10 碼，例如 0912-345-678';
+      else if (!(tw || intl)) E.phone = '電話格式不太對，例如 0912-345-678 或 +81 90-1234-5678';
+    }
+    if (s.email.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s.email.trim())) E.email = 'Email 格式不太對，例如 name@example.com';
+    return E;
+  }
+  function errKeys(E) { return ERR_ORDER.filter(function (k) { return E[k]; }); }
+
+  function pricing() {
+    var s = state, isPick = s.type === 'pick', isRound = s.type === 'round', trips = isRound ? 2 : 1, area = currentArea();
+    var base = s.county === OTHER ? 0 : HY.priceOf(s.county, area);
+    var quote = s.airport === 'TSA' || s.car !== 'std' || s.county === OTHER;
+    var reason = s.airport === 'TSA' ? '松山機場由專人報價，送出後客服會回覆金額。'
+      : s.county === OTHER ? '此地區不在價目表內，送出後由專人報價。'
+      : '特殊車種由專人報價，送出後客服會回覆金額。';
+    var seats = Math.min(s.seats, s.pax);
+    if (quote && (seats || s.stops)) reason += '加購項目會一併計入報價。';
+    var place = s.county === OTHER ? OTHER : s.county + area;
+    var ap = HY.AIRPORTS[s.airport].short;
+    var seatFee = seats * 100 * trips, stopFee = s.stops * 100;
+    var amt = function (n) { return quote ? HY.fmt(n) + '（併入報價）' : HY.fmt(n); };
+    var lines = [{ k: (isRound ? '來回' : '單程') + ' × ' + trips + ' 趟', v: quote ? '專人報價' : HY.fmt(base * trips) }];
+    if (seats) lines.push({ k: '安全座椅 × ' + seats + (trips > 1 ? '（來回）' : ''), v: amt(seatFee) });
+    if (s.stops) lines.push({ k: '中途停靠 × ' + s.stops, v: amt(stopFee) });
+    return {
+      from: isPick ? ap : place, to: isPick ? place : ap, isRound: isRound, place: place, seats: seats,
+      lines: lines, quote: quote, reason: reason,
+      total: quote ? '專人報價' : HY.fmt(base * trips + seatFee + stopFee)
+    };
+  }
+  function routeHTML(p) { return HY.esc(p.from) + (p.isRound ? HY.ICON.both : HY.ICON.arrow) + HY.esc(p.to); }
+
+  /* ---------- 畫面 ---------- */
+  function label(id, text, required) {
+    $(id).innerHTML = HY.esc(text) + '<span class="req">' + (required ? '必填' : '選填') + '</span>';
+  }
+  function markField(k, bad, msg) {
+    var el = $('f-' + k), er = $('e-' + k);
+    if (!el || !er) return;
+    el.setAttribute('aria-invalid', bad ? 'true' : 'false');
+    er.hidden = !bad;
+    er.innerHTML = bad ? HY.ICON.alert + '<span>' + HY.esc(msg) + '</span>' : '';
+    if (bad) el.setAttribute('aria-describedby', 'e-' + k); else el.removeAttribute('aria-describedby');
+  }
+  function stepper(k, min, max) {
+    $('v-' + k).textContent = state[k];
+    var btns = form.querySelectorAll('[data-step="' + k + '"]');
+    btns[0].disabled = state[k] <= min;
+    btns[1].disabled = state[k] >= max;
+  }
+  function fillCounties() {
+    $('f-county').innerHTML = HY.counties().concat([OTHER]).map(function (c) {
+      return '<option value="' + HY.esc(c) + '">' + HY.esc(c) + '</option>';
+    }).join('');
+  }
+  function fillAreas() {
+    var sel = $('f-area'), opts = areaOpts();
+    if (sel.getAttribute('data-county') !== state.county) {
+      sel.innerHTML = opts.map(function (o) { return '<option value="' + HY.esc(o) + '">' + HY.esc(o) + '</option>'; }).join('');
+      sel.setAttribute('data-county', state.county);
+    }
+    sel.value = currentArea();
+    sel.disabled = state.county === OTHER;
+  }
+  function syncInputs() {
+    TEXT.forEach(function (k) { var el = $('f-' + k); if (el && el.value !== state[k]) el.value = state[k]; });
+  }
+
+  function render() {
+    var s = state, isPick = s.type === 'pick', isRound = s.type === 'round';
+    var now = HY.twNow();
+
+    $('view-form').hidden = s.submitted;
+    $('view-done').hidden = !s.submitted;
+    document.body.classList.toggle('is-done', s.submitted);
+
+    ['type', 'airport', 'car'].forEach(function (n) {
+      Array.prototype.forEach.call(form.querySelectorAll('input[name="' + n + '"]'), function (r) { r.checked = r.value === s[n]; });
+    });
+
+    label('l-date', isPick ? '接機日期' : (isRound ? '去程日期' : '送機日期'), true);
+    label('l-time', isPick ? '班機抵達時間' : '上車時間', true);
+    label('l-flight', isRound ? '去程航班編號' : '航班編號', isPick);
+    label('l-addr', isPick ? '下車地址' : (isRound ? '上車地址（回程也送回這裡）' : '上車地址'), true);
+    $('legend-place').textContent = isPick ? '下車地點' : (isRound ? '上下車地點' : '上車地點');
+    $('f-date').min = now.date;
+    $('f-rdate').min = s.date || now.date;
+    $('return-fields').hidden = !isRound;
+    $('send-tip').hidden = isPick;
+
+    if ($('f-county').value !== s.county) $('f-county').value = s.county;
+    fillAreas();
+
+    stepper('pax', 1, 8); stepper('bags', 0, 12); stepper('seats', 0, seatsMax()); stepper('stops', 0, 3);
+    $('overcap').hidden = !(s.bags > HY.BAG_LIMIT);
+
+    var E = validate(), keys = errKeys(E), show = s.tried;
+    ERR_ORDER.forEach(function (k) { markField(k, !!(show && E[k]), E[k]); });
+    var contactMissing = show && E.phone && !normPhone(s.phone);
+    $('f-line').setAttribute('aria-invalid', contactMissing ? 'true' : 'false');
+
+    var p = pricing(), rh = routeHTML(p);
+    var lh = p.lines.map(function (l) { return '<div><dt>' + HY.esc(l.k) + '</dt><dd class="data">' + HY.esc(l.v) + '</dd></div>'; }).join('');
+    $('t-route').innerHTML = rh; $('m-route').innerHTML = rh;
+    $('t-lines').innerHTML = lh; $('m-lines').innerHTML = lh;
+    $('t-total').textContent = p.total; $('m-total').textContent = p.total;
+    ['t-quote', 'm-quote'].forEach(function (id) { $(id).hidden = !p.quote; $(id).textContent = p.quote ? p.reason : ''; });
+
+    var es = $('t-errors');
+    if (show && keys.length) {
+      es.hidden = false;
+      es.innerHTML = '<strong>還有 ' + keys.length + ' 項需要處理</strong>' +
+        keys.slice(0, 3).map(function (k) {
+          return '<a href="#f-' + k + '" data-focus="f-' + k + '">' + HY.esc(NAMES[k] + '：' + E[k]) + '</a>';
+        }).join('') +
+        (keys.length > 3 ? '<span class="hint">另外還有 ' + (keys.length - 3) + ' 項，請往下檢查</span>' : '');
+    } else { es.hidden = true; es.innerHTML = ''; }
+    $('m-errors').hidden = !(show && keys.length);
+    $('m-errors').textContent = show && keys.length ? '還有 ' + keys.length + ' 項需要處理，已捲到第一個欄位' : '';
+
+    var submitLabel = s.sending ? '送出中…' : (s.ref ? '更新預約' : '送出預約');
+    Array.prototype.forEach.call(document.querySelectorAll('.js-submit'), function (b) {
+      b.textContent = submitLabel; b.disabled = s.sending; b.setAttribute('aria-busy', String(s.sending));
+    });
+
+    $('edit-banner').hidden = !(s.ref && !s.submitted);
+    $('edit-ref').textContent = s.ref;
+    if (handoffMsg) {
+      $('notice').hidden = false;
+      $('notice-text').textContent = handoffMsg.text;
+      $('notice-undo').hidden = !handoffMsg.undo;
+    } else { $('notice').hidden = true; }
+
+    $('m-sheet').hidden = !sheetOpen;
+    $('m-toggle').setAttribute('aria-expanded', String(sheetOpen));
+    $('m-toggle-hint').textContent = sheetOpen ? '收合明細' : '看明細';
+
+    if (s.submitted) renderDone(p);
+  }
+
+  function when(date, time) {
+    var wd = '日一二三四五六'.charAt(new Date(date + 'T12:00:00').getDay());
+    return date.slice(5).replace('-', '/') + '（' + wd + '）' + time;
+  }
+  function renderDone(p) {
+    var s = state, isPick = s.type === 'pick', isRound = s.type === 'round';
+    $('done-title').textContent = s.updated ? '已更新您的預約' : '已收到您的預約';
+    $('done-ref').textContent = s.ref;
+    var rows = [
+      ['服務', isRound ? '來回接送' : (isPick ? '接機' : '送機')],
+      ['路線', p.from + (isRound ? ' ⇄ ' : ' → ') + p.to],
+      [isPick ? '接機' : (isRound ? '去程' : '送機'), { data: when(s.date, s.time) + (s.flight ? '・' + s.flight.toUpperCase() : '') }]
+    ];
+    if (isRound) rows.push(['回程', { data: when(s.rdate, s.rtime) + '・' + s.rflight.toUpperCase() }]);
+    rows.push([isPick ? '下車地址' : '上車地址', p.place + ' ' + s.addr]);
+    rows.push(['人數／行李', s.pax + ' 位・' + s.bags + ' 件']);
+    rows.push(['車種', HY.CARS[s.car].name]);
+    if (p.seats || s.stops) rows.push(['加購', [p.seats ? '安全座椅 ' + p.seats + ' 座' : '', s.stops ? '中途停靠 ' + s.stops + ' 點' : ''].filter(Boolean).join('・')]);
+    rows.push(['聯絡人', [s.name, s.phone, s.line ? 'LINE ' + s.line : ''].filter(Boolean).join('・')]);
+    if (s.note.trim()) rows.push(['備註', s.note]);
+    $('done-summary').innerHTML = rows.map(function (r) {
+      var v = typeof r[1] === 'object' ? '<span class="data">' + HY.esc(r[1].data) + '</span>' : HY.esc(r[1]);
+      return '<div><dt>' + HY.esc(r[0]) + '</dt><dd>' + v + '</dd></div>';
+    }).join('');
+    $('done-total').textContent = p.total;
+  }
+
+  /* ---------- 動作 ---------- */
+  function scrollTop() { window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }); }
+  function focusField(id) {
+    var el = $(id);
+    if (!el) return;
+    el.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+    el.focus({ preventScroll: true });
+  }
+  function genRef() {
+    return 'HY-' + HY.twNow().date.replace(/-/g, '') + '-' + String(Math.floor(1000 + Math.random() * 9000));
+  }
+
+  function submit() {
+    if (state.sending) return;
+    var keys = errKeys(validate());
+    if (keys.length) {
+      sheetOpen = false;
+      set({ tried: true });
+      setTimeout(function () { focusField('f-' + keys[0]); }, 30);
+      return;
+    }
+    set({ tried: true, sending: true });
+    var payload = {};
+    PERSIST.forEach(function (k) { if (k !== 'snapshot') payload[k] = state[k]; });
+    payload.area = currentArea();
+    payload.seats = Math.min(state.seats, state.pax);
+    payload.estimate = pricing().total;
+    HY.submitBooking(payload).then(function () {
+      var isUpdate = !!state.ref;
+      handoffMsg = null; sheetOpen = false;
+      set({ sending: false, submitted: true, ref: state.ref || genRef(), updated: isUpdate, snapshot: null, tried: false });
+      window.scrollTo(0, 0);
+      $('done-title').focus();
+    }, function () {
+      set({ sending: false });
+      $('m-errors').hidden = false;
+      $('m-errors').textContent = '送出失敗，請再試一次，或直接撥 03-5550113。';
+    });
+  }
+
+  function onField(e) {
+    var t = e.target, n = t.name;
+    if (!n) return;
+    if (TEXT.indexOf(n) >= 0) { state[n] = t.value; save(); render(); return; }
+    if (n === 'type' || n === 'airport' || n === 'car') { if (t.checked && state[n] !== t.value) { var o = {}; o[n] = t.value; set(o); } return; }
+    if (n === 'county') { set({ county: t.value, area: '' }); return; }
+    if (n === 'area') { set({ area: t.value }); }
+  }
+  form.addEventListener('input', onField);
+  form.addEventListener('change', onField);
+  form.addEventListener('submit', function (e) { e.preventDefault(); submit(); });
+
+  form.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-step]');
+    if (!b || b.disabled) return;
+    var k = b.getAttribute('data-step'), d = Number(b.getAttribute('data-dir'));
+    var lim = k === 'seats' ? [0, seatsMax()] : LIMITS[k];
+    var v = Math.max(lim[0], Math.min(lim[1], state[k] + d));
+    var patch = {}; patch[k] = v;
+    if (k === 'pax') patch.seats = Math.min(state.seats, v);
+    set(patch);
+  });
+
+  $('t-errors').addEventListener('click', function (e) {
+    var a = e.target.closest('[data-focus]');
+    if (a) { e.preventDefault(); focusField(a.getAttribute('data-focus')); }
+  });
+  $('m-toggle').addEventListener('click', function () { sheetOpen = !sheetOpen; sheetScrollY = window.scrollY; render(); });
+  /* 明細面板：按 Esc、開始填欄位、或捲動頁面時自動收合 */
+  var sheetScrollY = 0;
+  function closeSheet() { if (sheetOpen) { sheetOpen = false; render(); } }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && sheetOpen) { closeSheet(); $('m-toggle').focus(); } });
+  form.addEventListener('focusin', closeSheet);
+  window.addEventListener('scroll', function () { if (sheetOpen && Math.abs(window.scrollY - sheetScrollY) > 100) closeSheet(); }, { passive: true });
+  /* 表單底部的送出按鈕在畫面上時，隱藏底部列的送出按鈕 */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) {
+      document.body.classList.toggle('actions-in-view', en[0].isIntersecting);
+    }, { threshold: 0.5 }).observe(document.querySelector('.form-actions'));
+  }
+
+  $('btn-edit').addEventListener('click', function () {
+    var snap = {};
+    PERSIST.forEach(function (k) { if (k !== 'snapshot') snap[k] = state[k]; });
+    set({ submitted: false, updated: false, tried: false, snapshot: snap });
+    syncInputs();
+    scrollTop();
+    $('form-title').focus({ preventScroll: true });
+  });
+  $('btn-cancel-edit').addEventListener('click', function () {
+    var snap = state.snapshot;
+    if (snap) Object.keys(snap).forEach(function (k) { state[k] = snap[k]; });
+    state.snapshot = null; state.submitted = true; state.tried = false;
+    save(); syncInputs(); render();
+    window.scrollTo(0, 0);
+    $('done-title').focus();
+  });
+  $('btn-reset').addEventListener('click', function () {
+    state = blank(state);           /* 保留姓名與聯絡方式，方便預約下一筆 */
+    handoffMsg = null; sheetOpen = false;
+    save(); syncInputs(); render();
+    window.scrollTo(0, 0);
+    $('form-title').focus();
+  });
+  $('btn-copy').addEventListener('click', function () {
+    var btn = this, ref = state.ref;
+    var done = function () { btn.textContent = '已複製'; setTimeout(function () { btn.textContent = '複製編號'; }, 2000); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(ref).then(done, function () { fallbackCopy(ref); done(); });
+    } else { fallbackCopy(ref); done(); }
+  });
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) { /* 無法複製時使用者仍可手動選取編號 */ }
+    document.body.removeChild(ta);
+  }
+
+  /* ---------- 首頁查價帶入 ---------- */
+  function applyHandoff() {
+    var h;
+    try {
+      var raw = localStorage.getItem(HY.HANDOFF_KEY);
+      if (!raw) return false;
+      localStorage.removeItem(HY.HANDOFF_KEY);
+      h = JSON.parse(raw);
+    } catch (e) { return false; }
+    if (!h || HY.counties().indexOf(h.county) < 0 || !(Date.now() - h.at < HANDOFF_TTL)) return false;
+    var airport = HY.AIRPORTS[h.airport] ? h.airport : 'T1';
+    var area = HY.areasOf(h.county).indexOf(h.area) >= 0 ? h.area : HY.areasOf(h.county)[0];
+    var text = h.county + area + '・' + HY.AIRPORTS[airport].short;
+    if (state.ref && !state.submitted) {
+      handoffMsg = { text: '您正在修改預約 ' + state.ref + '，首頁選擇的「' + text + '」沒有套用。', undo: false };
+      render();
+      return true;
+    }
+    var prev = { county: state.county, area: currentArea(), airport: state.airport };
+    var started = state.submitted;
+    if (started) state = blank(state);
+    state.county = h.county; state.area = area; state.airport = airport;
+    var same = prev.county === state.county && prev.area === area && prev.airport === airport;
+    handoffMsg = {
+      text: (started ? '已開始新的預約，並帶入首頁選擇：' : '已帶入首頁選擇：') + text + '。',
+      undo: (!started && !same) ? prev : false
+    };
+    save(); syncInputs(); render();
+    return true;
+  }
+  $('notice-undo').addEventListener('click', function () {
+    if (handoffMsg && handoffMsg.undo) { var u = handoffMsg.undo; handoffMsg = null; set(u); }
+  });
+  $('notice-close').addEventListener('click', function () { handoffMsg = null; render(); });
+  window.addEventListener('storage', function (e) { if (e.key === HY.HANDOFF_KEY && e.newValue) applyHandoff(); });
+  window.addEventListener('pageshow', function (e) { if (e.persisted) applyHandoff(); });
+
+  /* ---------- 啟動 ---------- */
+  fillCounties();
+  syncInputs();
+  if (!applyHandoff()) render();
+})();
+
+</script>
+</body>
+</html>

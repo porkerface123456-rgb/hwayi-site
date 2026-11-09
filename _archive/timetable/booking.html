@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>預約接送｜華誼租車 新竹店</title>
+<meta name="description" content="線上預約桃園、松山機場接送，即時試算車資，送出後由專人以 LINE 或電話確認。">
+<meta name="theme-color" content="#0F0F0E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body class="page-booking">
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.html" aria-label="華誼租車 新竹店 首頁">
+      <span class="brand-name">華誼租車</span><span class="brand-sub">新竹店</span>
+    </a>
+    <nav class="nav" aria-label="主選單">
+      <a href="index.html#prices">價目表</a>
+      <a href="index.html#fleet">車輛</a>
+      <a href="index.html#how">預約須知</a>
+      <a href="index.html#charter">包車・特殊車種</a>
+      <a href="index.html#faq">常見問題</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang" role="group" aria-label="語言">
+        <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+      </div>
+      <a class="header-phone data" href="tel:035550113">03-5550113</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="開啟選單">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="mobile-menu wrap" hidden>
+    <nav aria-label="主選單（行動版）">
+      <a href="index.html">首頁</a>
+      <a href="index.html#prices">價目表</a>
+      <a href="index.html#fleet">車輛</a>
+      <a href="index.html#how">預約須知</a>
+      <a href="index.html#charter">包車・特殊車種</a>
+      <a href="index.html#faq">常見問題</a>
+      <a href="tel:035550113">24 小時專線 <span class="data">03-5550113</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="語言">
+      <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <!-- ===== 填寫 ===== -->
+  <div id="view-form" class="booking">
+    <div class="booking-head">
+      <h1 class="h-page" id="form-title" tabindex="-1">預約接送</h1>
+      <p class="booking-intro">填好行程會即時試算車資。送出後由專人以 LINE 或電話確認，確認後才算完成預約。</p>
+      <div id="edit-banner" class="notice" role="status" hidden>
+        <span>正在修改預約 <b id="edit-ref" class="data"></b>，送出後會取代原本的內容，不會產生第二筆。</span>
+        <button type="button" class="btn-text" id="btn-cancel-edit">取消修改</button>
+      </div>
+      <div id="notice" class="notice" role="status" hidden>
+        <span id="notice-text"></span>
+        <button type="button" class="btn-text" id="notice-undo" hidden>復原</button>
+        <button type="button" class="btn-text" id="notice-close">知道了</button>
+      </div>
+    </div>
+
+    <div class="booking-grid">
+      <form id="booking-form" novalidate aria-label="預約表單">
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">1／4</span>行程</legend>
+            <div class="field">
+              <span class="field-label" id="lbl-type">服務類型</span>
+              <div class="seg" role="radiogroup" aria-labelledby="lbl-type">
+                <label class="seg-opt"><input type="radio" name="type" value="send"><span>送機<small>到機場</small></span></label>
+                <label class="seg-opt"><input type="radio" name="type" value="pick"><span>接機<small>從機場</small></span></label>
+                <label class="seg-opt"><input type="radio" name="type" value="round"><span>來回接送<small>送＋接</small></span></label>
+              </div>
+            </div>
+            <div class="field">
+              <span class="field-label" id="lbl-airport">機場</span>
+              <div class="seg" role="radiogroup" aria-labelledby="lbl-airport">
+                <label class="seg-opt"><input type="radio" name="airport" value="T1"><span>桃園 T1<small>第一航廈</small></span></label>
+                <label class="seg-opt"><input type="radio" name="airport" value="T2"><span>桃園 T2<small>第二航廈</small></span></label>
+                <label class="seg-opt"><input type="radio" name="airport" value="TSA"><span>松山<small>台北</small></span></label>
+              </div>
+            </div>
+            <div class="grid-3">
+              <div class="field">
+                <label class="field-label" for="f-date" id="l-date"></label>
+                <input class="input data" type="date" id="f-date" name="date">
+                <p class="field-error" id="e-date" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-time" id="l-time"></label>
+                <input class="input data" type="time" id="f-time" name="time">
+                <p class="field-error" id="e-time" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-flight" id="l-flight"></label>
+                <input class="input data" type="text" id="f-flight" name="flight" placeholder="例：CI 100" autocomplete="off" autocapitalize="characters">
+                <p class="field-error" id="e-flight" hidden></p>
+              </div>
+            </div>
+            <p class="hint" id="send-tip">上車時間怎麼抓？國際線一般建議起飛前 3 小時抵達機場，再加上車程。不確定的話，客服確認時會幫您抓時間。</p>
+            <div class="grid-3" id="return-fields" hidden>
+              <div class="field">
+                <label class="field-label" for="f-rdate">回程接機日期<span class="req">必填</span></label>
+                <input class="input data" type="date" id="f-rdate" name="rdate">
+                <p class="field-error" id="e-rdate" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-rtime">回程班機抵達時間<span class="req">必填</span></label>
+                <input class="input data" type="time" id="f-rtime" name="rtime">
+                <p class="field-error" id="e-rtime" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-rflight">回程航班編號<span class="req">必填</span></label>
+                <input class="input data" type="text" id="f-rflight" name="rflight" placeholder="例：CI 101" autocomplete="off" autocapitalize="characters">
+                <p class="field-error" id="e-rflight" hidden></p>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">2／4</span><span id="legend-place">上車地點</span></legend>
+            <div class="grid-2">
+              <div class="field">
+                <label class="field-label" for="f-county">縣市</label>
+                <select class="select" id="f-county" name="county"></select>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-area">鄉鎮區</label>
+                <select class="select" id="f-area" name="area"></select>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="f-addr" id="l-addr"></label>
+              <input class="input" type="text" id="f-addr" name="addr" autocomplete="street-address" placeholder="路名、門牌號碼、大樓名稱">
+              <p class="field-error" id="e-addr" hidden></p>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <span class="field-label" id="lbl-pax">乘客人數</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-pax">
+                    <button type="button" data-step="pax" data-dir="-1" aria-label="減少乘客人數"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-pax" aria-live="polite"></output>
+                    <button type="button" data-step="pax" data-dir="1" aria-label="增加乘客人數"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">最多 8 位</span>
+                </div>
+              </div>
+              <div class="field">
+                <span class="field-label" id="lbl-bags">行李件數</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-bags">
+                    <button type="button" data-step="bags" data-dir="-1" aria-label="減少行李件數"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-bags" aria-live="polite"></output>
+                    <button type="button" data-step="bags" data-dir="1" aria-label="增加行李件數"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">以 28 吋行李箱計</span>
+                </div>
+              </div>
+            </div>
+            <p class="notice" id="overcap" role="status" hidden>行李超過 8 件，一台九人座可能放不下。建議先 <a href="https://line.me/ti/p/~kiki939779">LINE 確認</a>，或在備註註明需要兩台車。</p>
+          </fieldset>
+        </div>
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">3／4</span>車種與加購</legend>
+            <div class="seg seg-wide" role="radiogroup" aria-label="車種">
+              <label class="seg-opt"><input type="radio" name="car" value="std"><span>精選九人座<small><span class="nobr">賓士 Vito・</span><span class="nobr">現代 Staria・</span><span class="nobr">福斯 T6</span></small><small class="data">依價目表</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="v250"><span>賓士 V250D<small>頂級移動式頭等艙</small><small class="data">專人報價</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="nanny"><span>豪華特種保母車<small>獨立航空座椅・KTV</small><small class="data">專人報價</small></span></label>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <span class="field-label" id="lbl-seats">安全座椅或增高墊</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-seats">
+                    <button type="button" data-step="seats" data-dir="-1" aria-label="減少安全座椅"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-seats" aria-live="polite"></output>
+                    <button type="button" data-step="seats" data-dir="1" aria-label="增加安全座椅"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">每座 <span class="data price">+NT$100</span></span>
+                </div>
+              </div>
+              <div class="field">
+                <span class="field-label" id="lbl-stops">中途停靠</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-stops">
+                    <button type="button" data-step="stops" data-dir="-1" aria-label="減少中途停靠"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-stops" aria-live="polite"></output>
+                    <button type="button" data-step="stops" data-dir="1" aria-label="增加中途停靠"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">10 公里內每點 <span class="data price">+NT$100</span></span>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">4／4</span>聯絡資料</legend>
+            <div class="grid-2">
+              <div class="field">
+                <label class="field-label" for="f-name">姓名<span class="req">必填</span></label>
+                <input class="input" type="text" id="f-name" name="name" autocomplete="name">
+                <p class="field-error" id="e-name" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-phone">手機<span class="req">與 LINE ID 擇一必填</span></label>
+                <input class="input data" type="tel" id="f-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="0912-345-678">
+                <p class="hint">國外號碼請加國碼，例如 +81 90-1234-5678</p>
+                <p class="field-error" id="e-phone" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-line">LINE ID<span class="req">與手機擇一必填</span></label>
+                <input class="input" type="text" id="f-line" name="line" autocomplete="off" autocapitalize="off" placeholder="例：kiki939779">
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-email">Email<span class="req">選填</span></label>
+                <input class="input" type="email" id="f-email" name="email" autocomplete="email" inputmode="email">
+                <p class="field-error" id="e-email" hidden></p>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="f-note">備註<span class="req">選填</span></label>
+              <textarea class="textarea" id="f-note" name="note" rows="3" placeholder="例：嬰兒推車、大型行李、需要舉牌接機、指定車款"></textarea>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- 手機與平板：送出按鈕也放在表單最後，按 Enter 也能送出 -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block js-submit">送出預約</button>
+          <p class="hint">試算僅供參考，最終金額以專人確認為準。</p>
+        </div>
+      </form>
+
+      <!-- 桌機：行程單 -->
+      <aside class="ticket" aria-labelledby="ticket-h">
+        <h2 class="ticket-title" id="ticket-h">行程單</h2>
+        <p class="ticket-route data" id="t-route"></p>
+        <dl class="tl" id="t-lines"></dl>
+        <div class="ticket-total"><span class="muted">合計（每車）</span><span class="data price" id="t-total" aria-live="polite"></span></div>
+        <p class="hint" id="t-quote" hidden></p>
+        <div class="err-summary" id="t-errors" role="alert" hidden></div>
+        <button type="submit" form="booking-form" class="btn btn-primary btn-block js-submit">送出預約</button>
+        <p class="hint">試算僅供參考，最終金額以專人確認為準。</p>
+        <a class="btn-text" href="https://line.me/ti/p/~kiki939779">或直接 LINE：kiki939779</a>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ===== 完成 ===== -->
+  <section id="view-done" class="done" aria-labelledby="done-title" hidden>
+    <h1 class="h-page" id="done-title" tabindex="-1">已收到您的預約</h1>
+    <p class="done-lead">專人會在 [回覆時間] 內以 LINE 或電話確認車輛與最終金額，確認後才算完成預約。</p>
+    <div class="ref-row">
+      <span class="ref-label">預約編號</span>
+      <span class="data ref" id="done-ref"></span>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-copy">複製編號</button>
+    </div>
+    <dl class="spec" id="done-summary"></dl>
+    <div class="done-total"><span class="muted">預估金額（每車）</span><span class="data price" id="done-total"></span></div>
+    <ol class="next">
+      <li>加 LINE <strong>kiki939779</strong> 並傳送預約編號，可以加快確認。</li>
+      <li>出發前一天，我們會傳送司機姓名與車牌。</li>
+      <li>[回覆時間] 內沒有收到聯絡，請撥 24 小時專線 <a class="data" href="tel:035550113">03-5550113</a>。</li>
+    </ol>
+    <div class="done-actions">
+      <a class="btn btn-line" href="https://line.me/ti/p/~kiki939779">加 LINE 傳送編號</a>
+      <button type="button" class="btn btn-secondary" id="btn-edit">修改預約內容</button>
+      <button type="button" class="btn-text" id="btn-reset">預約新的一筆</button>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="footer-title">華誼租車 新竹店</p>
+      <p>華誼國際旅行社・甲級租賃公司</p>
+    </div>
+    <div>
+      <p class="footer-title">聯絡</p>
+      <ul>
+        <li>24 小時專線 <a class="data" href="tel:035550113">03-5550113</a></li>
+        <li>LINE／WeChat <a href="https://line.me/ti/p/~kiki939779">kiki939779</a></li>
+        <li>WhatsApp [號碼]</li>
+        <li><a href="https://maps.google.com/?q=新竹縣竹北市中華路340-8號">新竹縣竹北市<span class="nobr">中華路 340-8 號</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">頁面</p>
+      <ul>
+        <li><a href="index.html#prices">價目表</a></li>
+        <li><a href="index.html#how">預約須知</a></li>
+        <li><a href="booking.html">線上預約</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- 手機與平板：行程合計列 -->
+<div class="mbar mbar-booking" id="mbar">
+  <div class="mbar-sheet" id="m-sheet" hidden>
+    <p class="ticket-route data" id="m-route"></p>
+    <dl class="tl" id="m-lines"></dl>
+    <p class="hint" id="m-quote" hidden></p>
+    <p class="hint">試算僅供參考，最終金額以專人確認為準。</p>
+  </div>
+  <p class="mbar-err" id="m-errors" role="alert" hidden></p>
+  <div class="mbar-row">
+    <button type="button" class="mbar-total" id="m-toggle" aria-expanded="false" aria-controls="m-sheet">
+      <small>合計・<span id="m-toggle-hint">看明細</span><svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></small>
+      <span class="data price" id="m-total"></span>
+    </button>
+    <a class="btn btn-line mbar-line" href="https://line.me/ti/p/~kiki939779" aria-label="改用 LINE 預約">LINE</a>
+    <button type="submit" form="booking-form" class="btn btn-primary js-submit">送出預約</button>
+  </div>
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/booking.js"></script>
+</body>
+</html>
