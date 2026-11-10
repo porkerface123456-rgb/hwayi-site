@@ -669,3 +669,16 @@ body.is-done .mbar { display: none; }
 .lp-fleet-head { flex-wrap: nowrap; min-width: 0; }
 .lp-fleet-tabs { min-width: 0; width: 100%; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .lp-fleet-tabs::-webkit-scrollbar { display: none; }
+
+/* 精選車種：每款 3 個照片空格（大圖＋兩張小圖），照片由 fleet-photos.js 填入 */
+.lp-fleet-panel.has-gallery { display: grid; gap: var(--s-6); align-items: center; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .lp-fleet-panel.has-gallery { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); } }
+.lp-gallery { display: grid; gap: var(--s-3); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 640px) { .lp-gallery { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: repeat(2, minmax(0, 1fr)); } }
+.lp-slot { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-s); overflow: hidden; background: #F2EFE9; border: 1.5px dashed #C9BFAA; }
+.lp-slot-main { grid-column: 1 / -1; }
+@media (min-width: 640px) { .lp-slot-main { grid-column: 1; grid-row: 1 / span 2; aspect-ratio: auto; min-height: 320px; } }
+.lp-slot-ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s-2); color: #7A705F; font-size: var(--fs-small); font-weight: 500; }
+.lp-slot-ph .i { width: 28px; height: 28px; color: #A8823A; }
+.lp-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lp-slot.has-photo { border: 0; background: #E9E5DD; }
