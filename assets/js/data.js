@@ -20,9 +20,10 @@ window.HY = (function () {
   };
 
   var CARS = {
-    std: { name: '精選九人座', sub: '福斯 T6・Hyundai Staria・賓士 Vito・賓士 Sprinter', note: '依價目表' },
-    v250: { name: '賓士 V250D', sub: '頂級移動式頭等艙', note: '專人報價' },
-    nanny: { name: '福斯 The New Crafter 九人座（VIP）', sub: 'VIP 高頂改裝・KTV', note: '專人報價' }
+    /* maxPax／maxBags：各車載客與行李上限（28 吋計）。null = 尚未提供，暫用最多 8 位、8 件 */
+    std: { name: '精選九人座', sub: '福斯 T6・Hyundai Staria・賓士 Vito・賓士 Sprinter', note: '依價目表', maxPax: null, maxBags: null },
+    v250: { name: '賓士 V250D', sub: '頂級移動式頭等艙', note: '專人報價', maxPax: null, maxBags: null },
+    nanny: { name: '福斯 The New Crafter 九人座（VIP）', sub: 'VIP 高頂改裝・KTV', note: '專人報價', maxPax: null, maxBags: null }
   };
 
   function counties() { return Object.keys(PRICES); }
@@ -70,7 +71,7 @@ window.HY = (function () {
   };
 
   return {
-    PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, BAG_LIMIT: 8,
+    PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, BAG_LIMIT: 8, REPLY_TIME: '[回覆時間]',
     HANDOFF_KEY: 'hy-quote-handoff', DRAFT_KEY: 'hy-booking-draft',
     LINE_URL: 'https://line.me/ti/p/~kiki939779',
     counties: counties, areasOf: areasOf, priceOf: priceOf, fmt: fmt, esc: esc,

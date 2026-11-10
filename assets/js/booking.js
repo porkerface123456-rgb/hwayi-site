@@ -58,6 +58,11 @@
   function areaOpts() { return state.county === OTHER ? ['（專人報價）'] : HY.areasOf(state.county); }
   function currentArea() { var o = areaOpts(); return o.indexOf(state.area) >= 0 ? state.area : o[0]; }
   function seatsMax() { return Math.min(4, state.pax); }
+  /* 依車型的載客與行李上限；尚未提供時暫用 8 位、8 件 */
+  function carLimits(car) {
+    var c = HY.CARS[car || state.car] || {};
+    return { pax: c.maxPax || 8, bags: c.maxBags || HY.BAG_LIMIT, known: !!(c.maxPax && c.maxBags) };
+  }
   function toHalf(str) {
     return String(str).replace(/[０-９＋－]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); });
   }
@@ -97,11 +102,12 @@
     var s = state, isPick = s.type === 'pick', isRound = s.type === 'round', trips = isRound ? 2 : 1, area = currentArea();
     var base = s.county === OTHER ? 0 : HY.priceOf(s.county, area);
     var quote = s.airport === 'TSA' || s.car !== 'std' || s.county === OTHER;
-    var reason = s.airport === 'TSA' ? '松山機場由專人報價，送出後客服會回覆金額。'
-      : s.county === OTHER ? '此地區不在價目表內，送出後由專人報價。'
-      : '特殊車種由專人報價，送出後客服會回覆金額。';
+    var reason = s.airport === 'TSA' ? '松山機場由專人報價。'
+      : s.county === OTHER ? '此地區不在價目表內，由專人報價。'
+      : '這台車由專人報價。';
     var seats = Math.min(s.seats, s.pax);
     if (quote && (seats || s.stops)) reason += '加購項目會一併計入報價。';
+    if (quote) reason += '送出後，專人會在 ' + HY.REPLY_TIME + ' 內回覆金額。';
     var place = s.county === OTHER ? OTHER : s.county + area;
     var ap = HY.AIRPORTS[s.airport].short;
     var seatFee = seats * 100 * trips, stopFee = s.stops * 100;
@@ -178,8 +184,15 @@
     if ($('f-county').value !== s.county) $('f-county').value = s.county;
     fillAreas();
 
-    stepper('pax', 1, 8); stepper('bags', 0, 12); stepper('seats', 0, seatsMax()); stepper('stops', 0, 3);
-    $('overcap').hidden = !(s.bags > HY.BAG_LIMIT);
+    var lim = carLimits();
+    stepper('pax', 1, lim.pax); stepper('bags', 0, 12); stepper('seats', 0, seatsMax()); stepper('stops', 0, 3);
+    $('pax-hint').textContent = '這台車最多 ' + lim.pax + ' 位';
+    $('overcap-n').textContent = lim.bags;
+    $('overcap').hidden = !(s.bags > lim.bags);
+    Array.prototype.forEach.call(document.querySelectorAll('.cap[data-car]'), function (el) {
+      var c = HY.CARS[el.getAttribute('data-car')];
+      el.innerHTML = '<span class="nobr">載客 ' + (c.maxPax || '[人數]') + ' 位</span>・<span class="nobr">行李 ' + (c.maxBags || '[件數]') + ' 件</span>';
+    });
 
     var E = validate(), keys = errKeys(E), show = s.tried;
     ERR_ORDER.forEach(function (k) { markField(k, !!(show && E[k]), E[k]); });
@@ -242,6 +255,8 @@
     rows.push([isPick ? '下車地址' : '上車地址', p.place + ' ' + s.addr]);
     rows.push(['人數／行李', s.pax + ' 位・' + s.bags + ' 件']);
     rows.push(['車種', HY.CARS[s.car].name]);
+    if (s.bags > carLimits().bags) rows.push(['提醒', '行李較多，可能需要兩台車，客服會與您確認']);
+    if (p.quote) rows.push(['報價', '專人會在 ' + HY.REPLY_TIME + ' 內以 LINE 或電話回覆金額']);
     if (p.seats || s.stops) rows.push(['加購', [p.seats ? '安全座椅 ' + p.seats + ' 座' : '', s.stops ? '中途停靠 ' + s.stops + ' 點' : ''].filter(Boolean).join('・')]);
     rows.push(['聯絡人', [s.name, s.phone, s.line ? 'LINE ' + s.line : ''].filter(Boolean).join('・')]);
     if (s.note.trim()) rows.push(['備註', s.note]);
@@ -287,8 +302,11 @@
       $('done-title').focus();
     }, function () {
       set({ sending: false });
+      var msg = '送出失敗，請再試一次，或直接撥 03-5550113。';
       $('m-errors').hidden = false;
-      $('m-errors').textContent = '送出失敗，請再試一次，或直接撥 03-5550113。';
+      $('m-errors').textContent = msg;
+      $('t-errors').hidden = false;
+      $('t-errors').innerHTML = '<strong>' + msg + '</strong>';
     });
   }
 
@@ -296,7 +314,14 @@
     var t = e.target, n = t.name;
     if (!n) return;
     if (TEXT.indexOf(n) >= 0) { state[n] = t.value; save(); render(); return; }
-    if (n === 'type' || n === 'airport' || n === 'car') { if (t.checked && state[n] !== t.value) { var o = {}; o[n] = t.value; set(o); } return; }
+    if (n === 'type' || n === 'airport' || n === 'car') {
+      if (t.checked && state[n] !== t.value) {
+        var o = {}; o[n] = t.value;
+        if (n === 'car') { var mp = carLimits(t.value).pax; if (state.pax > mp) { o.pax = mp; o.seats = Math.min(state.seats, mp); } }
+        set(o);
+      }
+      return;
+    }
     if (n === 'county') { set({ county: t.value, area: '' }); return; }
     if (n === 'area') { set({ area: t.value }); }
   }
@@ -308,7 +333,7 @@
     var b = e.target.closest('[data-step]');
     if (!b || b.disabled) return;
     var k = b.getAttribute('data-step'), d = Number(b.getAttribute('data-dir'));
-    var lim = k === 'seats' ? [0, seatsMax()] : LIMITS[k];
+    var lim = k === 'seats' ? [0, seatsMax()] : (k === 'pax' ? [1, carLimits().pax] : LIMITS[k]);
     var v = Math.max(lim[0], Math.min(lim[1], state[k] + d));
     var patch = {}; patch[k] = v;
     if (k === 'pax') patch.seats = Math.min(state.seats, v);

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>預約接送｜華誼租車 新竹店</title>
 <meta name="description" content="線上預約桃園、松山機場接送，即時試算車資，送出後由專人以 LINE 或電話確認。">
-<meta name="theme-color" content="#0A0A0A">
+<meta name="theme-color" content="#0B0D10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
@@ -67,7 +67,7 @@
   <!-- ===== 填寫 ===== -->
   <div id="view-form" class="booking">
     <div class="booking-head">
-      <h1 class="title-bar" id="form-title" tabindex="-1">線上預約</h1>
+      <h1 class="lp-h2 page-title" id="form-title" tabindex="-1">線上預約</h1>
       <p class="booking-intro">填好行程會即時試算車資。送出後由專人以 LINE 或電話確認，確認後才算完成預約。</p>
       <div id="edit-banner" class="notice" role="status" hidden>
         <span>正在修改預約 <b id="edit-ref" class="data"></b>，送出後會取代原本的內容，不會產生第二筆。</span>
@@ -91,7 +91,7 @@
               <div class="seg" role="radiogroup" aria-labelledby="lbl-type">
                 <label class="seg-opt"><input type="radio" name="type" value="send"><span>送機<small>到機場</small></span></label>
                 <label class="seg-opt"><input type="radio" name="type" value="pick"><span>接機<small>從機場</small></span></label>
-                <label class="seg-opt"><input type="radio" name="type" value="round"><span>來回接送<small>送＋接</small></span></label>
+                <label class="seg-opt"><input type="radio" name="type" value="round"><span>來回<small>送機＋接機</small></span></label>
               </div>
             </div>
             <div class="field">
@@ -167,7 +167,7 @@
                     <output id="v-pax" aria-live="polite"></output>
                     <button type="button" data-step="pax" data-dir="1" aria-label="增加乘客人數"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
                   </div>
-                  <span class="hint">最多 8 位</span>
+                  <span class="hint" id="pax-hint">這台車最多 8 位</span>
                 </div>
               </div>
               <div class="field">
@@ -182,7 +182,7 @@
                 </div>
               </div>
             </div>
-            <p class="notice" id="overcap" role="status" hidden>行李超過 8 件，一台九人座可能放不下。建議先 <a href="https://line.me/ti/p/~kiki939779">LINE 確認</a>，或在備註註明需要兩台車。</p>
+            <p class="notice" id="overcap" role="status" hidden>行李超過 <span id="overcap-n">8</span> 件，這台車可能放不下。建議先 <a href="https://line.me/ti/p/~kiki939779">LINE 確認</a>，或在備註註明需要兩台車。</p>
           </fieldset>
         </div>
 
@@ -190,9 +190,9 @@
           <fieldset class="fs">
             <legend class="fs-legend"><span class="fs-step">3／4</span>車種與加購</legend>
             <div class="seg seg-wide" role="radiogroup" aria-label="車種">
-              <label class="seg-opt"><input type="radio" name="car" value="std"><span>精選九人座<small>福斯 T6・Hyundai Staria・賓士 Vito・賓士 Sprinter</small><small class="data">依價目表</small></span></label>
-              <label class="seg-opt"><input type="radio" name="car" value="v250"><span>賓士 V250D<small>頂級移動式頭等艙</small><small class="data">專人報價</small></span></label>
-              <label class="seg-opt"><input type="radio" name="car" value="nanny"><span>福斯 The New Crafter<small>VIP 高頂改裝・KTV</small><small class="data">專人報價</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="std"><span>精選九人座<small>福斯 T6・Hyundai Staria・賓士 Vito・賓士 Sprinter</small><small class="cap" data-car="std"></small><small class="data">依價目表</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="v250"><span>賓士 V250D<small>頂級移動式頭等艙</small><small class="cap" data-car="v250"></small><small class="data">專人報價</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="nanny"><span>福斯 The New Crafter<small>VIP 高頂改裝・KTV</small><small class="cap" data-car="nanny"></small><small class="data">專人報價</small></span></label>
             </div>
             <div class="grid-2">
               <div class="field">
@@ -277,7 +277,7 @@
 
   <!-- ===== 完成 ===== -->
   <section id="view-done" class="done" aria-labelledby="done-title" hidden>
-    <h1 class="title-bar" id="done-title" tabindex="-1">已收到您的預約</h1>
+    <h1 class="lp-h2 page-title" id="done-title" tabindex="-1">已收到您的預約</h1>
     <p class="done-lead">專人會在 [回覆時間] 內以 LINE 或電話確認車輛與最終金額，確認後才算完成預約。</p>
     <div class="ref-row">
       <span class="ref-label">預約編號</span>
@@ -289,7 +289,7 @@
     <ol class="next">
       <li>加 LINE <strong>kiki939779</strong> 並傳送預約編號，可以加快確認。</li>
       <li>出發前一天，我們會傳送司機姓名與車牌。</li>
-      <li>[回覆時間] 內沒有收到聯絡，請撥 24 小時專線 <a class="data" href="tel:035550113">03-5550113</a>。</li>
+      <li>[回覆時間] 內沒有收到聯絡，請撥 24 小時專線 <a class="data nobr" href="tel:035550113">03-5550113</a>。</li>
     </ol>
     <div class="done-actions">
       <a class="btn btn-line" href="https://line.me/ti/p/~kiki939779">加 LINE 傳送編號</a>

@@ -687,3 +687,73 @@ body.is-done .mbar { display: none; }
 @media (min-width: 768px) {
   .cta-split img { height: 0; min-height: 100%; max-height: none; align-self: stretch; }
 }
+
+/* =========================================================
+   10. 第 4 次評論修正
+   ========================================================= */
+
+/* 精選車種：沒有照片時整塊顯示一個「照片準備中」（保留版面空間） */
+.lp-gallery-empty { display: none; }
+.lp-gallery.is-empty .lp-slot { display: none; }
+.lp-gallery.is-empty .lp-gallery-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s-2);
+  grid-column: 1 / -1; min-height: 240px; padding: var(--s-5);
+  background: #F4F1EA; border: 1px solid var(--lp-line); border-radius: var(--radius-s); text-align: center;
+}
+@media (min-width: 640px) { .lp-gallery.is-empty .lp-gallery-empty { grid-row: 1 / span 2; min-height: 320px; } }
+.lp-gallery-empty .i { width: 32px; height: 32px; color: var(--lp-gold-text); }
+.lp-gallery-empty span { font-size: 18px; font-weight: 700; color: var(--lp-text); }
+.lp-gallery-empty small { font-size: var(--fs-small); color: var(--lp-text-2); }
+/* 部分照片已提供時，尚缺的位置用淡色底塊 */
+.lp-slot { border: 0; background: #F2EFE9; }
+.lp-slot-ph { color: #5E5546; }
+
+/* 主視覺的次要連結：不用播放圖示，避免誤以為有影片 */
+.lp-play { gap: var(--s-2); }
+
+/* 服務項目下方：包車計價與其他服務 */
+.lp-svc-notes { display: grid; gap: var(--s-2); margin-top: var(--s-5); color: var(--lp-text-2); }
+.lp-svc-notes strong { color: var(--lp-text); }
+.lp-svc-notes a { margin-left: var(--s-2); font-weight: 700; white-space: nowrap; }
+
+/* 計價方式：只留一張價目表卡片，加購一行字，須知改為單純清單 */
+.lp-addons { margin-top: var(--s-4); color: var(--lp-text-2); text-wrap: pretty; }
+.lp-addons strong { display: inline-block; margin-right: var(--s-2); padding: 0 8px; border-radius: 999px; background: #F3EAD3; color: #6E5218; font-size: var(--fs-small); }
+.lp-addons .data { color: var(--lp-gold-text); font-weight: 700; }
+.lp-policy { margin-top: var(--s-7); }
+.lp-policy h3 { margin-bottom: var(--s-3); font-family: var(--font-serif); font-size: 24px; font-weight: 700; color: var(--lp-text); }
+.board-row { align-items: stretch; }
+.board-areas { display: flex; align-items: center; }
+
+/* 標題統一：預約頁、確認頁、立即預約都用首頁的襯線標題 */
+.booking-head { text-align: left; }
+.page-title { margin-bottom: var(--s-2); }
+.page-booking .lp-h2, .lp-dark .lp-h2 { color: #FFFFFF; }
+.page-booking .page-title:focus { outline: none; }
+.booking-intro { margin: 0; }
+.done h1, .done-lead { text-align: left; }
+.ref-row, .done-actions { justify-content: flex-start; }
+.cta-body .lp-h2 { margin-bottom: 0; color: #FFFFFF; font-size: clamp(26px, 3vw, 34px); }
+.cap { color: var(--fg-3); }
+.seg-opt input:checked + span .cap { color: #4A3A1A; }
+
+/* 對比 */
+.lp-light .cta-split a:not(.btn) { color: var(--gold-hi); }
+.lp-white .tag { color: #6E5218; }
+.contact-stack .btn span:last-child { opacity: 1; font-weight: 500; }
+.btn-line:hover { background: #056B33; }
+.lp-quote .select { border-color: #8A7A5C; }
+
+/* 鍵盤焦點框：白色查價列與照片卡片上也看得到 */
+.lp-quote .select:focus { box-shadow: none; border-color: var(--lp-text); }
+.lp-quote :focus-visible { outline: 2px solid var(--lp-text); outline-offset: 2px; }
+.lp-light .lp-svc a:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 3px; }
+
+/* 點擊範圍與手機版 */
+.brand { min-height: 44px; }
+@media (max-width: 479px) {
+  .steps li { grid-template-columns: 1fr; gap: var(--s-2); }
+  .steps .n { width: 40px; height: 40px; font-size: 18px; }
+  .steps-panel { padding: var(--s-5); }
+}
+.lp-fleet-tabs.has-more { -webkit-mask-image: linear-gradient(90deg, #000 78%, transparent); mask-image: linear-gradient(90deg, #000 78%, transparent); }
