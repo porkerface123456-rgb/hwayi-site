@@ -5,6 +5,25 @@
   var $ = function (id) { return document.getElementById(id); };
   var form = $('booking-form');
 
+  /* 進入預約頁一律從最上方開始：
+     不讓瀏覽器或預覽環境沿用上一頁（或上次）的捲動位置。
+     使用者一開始捲動或操作，就不再強制回到頂端。 */
+  (function startAtTop() {
+    if (location.hash) return;
+    try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+    var timers = [];
+    var toTop = function () { window.scrollTo(0, 0); };
+    var stop = function () {
+      timers.forEach(clearTimeout); timers = [];
+      ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (t) { window.removeEventListener(t, stop, true); });
+    };
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (t) { window.addEventListener(t, stop, true); });
+    toTop();
+    window.addEventListener('load', function () { toTop(); timers.push(setTimeout(toTop, 60), setTimeout(toTop, 300)); });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) toTop(); });
+    timers.push(setTimeout(stop, 1500));
+  })();
+
   var OTHER = '其他地區';
   var TEXT = ['date', 'time', 'flight', 'rdate', 'rtime', 'rflight', 'addr', 'name', 'phone', 'line', 'email', 'note'];
   var ERR_ORDER = ['date', 'time', 'flight', 'rdate', 'rtime', 'rflight', 'addr', 'name', 'phone', 'email'];
