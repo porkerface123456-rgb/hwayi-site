@@ -803,3 +803,6 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 .lp-promise ul { border-top: 1px solid #2B2F36; }
 /* 預約頁手機版：頁尾最後一行不被底部列蓋住 */
 @media (max-width: 1023px) { .page-booking .site-footer { padding-bottom: 120px; } }
+
+/* 查價結果下方的說明文字留空時不佔位置 */
+.quote-note:empty { display: none; }

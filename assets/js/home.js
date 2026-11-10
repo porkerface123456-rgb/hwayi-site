@@ -33,7 +33,7 @@
     } else {
       price.textContent = HY.fmt(HY.priceOf(county, area));
       price.classList.remove('is-quote');
-      $('q-note').textContent = '每車單趟・九人座商務車・送機接機同價';
+      $('q-note').textContent = '';
     }
   }
 
