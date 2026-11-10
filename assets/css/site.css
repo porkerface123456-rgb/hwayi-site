@@ -40,7 +40,7 @@
 
   /* 字型 */
   --font-sans: "Noto Sans TC", -apple-system, "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
-  --font-num: "Noto Sans TC", -apple-system, system-ui, sans-serif;
+  --font-num: var(--font-sans);
 
   /* 字級 */
   --fs-small: 14px;
@@ -518,7 +518,7 @@ body.is-done .mbar { display: none; }
   --lp-text-2: #5B5346;
   --lp-line: #E3DCCF;
   --lp-gold-text: #8C6A26;   /* 白底上的金色文字（4.9:1） */
-  --font-serif: "Noto Serif TC", "Songti TC", serif;
+  --font-serif: var(--font-sans);   /* 全站統一用標題的思源黑體（Noto Sans TC） */
 }
 
 /* 頁首：標誌＋兩行品牌名，電話含圖示 */
