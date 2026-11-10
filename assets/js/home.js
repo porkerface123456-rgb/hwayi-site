@@ -62,10 +62,10 @@
       if (on) { board.setAttribute('aria-labelledby', b.id); if (focus) b.focus(); }
     });
     rows.innerHTML = HY.PRICES[c].map(function (r) {
-      return '<div class="board-row"><span class="board-areas">' + HY.esc(r[0].join('、')) + '</span>' +
-        '<span class="board-price data">' + HY.fmt(r[1]) + '</span></div>';
+      return '<a class="board-row" href="booking.html" data-area="' + HY.esc(r[0][0]) + '" aria-label="' + HY.esc(r[0].join('、') + ' ' + HY.fmt(r[1]) + '，預約這一區') + '">' +
+        '<span class="board-areas">' + HY.esc(r[0].join('、')) + '</span>' +
+        '<span class="board-price data">' + HY.fmt(r[1]) + '<svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>';
     }).join('');
-    $('board-book').textContent = '從' + c + '出發，線上預約';
   }
 
   tabs.addEventListener('click', function (e) {
@@ -79,7 +79,10 @@
     if (e.key === 'Home') { e.preventDefault(); selectCounty(counties[0], true); }
     if (e.key === 'End') { e.preventDefault(); selectCounty(counties[counties.length - 1], true); }
   });
-  $('board-book').addEventListener('click', function () { handoff(current, HY.areasOf(current)[0], 'T1'); });
+  rows.addEventListener('click', function (e) {
+    var a = e.target.closest('a.board-row');
+    if (a) handoff(current, a.getAttribute('data-area'), 'T1');
+  });
 
   selectCounty('新竹');
 

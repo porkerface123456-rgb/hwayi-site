@@ -72,3 +72,10 @@
     });
   });
 })();
+
+/* 「用這台車預約」：把車種帶入預約頁 */
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('[data-handoff-car]');
+  if (!a || !window.HY) return;
+  try { localStorage.setItem(window.HY.HANDOFF_KEY, JSON.stringify({ car: a.getAttribute('data-handoff-car'), at: Date.now() })); } catch (err) {}
+});

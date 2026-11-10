@@ -191,7 +191,8 @@
     $('overcap').hidden = !(s.bags > lim.bags);
     Array.prototype.forEach.call(document.querySelectorAll('.cap[data-car]'), function (el) {
       var c = HY.CARS[el.getAttribute('data-car')];
-      el.innerHTML = '<span class="nobr">載客 ' + (c.maxPax || '[人數]') + ' 位</span>・<span class="nobr">行李 ' + (c.maxBags || '[件數]') + ' 件</span>';
+      el.hidden = !(c.maxPax && c.maxBags);  /* 數字提供前先不顯示 */
+      el.innerHTML = '<span class="nobr">載客 ' + c.maxPax + ' 位</span>・<span class="nobr">行李 ' + c.maxBags + ' 件</span>';
     });
 
     var E = validate(), keys = errKeys(E), show = s.tried;
@@ -204,6 +205,7 @@
     $('t-route').innerHTML = rh; $('m-route').innerHTML = rh;
     $('t-lines').innerHTML = lh; $('m-lines').innerHTML = lh;
     $('t-total').textContent = p.total; $('m-total').textContent = p.total;
+    ['t-total', 'm-total'].forEach(function (id) { $(id).classList.toggle('is-quote', p.quote); });
     ['t-quote', 'm-quote'].forEach(function (id) { $(id).hidden = !p.quote; $(id).textContent = p.quote ? p.reason : ''; });
 
     var es = $('t-errors');
@@ -265,6 +267,7 @@
       return '<div><dt>' + HY.esc(r[0]) + '</dt><dd>' + v + '</dd></div>';
     }).join('');
     $('done-total').textContent = p.total;
+    $('done-total').classList.toggle('is-quote', p.quote);
   }
 
   /* ---------- 動作 ---------- */
@@ -405,7 +408,18 @@
       localStorage.removeItem(HY.HANDOFF_KEY);
       h = JSON.parse(raw);
     } catch (e) { return false; }
-    if (!h || HY.counties().indexOf(h.county) < 0 || !(Date.now() - h.at < HANDOFF_TTL)) return false;
+    if (!h || !(Date.now() - h.at < HANDOFF_TTL)) return false;
+    if (h.car && HY.CARS[h.car] && !h.county) {
+      if (state.ref && !state.submitted) { handoffMsg = { text: '您正在修改預約 ' + state.ref + '，首頁選擇的車種沒有套用。', undo: false }; render(); return true; }
+      var prevCar = { car: state.car };
+      if (state.submitted) state = blank(state);
+      state.car = h.car;
+      var mp = carLimits(h.car).pax; if (state.pax > mp) state.pax = mp;
+      handoffMsg = { text: '已帶入首頁選擇的車種：' + HY.CARS[h.car].name + '。', undo: prevCar.car !== h.car ? prevCar : false };
+      save(); syncInputs(); render();
+      return true;
+    }
+    if (HY.counties().indexOf(h.county) < 0) return false;
     var airport = HY.AIRPORTS[h.airport] ? h.airport : 'T1';
     var area = HY.areasOf(h.county).indexOf(h.area) >= 0 ? h.area : HY.areasOf(h.county)[0];
     var text = h.county + area + '・' + HY.AIRPORTS[airport].short;

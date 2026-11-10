@@ -757,3 +757,49 @@ body.is-done .mbar { display: none; }
   .steps-panel { padding: var(--s-5); }
 }
 .lp-fleet-tabs.has-more { -webkit-mask-image: linear-gradient(90deg, #000 78%, transparent); mask-image: linear-gradient(90deg, #000 78%, transparent); }
+
+/* =========================================================
+   11. 第 5 次評論修正
+   ========================================================= */
+/* 行李超量提醒：一段完整句子，不被拆成碎片 */
+#overcap { display: block; }
+
+/* 深色「立即預約」區塊內的焦點框改用淺金色 */
+.lp-light .cta-split :focus-visible { outline-color: var(--gold-hi); }
+/* 淺色漸層上的金色文字加深 */
+.lp-policy dt, .lp-light .lp-svc-notes a { color: #6E5218; }
+/* 預約頁輸入框：選取時加上明顯的金色框 */
+.input:focus, .select:focus, .textarea:focus { outline: 2px solid var(--gold-hi); outline-offset: 1px; }
+.lp-quote .select:focus { outline-color: var(--lp-text); }
+/* 價目表：手機上價格右側留白、每列可點 */
+@media (max-width: 479px) {
+  .board-head, .board-row { grid-template-columns: minmax(0, 1fr) 128px; }
+  .board-price { font-size: 19px; padding-inline: var(--s-3); }
+}
+a.board-row { color: inherit; text-decoration: none; cursor: pointer; transition: background-color .15s var(--ease); }
+a.board-row:hover { background: #F3E6C4; }
+a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -2px; }
+.board-price { gap: 6px; }
+.board-price .i { color: var(--lp-gold-text); flex: none; }
+.lp-quote-result .quote-note { font-size: var(--fs-small); }
+
+/* 專人報價的車：精選車種給下一步按鈕；金額區不再把「專人報價」放大成價格 */
+.lp-fleet-actions { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-2); }
+.lp-fleet-actions .btn-primary { box-shadow: none; }
+.ticket-total .price.is-quote, .done-total .price.is-quote { font-size: 20px; color: var(--fg); font-weight: 700; }
+.mbar-total .price.is-quote { font-size: 18px; color: var(--fg); }
+
+/* 預約頁收斂金色：行程單用襯線標題、步驟編號改金框 */
+.ticket-title { margin: 0; padding: var(--s-5) 0 var(--s-3); background: none; color: #FFFFFF; font-family: var(--font-serif); font-size: 22px; letter-spacing: .04em; border-bottom: 1px solid var(--line); }
+.fs-step { background: transparent; border: 1px solid var(--gold); color: var(--gold-hi); }
+/* 車卡：等高、報價方式固定在卡片底部 */
+.seg-wide .seg-opt > span { justify-content: flex-start; height: 100%; }
+.seg-wide .seg-opt small.data { margin-top: auto; padding-top: var(--s-2); font-weight: 700; color: var(--gold-hi); }
+.seg-wide .seg-opt input:checked + span small.data { color: var(--on-gold); }
+
+/* 頁尾品牌名與頁首一致；主視覺與優勢條之間不留色帶 */
+.footer-brand { font-family: var(--font-serif); color: #FFFFFF; font-weight: 700; }
+.lp-promise { background: var(--lp-ink); }
+.lp-promise ul { border-top: 1px solid #2B2F36; }
+/* 預約頁手機版：頁尾最後一行不被底部列蓋住 */
+@media (max-width: 1023px) { .page-booking .site-footer { padding-bottom: 120px; } }
