@@ -806,3 +806,7 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 
 /* 查價結果下方的說明文字留空時不佔位置 */
 .quote-note:empty { display: none; }
+
+/* 頁首 LOGO 圖片 */
+.brand-logo { display: block; height: 52px; width: auto; }
+@media (max-width: 639px) { .brand-logo { height: 44px; } }
