@@ -823,3 +823,6 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
   .lp-hero-media img { object-position: 72% center; }
   .lp-hero::before { background: linear-gradient(180deg, rgba(11, 13, 16, .6) 0%, rgba(11, 13, 16, .78) 55%, var(--lp-ink) 100%); }
 }
+
+/* 服務項目「機場接送」卡片照片：讓整台車留在畫面中 */
+.lp-svc-airport img { object-position: 50% 62%; }
