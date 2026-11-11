@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>華誼租車｜桃園機場接送・包車旅遊</title>
+<meta name="description" content="新竹、苗栗到台南，九人座商務車接送桃園與松山機場。每車計價、不另收人頭費，接單一律派本公司車輛。24 小時訂車專線 03-5550113。">
+<meta name="theme-color" content="#0B0D10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body class="page-home has-mbar">
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.html" aria-label="華誼租車 首頁">
+      <img class="brand-logo" src="assets/img/logo.png" alt="華誼租車" width="130" height="52">
+    </a>
+    <nav class="nav" aria-label="主選單">
+      <a href="#service">機場接送</a>
+      <a href="booking.html">我要預約</a>
+      <a href="#fleet">車款介紹</a>
+      <a href="#prices">計價方式</a>
+      <a href="#charter">包車旅遊</a>
+      <a href="#faq">常見問題</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang" role="group" aria-label="語言">
+        <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+      </div>
+      <a class="header-phone" href="tel:035550113">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        <span><b>03-5550113</b><small>24 小時訂車專線</small></span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="開啟選單">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="mobile-menu wrap" hidden>
+    <nav aria-label="主選單（行動版）">
+      <a href="#service">機場接送</a>
+      <a href="booking.html">我要預約</a>
+      <a href="#fleet">車款介紹</a>
+      <a href="#prices">計價方式</a>
+      <a href="#charter">包車旅遊</a>
+      <a href="#faq">常見問題</a>
+      <a href="#feedback">意見反饋</a>
+      <a href="tel:035550113">24 小時訂車專線 03-5550113</a>
+    </nav>
+    <div class="lang" role="group" aria-label="語言">
+      <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 主視覺 -->
+  <section class="lp-hero" aria-labelledby="hero-h">
+    <div class="lp-hero-media"><img src="assets/img/hero-airport.webp" alt="" width="1799" height="874" fetchpriority="high"></div>
+    <div class="wrap lp-hero-body">
+      <h1 id="hero-h" class="lp-hero-title"><span class="nobr">機場接送・</span><span class="nobr">包車旅遊</span></h1>
+      <p class="lp-hero-tagline">專業・安全・舒適・用心</p>
+      <div class="lp-hero-actions">
+        <a class="btn btn-primary" href="#quote">立即查詢接送價格
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="lp-play" href="#fleet">
+          看車款介紹
+          <svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 查價列 -->
+  <div class="wrap lp-quote-wrap">
+    <form class="lp-quote" id="quote" aria-label="接送價格查詢" onsubmit="return false">
+      <label class="field">
+        <span class="field-label">出發縣市</span>
+        <select class="select" id="q-county"></select>
+      </label>
+      <label class="field">
+        <span class="field-label">鄉鎮區</span>
+        <select class="select" id="q-area"></select>
+      </label>
+      <label class="field field-airport">
+        <span class="field-label">機場</span>
+        <select class="select" id="q-airport">
+          <option value="T1">桃園機場 第一航廈</option>
+          <option value="T2">桃園機場 第二航廈</option>
+          <option value="T3">桃園機場 第三航廈</option>
+          <option value="TSA">台北松山機場</option>
+        </select>
+      </label>
+      <div class="lp-quote-result" aria-live="polite">
+        <p class="quote-route" id="q-route"></p>
+        <p class="quote-price data" id="q-price"></p>
+        <p class="quote-note" id="q-note"></p>
+      </div>
+      <a class="btn btn-primary lp-quote-btn" id="q-book" href="booking.html">預約這趟</a>
+    </form>
+  </div>
+
+  <!-- 公司優勢 -->
+  <section class="lp-promise" aria-label="本公司優勢">
+    <ul class="wrap">
+      <li><svg class="lp-promise-ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l10 4v8c0 6.5-4.2 11.8-10 14-5.8-2.2-10-7.5-10-14V7z"/><path d="M11 16l3.5 3.5L21 13"/></svg>甲級租賃公司</li>
+      <li><svg class="lp-promise-ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29s-9-8-9-15a9 9 0 0 1 18 0c0 7-9 15-9 15z"/><circle cx="16" cy="14" r="3.4"/></svg>竹北實體店面</li>
+      <li><svg class="lp-promise-ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 21h22M6 21v-5l3-6h14l3 6v5M6 16h20"/><circle cx="10.5" cy="22.5" r="2.5"/><circle cx="21.5" cy="22.5" r="2.5"/></svg>絕不外派・不轉包</li>
+      <li><svg class="lp-promise-ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M27 16a11 11 0 1 1-3.2-7.8M27 5v6h-6"/><path d="M12.5 13.5c0-1.4 1.1-2.3 2.4-2.3s2.3.9 2.3 2.1c0 2.3-4.7 3.3-4.7 6.2h4.8M19.5 11.2v5.3h3.3M22 13.6v6.2"/></svg>24 小時訂車專線</li>
+    </ul>
+  </section>
+
+  <!-- 服務項目 -->
+  <section class="lp-section lp-light" id="service" aria-labelledby="service-h">
+    <div class="wrap">
+      <h2 id="service-h" class="lp-h2">服務項目</h2>
+      <div class="lp-svc-grid">
+        <article class="lp-svc lp-svc-airport">
+          <img src="assets/img/svc-airport.webp" alt="" width="1254" height="1254" loading="lazy">
+          <div class="lp-svc-body">
+            <h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17h14M5 17a2 2 0 1 1-4 0v-4l2-6h18l2 6v4a2 2 0 1 1-4 0M3 13h18"/></svg>機場接送</h3>
+            <p>依航班安排，準時接送<br>班機延誤也不用另外通知。</p>
+            <a href="#quote">立即查價 <svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+        <article class="lp-svc lp-svc-charter" id="charter">
+          <img src="assets/img/svc-charter.webp" alt="" width="1254" height="1254" loading="lazy">
+          <div class="lp-svc-body">
+            <h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>包車旅遊</h3>
+            <p>行程彈性，景點自己決定<br>家族出遊、員工旅遊、貴賓接待。</p>
+            <a href="https://line.me/ti/p/~kiki939779">LINE 洽詢包車 <svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+      </div>
+      <div class="lp-svc-notes">
+        <p><strong>包車旅遊計價：</strong>依行程天數、車種與地區報價，隔夜行程的住宿與餐費另計。<a href="https://line.me/ti/p/~kiki939779">LINE 詢問報價</a></p>
+        <p><strong>其他服務列表：</strong>高鐵接送、商務洽公、婚紗與網紅外拍、各車種自駕出租。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 精選車種 -->
+  <section class="lp-section lp-white" id="fleet" aria-labelledby="fleet-h">
+    <div class="wrap">
+      <div class="lp-fleet-head">
+        <h2 id="fleet-h" class="lp-h2">精選車種</h2>
+        <div class="lp-fleet-tabs" role="tablist" aria-label="車款" id="fleet-tabs">
+          <button type="button" role="tab" id="ft-0" aria-controls="fp-0" aria-selected="true">福斯 Crafter</button>
+          <button type="button" role="tab" id="ft-1" aria-controls="fp-1" aria-selected="false" tabindex="-1">福斯 T6</button>
+          <button type="button" role="tab" id="ft-2" aria-controls="fp-2" aria-selected="false" tabindex="-1">Hyundai Staria</button>
+          <button type="button" role="tab" id="ft-3" aria-controls="fp-3" aria-selected="false" tabindex="-1">賓士 Vito</button>
+          <button type="button" role="tab" id="ft-4" aria-controls="fp-4" aria-selected="false" tabindex="-1">賓士 V250D</button>
+          <button type="button" role="tab" id="ft-5" aria-controls="fp-5" aria-selected="false" tabindex="-1">賓士 Sprinter</button>
+        </div>
+      </div>
+
+      <div class="lp-fleet-panel has-gallery" id="fp-0" role="tabpanel" aria-labelledby="ft-0">
+        <div class="lp-gallery is-empty" data-car="crafter">
+          <div class="lp-gallery-empty"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>車款照片準備中</span><small>實車照片即將上架</small></div>
+          <figure class="lp-slot lp-slot-main" data-slot="1"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="2"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="3"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+        </div>
+        <div class="lp-fleet-text">
+          <h3>福斯 The New Crafter <span class="nobr">九人座</span></h3>
+          <p class="lp-fleet-sub">VIP 高頂改裝</p>
+          <ul class="lp-check">
+            <li>獨立沙發座椅</li>
+            <li>大螢幕電視、KTV 歡唱設備</li>
+            <li>高頂設計、兩側氣氛燈</li>
+            <li>大容量收納，可放大量行李與高爾夫球具</li>
+            <li>機場接送依價目表計價</li>
+          </ul>
+          <div class="lp-fleet-actions"><a class="btn btn-primary btn-sm" href="booking.html" data-handoff-car="crafter">用這台車預約</a></div>
+        </div>
+      </div>
+      <div class="lp-fleet-panel has-gallery" id="fp-1" role="tabpanel" aria-labelledby="ft-1" hidden>
+        <div class="lp-gallery is-empty" data-car="t6">
+          <div class="lp-gallery-empty"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>車款照片準備中</span><small>實車照片即將上架</small></div>
+          <figure class="lp-slot lp-slot-main" data-slot="1"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="2"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="3"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+        </div>
+        <div class="lp-fleet-text">
+          <h3>福斯 T6 <span class="nobr">九人座</span></h3>
+          <p class="lp-fleet-sub">九人座商務車</p>
+          <ul class="lp-check">
+            <li>最多 [乘客人數] 位乘客</li>
+            <li>[件數] 件 28 吋行李</li>
+            <li>機場接送依價目表計價</li>
+          </ul>
+          <div class="lp-fleet-actions"><a class="btn btn-primary btn-sm" href="booking.html" data-handoff-car="t6">用這台車預約</a></div>
+        </div>
+      </div>
+      <div class="lp-fleet-panel has-gallery" id="fp-2" role="tabpanel" aria-labelledby="ft-2" hidden>
+        <div class="lp-gallery is-empty" data-car="staria">
+          <div class="lp-gallery-empty"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>車款照片準備中</span><small>實車照片即將上架</small></div>
+          <figure class="lp-slot lp-slot-main" data-slot="1"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="2"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="3"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+        </div>
+        <div class="lp-fleet-text">
+          <h3>Hyundai Staria <span class="nobr">九人座</span></h3>
+          <p class="lp-fleet-sub">九人座商務車</p>
+          <ul class="lp-check">
+            <li>最多 [乘客人數] 位乘客</li>
+            <li>[件數] 件 28 吋行李</li>
+            <li>機場接送依價目表計價</li>
+          </ul>
+          <div class="lp-fleet-actions"><a class="btn btn-primary btn-sm" href="booking.html" data-handoff-car="staria">用這台車預約</a></div>
+        </div>
+      </div>
+      <div class="lp-fleet-panel has-gallery" id="fp-3" role="tabpanel" aria-labelledby="ft-3" hidden>
+        <div class="lp-gallery is-empty" data-car="vito">
+          <div class="lp-gallery-empty"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>車款照片準備中</span><small>實車照片即將上架</small></div>
+          <figure class="lp-slot lp-slot-main" data-slot="1"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="2"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="3"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+        </div>
+        <div class="lp-fleet-text">
+          <h3>賓士 Vito <span class="nobr">九人座（黑）</span></h3>
+          <p class="lp-fleet-sub">九人座商務車・黑色</p>
+          <ul class="lp-check">
+            <li>最多 [乘客人數] 位乘客</li>
+            <li>[件數] 件 28 吋行李</li>
+            <li>機場接送依價目表計價</li>
+          </ul>
+          <div class="lp-fleet-actions"><a class="btn btn-primary btn-sm" href="booking.html" data-handoff-car="vito">用這台車預約</a><a class="btn btn-line btn-sm" href="https://line.me/ti/p/~kiki939779">LINE 詢問報價</a></div>
+        </div>
+      </div>
+      <div class="lp-fleet-panel has-gallery" id="fp-4" role="tabpanel" aria-labelledby="ft-4" hidden>
+        <div class="lp-gallery is-empty" data-car="v250d">
+          <div class="lp-gallery-empty"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>車款照片準備中</span><small>實車照片即將上架</small></div>
+          <figure class="lp-slot lp-slot-main" data-slot="1"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="2"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="3"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+        </div>
+        <div class="lp-fleet-text">
+          <h3>賓士 V250D <span class="nobr">頂級移動式頭等艙（黑）</span></h3>
+          <p class="lp-fleet-sub">頂級豪華 MPV・黑色</p>
+          <ul class="lp-check">
+            <li>水晶多功能零重力按摩椅</li>
+            <li>後方大行李空間</li>
+            <li>氛圍燈與獨立空調</li>
+          </ul>
+          <div class="lp-fleet-actions"><a class="btn btn-primary btn-sm" href="booking.html" data-handoff-car="v250">用這台車預約</a><a class="btn btn-line btn-sm" href="https://line.me/ti/p/~kiki939779">LINE 詢問報價</a></div>
+        </div>
+      </div>
+      <div class="lp-fleet-panel has-gallery" id="fp-5" role="tabpanel" aria-labelledby="ft-5" hidden>
+        <div class="lp-gallery is-empty" data-car="sprinter">
+          <div class="lp-gallery-empty"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>車款照片準備中</span><small>實車照片即將上架</small></div>
+          <figure class="lp-slot lp-slot-main" data-slot="1"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="2"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+          <figure class="lp-slot" data-slot="3"><span class="lp-slot-ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span>照片準備中</span></span></figure>
+        </div>
+        <div class="lp-fleet-text">
+          <h3>賓士 Sprinter <span class="nobr">九人座</span></h3>
+          <p class="lp-fleet-sub">九人座商務車</p>
+          <ul class="lp-check">
+            <li>最多 [乘客人數] 位乘客</li>
+            <li>[件數] 件 28 吋行李</li>
+            <li>機場接送由專人報價</li>
+          </ul>
+          <div class="lp-fleet-actions"><a class="btn btn-primary btn-sm" href="booking.html" data-handoff-car="sprinter">用這台車預約</a><a class="btn btn-line btn-sm" href="https://line.me/ti/p/~kiki939779">LINE 詢問報價</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 三步驟快速預約 -->
+  <section class="lp-section lp-dark" id="steps" aria-labelledby="steps-h">
+    <div class="wrap">
+      <h2 id="steps-h" class="lp-h2">三步驟快速預約</h2>
+      <div class="steps-panel">
+        <ol class="steps">
+          <li><span class="n">1</span><div><h3>線上預約或加 LINE</h3><p>填寫機場、上車地區與時間，系統會先算出預估金額。</p></div></li>
+          <li><span class="n">2</span><div><h3>提供航班與行程資訊</h3><p>姓名、人數、電話、行李件數、航班編號。專人以 LINE 或電話確認。</p></div></li>
+          <li><span class="n">3</span><div><h3>完成預約</h3><p>出發前一天傳送司機姓名與車牌，當天準時到場。</p></div></li>
+        </ol>
+        <div>
+          <div class="contact-stack">
+            <a class="btn btn-primary btn-lg" href="booking.html"><span>線上預約</span><span>即時試算</span></a>
+            <a class="btn btn-line btn-lg" href="https://line.me/ti/p/~kiki939779"><span>LINE</span><span>kiki939779</span></a>
+            <a class="btn btn-secondary btn-lg" href="tel:035550113"><span>訂車專線</span><span>03-5550113</span></a>
+          </div>
+          <p class="contact-ids"><span class="nobr">WeChat：kiki939779</span>　<span class="nobr">WhatsApp：0921-507-385</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 計價方式 -->
+  <section class="lp-section lp-light" id="prices" aria-labelledby="prices-h">
+    <div class="wrap">
+      <h2 id="prices-h" class="lp-h2">計價方式</h2>
+      <div class="card lp-board-card">
+        <p class="card-head">桃園機場接送 價目表<small>九人座・每車單趟・送機接機同價</small></p>
+        <div class="card-body">
+          <div class="tabs" role="tablist" aria-label="出發縣市" id="tabs"></div>
+          <div class="ptable" id="board" role="tabpanel" tabindex="0">
+            <div class="board-head" aria-hidden="true"><span>出發地區</span><span>九人座</span></div>
+            <div id="board-rows"></div>
+          </div>
+          <p class="lp-addons"><strong>加價</strong>到達松山機場 每趟 <span class="data">+NT$300</span>・<strong>加購</strong>安全座椅或增高墊 每座 <span class="data">+NT$100</span>・中途停靠 每點 <span class="data">+NT$100</span>（10 公里內）</p>
+        </div>
+      </div>
+
+      <div class="lp-policy">
+        <h3>預約須知</h3>
+        <dl class="spec">
+          <div><dt>建議提前預約</dt><dd>3 天前，連續假期請提早</dd></div>
+          <div><dt>接機等候</dt><dd>免費等候 90 分鐘，自班機實際落地起算</dd></div>
+          <div><dt>取消與改期</dt><dd>2 天前免費；2 天內取消收取 1/3 車資</dd></div>
+          <div><dt>付款方式</dt><dd>現金／轉帳／LINE Pay</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 常見問題 -->
+  <section class="lp-section lp-dark" id="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <h2 id="faq-h" class="lp-h2">常見問題</h2>
+      <div class="faq">
+        <details>
+          <summary>如何預約機場接送？<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <p>使用線上預約表單，或加 LINE／WeChat：kiki939779，專人會以 LINE 或電話確認。</p>
+        </details>
+        <details>
+          <summary>預約需要提供哪些資訊？<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <p>日期與時間、航班編號、上下車地址、乘客人數與行李件數。接機一定要提供航班編號。</p>
+        </details>
+        <details>
+          <summary>價格是每人還是每車？<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <p>每車計價，同一台車不論坐幾位都一樣，不另收人頭費。</p>
+        </details>
+        <details>
+          <summary>班機延誤怎麼辦？<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <p>我們依航班編號掌握實際抵達時間，司機會配合調整，不需要另外通知。</p>
+        </details>
+        <details>
+          <summary>接機時司機在哪裡等？<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <p>司機會先在機場停車場等候，班機落地後請聯絡司機，確認接機出口。</p>
+        </details>
+        <details>
+          <summary>只會用 LINE，可以不填手機嗎？<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <p>可以。手機和 LINE ID 擇一填寫即可，國外號碼也能使用。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 立即預約 -->
+  <section class="lp-section lp-light" aria-labelledby="cta-h">
+    <div class="wrap">
+      <div class="cta-split">
+        <img src="assets/img/cta-window.webp" alt="從機窗望出的夕陽雲海與機翼" width="1254" height="1254" loading="lazy">
+        <div class="cta-body">
+          <h2 id="cta-h" class="lp-h2">一趟旅程，從專業開始</h2>
+          <p>線上填寫行程即時試算車資，送出後由專人確認。<span class="nobr">24 小時訂車專線</span> <a class="nobr" href="tel:035550113">03-5550113</a>。</p>
+          <div class="cta-actions">
+            <a class="btn btn-primary btn-lg" href="booking.html">線上預約</a>
+            <a class="btn btn-line btn-lg" href="https://line.me/ti/p/~kiki939779">LINE 預約</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 意見反饋 -->
+  <section class="lp-section lp-dark" id="feedback" aria-labelledby="fb-h">
+    <div class="wrap">
+      <div class="fb-panel">
+        <div class="fb-intro">
+          <h2 id="fb-h" class="lp-h2">意見反饋</h2>
+          <p>搭乘後有任何建議、想表揚的司機，或需要我們改進的地方，都歡迎告訴我們。留下聯絡方式，專人會再與您聯繫。</p>
+        </div>
+        <form class="fb-form" id="fb-form" novalidate>
+          <div class="field">
+            <span class="field-label" id="fb-l-type">意見類型</span>
+            <div class="seg fb-seg" role="radiogroup" aria-labelledby="fb-l-type">
+              <label class="seg-opt"><input type="radio" name="fbtype" value="建議" checked><span>服務建議</span></label>
+              <label class="seg-opt"><input type="radio" name="fbtype" value="表揚"><span>表揚司機</span></label>
+              <label class="seg-opt"><input type="radio" name="fbtype" value="反映"><span>問題反映</span></label>
+              <label class="seg-opt"><input type="radio" name="fbtype" value="其他"><span>其他</span></label>
+            </div>
+          </div>
+          <div class="fb-row">
+            <div class="field">
+              <label class="field-label" for="fb-rate">整體滿意度<span class="req">選填</span></label>
+              <select class="select" id="fb-rate" name="rate">
+                <option value="">請選擇</option>
+                <option>非常滿意</option><option>滿意</option><option>普通</option><option>不滿意</option><option>非常不滿意</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="fb-date">搭乘日期<span class="req">選填</span></label>
+              <input class="input data" type="date" id="fb-date" name="date">
+            </div>
+          </div>
+          <div class="fb-row">
+            <div class="field">
+              <label class="field-label" for="fb-name">姓名<span class="req">選填</span></label>
+              <input class="input" id="fb-name" name="name" autocomplete="name" maxlength="40">
+            </div>
+            <div class="field">
+              <label class="field-label" for="fb-contact">電話或 LINE ID<span class="req">選填</span></label>
+              <input class="input" id="fb-contact" name="contact" maxlength="60" placeholder="需要回覆時請留下">
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label" for="fb-msg">意見內容<span class="req">必填</span></label>
+            <textarea class="textarea" id="fb-msg" name="message" rows="5" maxlength="1000" placeholder="例如：司機很準時、車內很乾淨，或希望改進的地方"></textarea>
+            <p class="field-error" id="fb-e-msg" hidden></p>
+          </div>
+          <div class="fb-actions">
+            <button class="btn btn-primary btn-lg" type="submit" id="fb-submit">送出意見</button>
+            <p class="fb-count data" id="fb-count" aria-live="polite">0 / 1000</p>
+          </div>
+        </form>
+        <div class="fb-done" id="fb-done" tabindex="-1" hidden>
+          <h3>謝謝您的寶貴意見</h3>
+          <p id="fb-done-msg">我們已收到您的意見，會轉給相關同仁處理。</p>
+          <button class="btn btn-secondary" type="button" id="fb-again">再寫一則</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="footer-brand">華誼租車</p>
+      <p>新竹店・華誼國際旅行社</p>
+    </div>
+    <div>
+      <p class="footer-title">服務項目</p>
+      <ul>
+        <li><a href="#service">機場接送</a></li>
+        <li><a href="#charter">包車旅遊</a></li>
+        <li><a href="#prices">計價方式</a></li>
+        <li><a href="booking.html">線上預約</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">聯絡我們</p>
+      <ul>
+        <li><a href="tel:035550113">訂車專線 03-5550113</a></li>
+        <li><a href="https://line.me/ti/p/~kiki939779">LINE／WeChat kiki939779</a></li>
+        <li><a href="https://maps.google.com/?q=新竹縣竹北市中華路340-8號">新竹縣竹北市<span class="nobr">中華路 340-8 號</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-legal"><p>交觀甲第 885600 甲種旅行社</p></div>
+</footer>
+
+<nav class="mbar mbar-home" aria-label="快速聯絡">
+  <div class="mbar-row">
+    <a class="btn btn-line" href="https://line.me/ti/p/~kiki939779">LINE</a>
+    <a class="btn btn-secondary" href="tel:035550113">撥打電話</a>
+    <a class="btn btn-primary" href="booking.html">預約</a>
+  </div>
+</nav>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/home.js"></script>
+<script src="assets/js/fleet-photos.js"></script>
+<script src="assets/js/fleet.js"></script>
+<script src="assets/js/feedback.js"></script>
+</body>
+</html>
