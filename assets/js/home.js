@@ -19,12 +19,13 @@
     var areas = HY.areasOf(qc.value);
     qa.innerHTML = areas.map(function (a) { return '<option>' + HY.esc(a) + '</option>'; }).join('');
     qa.value = keep && areas.indexOf(keep) >= 0 ? keep : areas[0];
+    qa.disabled = HY.isAll(qc.value);
   }
 
   function updateQuote() {
     var county = qc.value, area = qa.value, ap = qair.value;
     var to = HY.AIRPORTS[ap].short;
-    $('q-route').innerHTML = HY.esc(county + area) + HY.ICON.arrow + HY.esc(to);
+    $('q-route').innerHTML = HY.esc(HY.placeOf(county, area)) + HY.ICON.arrow + HY.esc(to);
     var price = $('q-price');
     var extra = HY.AIRPORTS[ap].extra || 0;
     price.textContent = HY.fmt(HY.priceOf(county, area) + extra);

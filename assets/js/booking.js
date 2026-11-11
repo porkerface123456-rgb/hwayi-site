@@ -126,7 +126,7 @@
     var seats = Math.min(s.seats, s.pax);
     if (quote && (seats || s.stops)) reason += '加購項目會一併計入報價。';
     if (quote) reason += '送出後，專人會在 ' + HY.REPLY_TIME + ' 內回覆金額。';
-    var place = s.county === OTHER ? OTHER : s.county + area;
+    var place = s.county === OTHER ? OTHER : HY.placeOf(s.county, area);
     var ap = HY.AIRPORTS[s.airport].short;
     var seatFee = seats * 100 * trips, stopFee = s.stops * 100;
     var apExtra = HY.AIRPORTS[s.airport].extra || 0, apFee = apExtra * trips;
@@ -173,7 +173,7 @@
       sel.setAttribute('data-county', state.county);
     }
     sel.value = currentArea();
-    sel.disabled = state.county === OTHER;
+    sel.disabled = state.county === OTHER || HY.isAll(state.county);
   }
   function syncInputs() {
     TEXT.forEach(function (k) { var el = $('f-' + k); if (el && el.value !== state[k]) el.value = state[k]; });
@@ -442,7 +442,7 @@
     if (HY.counties().indexOf(h.county) < 0) return false;
     var airport = HY.AIRPORTS[h.airport] ? h.airport : 'T1';
     var area = HY.areasOf(h.county).indexOf(h.area) >= 0 ? h.area : HY.areasOf(h.county)[0];
-    var text = h.county + area + '・' + HY.AIRPORTS[airport].short;
+    var text = HY.placeOf(h.county, area) + '・' + HY.AIRPORTS[airport].short;
     if (state.ref && !state.submitted) {
       handoffMsg = { text: '您正在修改預約 ' + state.ref + '，首頁選擇的「' + text + '」沒有套用。', undo: false };
       render();

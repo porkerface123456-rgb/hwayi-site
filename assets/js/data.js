@@ -2,8 +2,11 @@
 window.HY = (function () {
   'use strict';
 
-  /* 中南部 → 桃園機場，每車單趟（來源：店家價目表） */
+  /* 各縣市 → 桃園機場，每車單趟（來源：店家價目表）。雙北不分鄉鎮區，以「全區」表示 */
+  var ALL = '全區';
   var PRICES = {
+    '台北': [[[ALL], 1100]],
+    '新北': [[[ALL], 1100]],
     '新竹': [[['新豐', '湖口', '新埔'], 1100], [['竹北', '關西', '芎林'], 1200], [['東區', '北區'], 1300], [['竹東', '寶山', '香山'], 1400]],
     '苗栗': [[['頭份', '竹南'], 1700], [['造橋', '頭屋', '後龍', '公館', '苗栗市'], 2000], [['通霄', '銅鑼', '苑裡', '三義'], 2300]],
     '台中': [[['大甲', '大安', '后里', '外埔'], 2500], [['清水', '神岡', '豐原'], 2600], [['梧棲', '沙鹿', '北屯', '大雅', '西屯', '潭子', '太平'], 2700], [['南屯', '西區', '北區', '中區'], 2800], [['南區', '大里', '大肚', '龍井', '烏日'], 2900]],
@@ -35,6 +38,9 @@ window.HY = (function () {
     (PRICES[c] || []).forEach(function (r) { if (r[0].indexOf(area) >= 0) p = r[1]; });
     return p;
   }
+  function isAll(c) { var a = areasOf(c); return a.length === 1 && a[0] === ALL; }
+  /* 顯示用地名：雙北顯示「台北市／新北市」，其他為縣市＋鄉鎮區 */
+  function placeOf(c, area) { return isAll(c) ? c + '市' : c + area; }
   function fmt(n) { return 'NT$' + Number(n).toLocaleString('en-US'); }
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -74,7 +80,7 @@ window.HY = (function () {
     PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, BAG_LIMIT: 8, REPLY_TIME: '[回覆時間]',
     HANDOFF_KEY: 'hy-quote-handoff', DRAFT_KEY: 'hy-booking-draft',
     LINE_URL: 'https://line.me/ti/p/~kiki939779',
-    counties: counties, areasOf: areasOf, priceOf: priceOf, fmt: fmt, esc: esc,
+    counties: counties, areasOf: areasOf, priceOf: priceOf, isAll: isAll, placeOf: placeOf, fmt: fmt, esc: esc,
     twNow: twNow, submitBooking: submitBooking, ICON: ICON
   };
 })();
