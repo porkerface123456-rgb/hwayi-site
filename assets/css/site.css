@@ -834,3 +834,15 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 .footer-legal { margin-top: var(--s-6); padding-top: var(--s-4); border-top: 1px solid rgba(255,255,255,.08); }
 .footer-legal p { font-size: 13px; color: var(--fg-2); letter-spacing: .04em; }
 .footer-brand { margin-bottom: 12px; }
+
+/* 三步驟：左側 1・2・3 與右側三個按鈕逐列對齊、等高等距（桌機） */
+@media (min-width: 900px) {
+  .steps-panel { grid-template-rows: repeat(3, minmax(64px, 1fr)) auto; row-gap: var(--s-4); align-items: stretch; }
+  .steps-panel > .steps, .steps-panel > div { display: grid; grid-row: 1 / span 4; grid-template-rows: subgrid; gap: inherit; row-gap: var(--s-4); }
+  .steps-panel > .steps { grid-column: 1; }
+  .steps-panel > div { grid-column: 2; }
+  .steps-panel > div > .contact-stack { display: contents; }
+  .steps li { align-self: center; align-items: center; }
+  .contact-stack .btn { align-self: center; }
+  .contact-ids { grid-row: 4; margin-top: 0; }
+}
