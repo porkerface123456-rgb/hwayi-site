@@ -813,10 +813,10 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 
 /* 主視覺底圖：機場夜景照片鋪滿整個區塊（照片左側本身已是深色，用來放文字） */
 .lp-hero-media { inset: 0; width: 100%; }
-.lp-hero-media img { object-position: right 30%; filter: none; }
+.lp-hero-media img { object-position: right 30%; filter: saturate(.8); }
 .lp-hero::before {
   background:
-    linear-gradient(90deg, rgba(11, 13, 16, .55) 0%, rgba(11, 13, 16, .25) 40%, rgba(11, 13, 16, 0) 62%),
+    linear-gradient(90deg, rgba(11, 13, 16, .6) 0%, rgba(11, 13, 16, .42) 40%, rgba(11, 13, 16, .35) 100%),
     linear-gradient(0deg, var(--lp-ink) 0%, rgba(11, 13, 16, 0) 26%);
 }
 @media (max-width: 767px) {
