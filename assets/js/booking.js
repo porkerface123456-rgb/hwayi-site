@@ -39,7 +39,7 @@
 
   function blank(keep) {
     var b = {
-      type: 'send', airport: 'T1', county: '新竹', area: '竹北', pax: 2, bags: 2, car: 'std', seats: 0, stops: 0,
+      type: 'send', airport: 'T1', county: '新竹', area: '竹北', pax: 2, bags: 2, car: 't6', seats: 0, stops: 0,
       date: '', time: '', flight: '', rdate: '', rtime: '', rflight: '', addr: '',
       name: '', phone: '', line: '', email: '', note: '',
       tried: false, submitted: false, sending: false, ref: '', updated: false, snapshot: null
@@ -56,6 +56,7 @@
         var o = JSON.parse(raw);
         if (o && o.data && Date.now() - o.savedAt < TTL) {
           PERSIST.forEach(function (k) { if (o.data[k] !== undefined) s[k] = o.data[k]; });
+          if (!HY.CARS[s.car]) s.car = HY.CAR_ALIAS[s.car] || 't6';
         }
       }
     } catch (e) { /* 無法讀取就用空白表單 */ }
@@ -120,7 +121,7 @@
   function pricing() {
     var s = state, isPick = s.type === 'pick', isRound = s.type === 'round', trips = isRound ? 2 : 1, area = currentArea();
     var base = s.county === OTHER ? 0 : HY.priceOf(s.county, area);
-    var quote = s.car !== 'std' || s.county === OTHER;
+    var quote = HY.CARS[s.car].quote || s.county === OTHER;
     var reason = s.county === OTHER ? '此地區不在價目表內，由專人報價。'
       : '這台車由專人報價。';
     var seats = Math.min(s.seats, s.pax);
@@ -429,6 +430,7 @@
       h = JSON.parse(raw);
     } catch (e) { return false; }
     if (!h || !(Date.now() - h.at < HANDOFF_TTL)) return false;
+    if (h.car && !HY.CARS[h.car]) h.car = HY.CAR_ALIAS[h.car];
     if (h.car && HY.CARS[h.car] && !h.county) {
       if (state.ref && !state.submitted) { handoffMsg = { text: '您正在修改預約 ' + state.ref + '，首頁選擇的車種沒有套用。', undo: false }; render(); return true; }
       var prevCar = { car: state.car };

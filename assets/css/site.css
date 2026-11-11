@@ -868,3 +868,7 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 /* 機場四選一（桃園 T1・T2・T3、松山）：手機 2×2，平板以上一排四個 */
 .seg-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 640px) { .seg-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* 預約頁車種：六款，手機兩欄、平板以上三欄 */
+.seg-cars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 640px) { .seg-cars { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

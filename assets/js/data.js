@@ -23,12 +23,18 @@ window.HY = (function () {
     TSA: { name: '台北松山機場', short: '松山機場', extra: 300 }
   };
 
+  /* 六種車款。quote: true = 專人報價，其餘依價目表 */
   var CARS = {
     /* maxPax／maxBags：各車載客與行李上限（28 吋計）。null = 尚未提供，暫用最多 8 位、8 件 */
-    std: { name: '精選九人座', sub: '福斯 T6・Hyundai Staria・賓士 Vito・賓士 Sprinter', note: '依價目表', maxPax: null, maxBags: null },
-    v250: { name: '賓士 V250D', sub: '頂級移動式頭等艙', note: '專人報價', maxPax: null, maxBags: null },
-    nanny: { name: '福斯 The New Crafter 九人座（VIP）', sub: 'VIP 高頂改裝・KTV', note: '專人報價', maxPax: null, maxBags: null }
+    crafter: { name: '福斯 The New Crafter', sub: 'VIP 高頂改裝・KTV', quote: false, maxPax: null, maxBags: null },
+    t6: { name: '福斯 T6', sub: '九人座', quote: false, maxPax: null, maxBags: null },
+    staria: { name: 'Hyundai Staria', sub: '九人座', quote: false, maxPax: null, maxBags: null },
+    vito: { name: '賓士 Vito', sub: '九人座（黑）', quote: false, maxPax: null, maxBags: null },
+    v250: { name: '賓士 V250D', sub: '頂級移動式頭等艙（黑）', quote: true, maxPax: null, maxBags: null },
+    sprinter: { name: '賓士 Sprinter', sub: '九人座', quote: true, maxPax: null, maxBags: null }
   };
+  /* 舊版草稿的車種代號 */
+  var CAR_ALIAS = { std: 't6', nanny: 'crafter' };
 
   function counties() { return Object.keys(PRICES); }
   function areasOf(c) {
@@ -83,7 +89,7 @@ window.HY = (function () {
   };
 
   return {
-    PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, BAG_LIMIT: 8, REPLY_TIME: '[回覆時間]',
+    PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, CAR_ALIAS: CAR_ALIAS, BAG_LIMIT: 8, REPLY_TIME: '[回覆時間]',
     HANDOFF_KEY: 'hy-quote-handoff', DRAFT_KEY: 'hy-booking-draft',
     LINE_URL: 'https://line.me/ti/p/~kiki939779',
     counties: counties, areasOf: areasOf, priceOf: priceOf, isAll: isAll, placeOf: placeOf, fmt: fmt, esc: esc,
