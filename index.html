@@ -373,6 +373,66 @@
       </div>
     </div>
   </section>
+
+  <!-- 意見反饋 -->
+  <section class="lp-section lp-dark" id="feedback" aria-labelledby="fb-h">
+    <div class="wrap">
+      <div class="fb-panel">
+        <div class="fb-intro">
+          <h2 id="fb-h" class="lp-h2">意見反饋</h2>
+          <p>搭乘後有任何建議、想表揚的司機，或需要我們改進的地方，都歡迎告訴我們。留下聯絡方式，專人會再與您聯繫。</p>
+        </div>
+        <form class="fb-form" id="fb-form" novalidate>
+          <div class="field">
+            <span class="field-label" id="fb-l-type">意見類型</span>
+            <div class="seg fb-seg" role="radiogroup" aria-labelledby="fb-l-type">
+              <label class="seg-opt"><input type="radio" name="fbtype" value="建議" checked><span>服務建議</span></label>
+              <label class="seg-opt"><input type="radio" name="fbtype" value="表揚"><span>表揚司機</span></label>
+              <label class="seg-opt"><input type="radio" name="fbtype" value="反映"><span>問題反映</span></label>
+              <label class="seg-opt"><input type="radio" name="fbtype" value="其他"><span>其他</span></label>
+            </div>
+          </div>
+          <div class="fb-row">
+            <div class="field">
+              <label class="field-label" for="fb-rate">整體滿意度<span class="req">選填</span></label>
+              <select class="select" id="fb-rate" name="rate">
+                <option value="">請選擇</option>
+                <option>非常滿意</option><option>滿意</option><option>普通</option><option>不滿意</option><option>非常不滿意</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="fb-date">搭乘日期<span class="req">選填</span></label>
+              <input class="input data" type="date" id="fb-date" name="date">
+            </div>
+          </div>
+          <div class="fb-row">
+            <div class="field">
+              <label class="field-label" for="fb-name">姓名<span class="req">選填</span></label>
+              <input class="input" id="fb-name" name="name" autocomplete="name" maxlength="40">
+            </div>
+            <div class="field">
+              <label class="field-label" for="fb-contact">電話或 LINE ID<span class="req">選填</span></label>
+              <input class="input" id="fb-contact" name="contact" maxlength="60" placeholder="需要回覆時請留下">
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label" for="fb-msg">意見內容<span class="req">必填</span></label>
+            <textarea class="textarea" id="fb-msg" name="message" rows="5" maxlength="1000" placeholder="例如：司機很準時、車內很乾淨，或希望改進的地方"></textarea>
+            <p class="field-error" id="fb-e-msg" hidden></p>
+          </div>
+          <div class="fb-actions">
+            <button class="btn btn-primary btn-lg" type="submit" id="fb-submit">送出意見</button>
+            <p class="fb-count data" id="fb-count" aria-live="polite">0 / 1000</p>
+          </div>
+        </form>
+        <div class="fb-done" id="fb-done" tabindex="-1" hidden>
+          <h3>謝謝您的寶貴意見</h3>
+          <p id="fb-done-msg">我們已收到您的意見，會轉給相關同仁處理。</p>
+          <button class="btn btn-secondary" type="button" id="fb-again">再寫一則</button>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer">
@@ -415,5 +475,6 @@
 <script src="assets/js/home.js"></script>
 <script src="assets/js/fleet-photos.js"></script>
 <script src="assets/js/fleet.js"></script>
+<script src="assets/js/feedback.js"></script>
 </body>
 </html>

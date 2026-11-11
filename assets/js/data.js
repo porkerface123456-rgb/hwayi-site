@@ -70,6 +70,11 @@ window.HY = (function () {
     return new Promise(function (resolve) { setTimeout(function () { resolve(payload); }, 900); });
   }
 
+  /* 意見反饋送出（尚未串接後端） */
+  function submitFeedback(payload) {
+    return new Promise(function (resolve) { setTimeout(function () { resolve(payload); }, 700); });
+  }
+
   var ICON = {
     arrow: '<svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
     both: '<svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16l-4-4M20 15H4l4 4"/></svg>',
@@ -81,6 +86,6 @@ window.HY = (function () {
     HANDOFF_KEY: 'hy-quote-handoff', DRAFT_KEY: 'hy-booking-draft',
     LINE_URL: 'https://line.me/ti/p/~kiki939779',
     counties: counties, areasOf: areasOf, priceOf: priceOf, isAll: isAll, placeOf: placeOf, fmt: fmt, esc: esc,
-    twNow: twNow, submitBooking: submitBooking, ICON: ICON
+    twNow: twNow, submitBooking: submitBooking, submitFeedback: submitFeedback, ICON: ICON
   };
 })();

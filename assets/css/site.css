@@ -846,3 +846,21 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
   .contact-stack .btn { align-self: center; }
   .contact-ids { grid-row: 4; margin-top: 0; }
 }
+
+/* 意見反饋 */
+.fb-panel { display: grid; gap: var(--s-6); padding: var(--s-6); background: linear-gradient(135deg, var(--panel-2), var(--panel)); border: 1px solid var(--gold-lo); border-radius: var(--radius); }
+@media (min-width: 900px) { .fb-panel { grid-template-columns: minmax(0, .8fr) minmax(0, 1.4fr); padding: var(--s-7); column-gap: var(--s-7); } }
+.fb-intro p { margin-top: var(--s-3); color: var(--fg-2); text-wrap: pretty; }
+.fb-form, .fb-done { display: grid; gap: var(--s-5); align-content: start; }
+.fb-form[hidden], .fb-done[hidden] { display: none; }
+.fb-seg { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 640px) { .fb-seg { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.fb-row { display: grid; gap: var(--s-5); }
+@media (min-width: 640px) { .fb-row { grid-template-columns: 1fr 1fr; } }
+.fb-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; }
+.fb-count { font-size: var(--fs-small); color: var(--fg-3); }
+.fb-done { padding: var(--s-6); border: 1px solid var(--gold-lo); border-radius: var(--radius-s); background: rgba(217,180,90,.06); }
+.fb-done:focus { outline: none; }
+.fb-done h3 { font-size: var(--fs-h3); font-weight: 900; color: var(--gold-hi); }
+.fb-done p { color: var(--fg-2); }
+.fb-done .btn { justify-self: start; }
