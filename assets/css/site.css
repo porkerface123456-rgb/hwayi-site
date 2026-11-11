@@ -833,3 +833,4 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 /* 頁尾左下角：旅行社執照字號 */
 .footer-legal { margin-top: var(--s-6); padding-top: var(--s-4); border-top: 1px solid rgba(255,255,255,.08); }
 .footer-legal p { font-size: 13px; color: var(--fg-2); letter-spacing: .04em; }
+.footer-brand { margin-bottom: 12px; }
