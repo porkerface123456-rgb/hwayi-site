@@ -26,15 +26,10 @@
     var to = HY.AIRPORTS[ap].short;
     $('q-route').innerHTML = HY.esc(county + area) + HY.ICON.arrow + HY.esc(to);
     var price = $('q-price');
-    if (ap === 'TSA') {
-      price.textContent = '專人報價';
-      price.classList.add('is-quote');
-      $('q-note').textContent = '松山機場依地址報價，送出預約後客服會回覆金額。';
-    } else {
-      price.textContent = HY.fmt(HY.priceOf(county, area));
-      price.classList.remove('is-quote');
-      $('q-note').textContent = '';
-    }
+    var extra = HY.AIRPORTS[ap].extra || 0;
+    price.textContent = HY.fmt(HY.priceOf(county, area) + extra);
+    price.classList.remove('is-quote');
+    $('q-note').textContent = extra ? '含松山機場加價 ' + HY.fmt(extra) : '';
   }
 
   fillAreas('竹北');

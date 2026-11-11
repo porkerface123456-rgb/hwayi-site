@@ -16,7 +16,7 @@ window.HY = (function () {
   var AIRPORTS = {
     T1: { name: '桃園機場 第一航廈', short: '桃園 T1' },
     T2: { name: '桃園機場 第二航廈', short: '桃園 T2' },
-    TSA: { name: '台北松山機場', short: '松山機場' }
+    TSA: { name: '台北松山機場', short: '松山機場', extra: 300 }
   };
 
   var CARS = {

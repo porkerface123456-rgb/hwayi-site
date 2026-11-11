@@ -120,9 +120,8 @@
   function pricing() {
     var s = state, isPick = s.type === 'pick', isRound = s.type === 'round', trips = isRound ? 2 : 1, area = currentArea();
     var base = s.county === OTHER ? 0 : HY.priceOf(s.county, area);
-    var quote = s.airport === 'TSA' || s.car !== 'std' || s.county === OTHER;
-    var reason = s.airport === 'TSA' ? '松山機場由專人報價。'
-      : s.county === OTHER ? '此地區不在價目表內，由專人報價。'
+    var quote = s.car !== 'std' || s.county === OTHER;
+    var reason = s.county === OTHER ? '此地區不在價目表內，由專人報價。'
       : '這台車由專人報價。';
     var seats = Math.min(s.seats, s.pax);
     if (quote && (seats || s.stops)) reason += '加購項目會一併計入報價。';
@@ -130,14 +129,16 @@
     var place = s.county === OTHER ? OTHER : s.county + area;
     var ap = HY.AIRPORTS[s.airport].short;
     var seatFee = seats * 100 * trips, stopFee = s.stops * 100;
+    var apExtra = HY.AIRPORTS[s.airport].extra || 0, apFee = apExtra * trips;
     var amt = function (n) { return quote ? HY.fmt(n) + '（併入報價）' : HY.fmt(n); };
     var lines = [{ k: (isRound ? '來回' : '單程') + ' × ' + trips + ' 趟', v: quote ? '專人報價' : HY.fmt(base * trips) }];
+    if (apFee) lines.push({ k: '松山機場加價' + (trips > 1 ? ' × ' + trips + ' 趟' : ''), v: amt(apFee) });
     if (seats) lines.push({ k: '安全座椅 × ' + seats + (trips > 1 ? '（來回）' : ''), v: amt(seatFee) });
     if (s.stops) lines.push({ k: '中途停靠 × ' + s.stops, v: amt(stopFee) });
     return {
       from: isPick ? ap : place, to: isPick ? place : ap, isRound: isRound, place: place, seats: seats,
       lines: lines, quote: quote, reason: reason,
-      total: quote ? '專人報價' : HY.fmt(base * trips + seatFee + stopFee)
+      total: quote ? '專人報價' : HY.fmt(base * trips + apFee + seatFee + stopFee)
     };
   }
   function routeHTML(p) { return HY.esc(p.from) + (p.isRound ? HY.ICON.both : HY.ICON.arrow) + HY.esc(p.to); }
