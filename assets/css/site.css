@@ -810,3 +810,16 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 /* 頁首 LOGO 圖片 */
 .brand-logo { display: block; height: 52px; width: auto; }
 @media (max-width: 639px) { .brand-logo { height: 44px; } }
+
+/* 主視覺底圖：機場夜景照片鋪滿整個區塊（照片左側本身已是深色，用來放文字） */
+.lp-hero-media { inset: 0; width: 100%; }
+.lp-hero-media img { object-position: right 30%; filter: none; }
+.lp-hero::before {
+  background:
+    linear-gradient(90deg, rgba(11, 13, 16, .55) 0%, rgba(11, 13, 16, .25) 40%, rgba(11, 13, 16, 0) 62%),
+    linear-gradient(0deg, var(--lp-ink) 0%, rgba(11, 13, 16, 0) 26%);
+}
+@media (max-width: 767px) {
+  .lp-hero-media img { object-position: 72% center; }
+  .lp-hero::before { background: linear-gradient(180deg, rgba(11, 13, 16, .6) 0%, rgba(11, 13, 16, .78) 55%, var(--lp-ink) 100%); }
+}
