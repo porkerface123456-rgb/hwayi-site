@@ -864,3 +864,7 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 .fb-done h3 { font-size: var(--fs-h3); font-weight: 900; color: var(--gold-hi); }
 .fb-done p { color: var(--fg-2); }
 .fb-done .btn { justify-self: start; }
+
+/* 機場四選一（桃園 T1・T2・T3、松山）：手機 2×2，平板以上一排四個 */
+.seg-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 640px) { .seg-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
