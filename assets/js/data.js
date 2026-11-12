@@ -73,14 +73,25 @@ window.HY = (function () {
 
   /* 送出預約。上線前在這裡串接實際通知管道（Email／LINE／後端 API）。
      目前模擬 900ms 後成功，回傳 Promise 以便替換。 */
-  function submitBooking(payload) {
-    return new Promise(function (resolve) { setTimeout(function () { resolve(payload); }, 900); });
+  /* 送出：Google Apps Script 網頁應用程式 → 寫入 Google 試算表並寄通知信給管理員
+     用 text/plain 送出，避免瀏覽器先發 CORS 預檢請求（Apps Script 不支援） */
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbyygpK-hcvzMDVMwrGxHgvxhK0HP0n0zVRfh4vw7ilpuKMyYK2Yu9Pfp_GE3XG7iTe4xw/exec';
+  function post(payload) {
+    var ctrl = 'AbortController' in window ? new AbortController() : null;
+    var timer = ctrl && setTimeout(function () { ctrl.abort(); }, 20000);
+    return fetch(ENDPOINT, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload), signal: ctrl ? ctrl.signal : undefined
+    }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function (res) {
+      if (!res || !res.ok) throw new Error((res && res.error) || 'send failed');
+      return res;
+    }).finally(function () { if (timer) clearTimeout(timer); });
   }
-
-  /* 意見反饋送出（尚未串接後端） */
-  function submitFeedback(payload) {
-    return new Promise(function (resolve) { setTimeout(function () { resolve(payload); }, 700); });
-  }
+  function submitBooking(payload) { payload.kind = 'booking'; return post(payload); }
+  function submitFeedback(payload) { payload.kind = 'feedback'; return post(payload); }
 
   var ICON = {
     arrow: '<svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',

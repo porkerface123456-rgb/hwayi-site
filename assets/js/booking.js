@@ -318,10 +318,14 @@
     payload.area = currentArea();
     payload.seats = Math.min(state.seats, state.pax);
     payload.estimate = pricing().total;
+    var isUpdate = !!state.ref, ref = state.ref || genRef();
+    payload.ref = ref;
+    payload.updated = isUpdate;
+    payload.carName = HY.CARS[state.car].name;
+    payload.airport = HY.AIRPORTS[state.airport].name;
     HY.submitBooking(payload).then(function () {
-      var isUpdate = !!state.ref;
       handoffMsg = null; sheetOpen = false;
-      set({ sending: false, submitted: true, ref: state.ref || genRef(), updated: isUpdate, snapshot: null, tried: false });
+      set({ sending: false, submitted: true, ref: ref, updated: isUpdate, snapshot: null, tried: false });
       window.scrollTo(0, 0);
       $('done-title').focus();
     }, function () {
