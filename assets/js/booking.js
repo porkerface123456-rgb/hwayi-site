@@ -126,7 +126,7 @@
       : '這台車由專人報價。';
     var seats = Math.min(s.seats, s.pax);
     if (quote && (seats || s.stops)) reason += '加購項目會一併計入報價。';
-    if (quote) reason += '送出後，專人會在 ' + HY.REPLY_TIME + ' 內回覆金額。';
+    if (quote) reason += '送出後，專人會在' + HY.REPLY_TIME + '內回覆金額。';
     var place = s.county === OTHER ? OTHER : HY.placeOf(s.county, area);
     var ap = HY.AIRPORTS[s.airport].short;
     var seatFee = seats * 100 * trips, stopFee = s.stops * 100;
@@ -279,7 +279,7 @@
     rows.push(['人數／行李', s.pax + ' 位・' + s.bags + ' 件']);
     rows.push(['車種', HY.CARS[s.car].name]);
     if (s.bags > carLimits().bags) rows.push(['提醒', '行李較多，可能需要兩台車，客服會與您確認']);
-    if (p.quote) rows.push(['報價', '專人會在 ' + HY.REPLY_TIME + ' 內以 LINE 或電話回覆金額']);
+    if (p.quote) rows.push(['報價', '專人會在' + HY.REPLY_TIME + '內以 LINE 或電話回覆金額']);
     if (p.seats || s.stops) rows.push(['加購', [p.seats ? '安全座椅 ' + p.seats + ' 座' : '', s.stops ? '中途停靠 ' + s.stops + ' 點' : ''].filter(Boolean).join('・')]);
     rows.push(['聯絡人', [s.name, s.phone, s.line ? 'LINE ' + s.line : ''].filter(Boolean).join('・')]);
     if (s.note.trim()) rows.push(['備註', s.note]);

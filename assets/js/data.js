@@ -100,7 +100,7 @@ window.HY = (function () {
   };
 
   return {
-    PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, CAR_ALIAS: CAR_ALIAS, BAG_LIMIT: 8, REPLY_TIME: '[回覆時間]',
+    PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, CAR_ALIAS: CAR_ALIAS, BAG_LIMIT: 8, REPLY_TIME: '一天',
     HANDOFF_KEY: 'hy-quote-handoff', DRAFT_KEY: 'hy-booking-draft',
     LINE_URL: 'https://line.me/ti/p/~kiki939779',
     counties: counties, areasOf: areasOf, priceOf: priceOf, isAll: isAll, placeOf: placeOf, fmt: fmt, esc: esc,
