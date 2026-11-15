@@ -5,7 +5,7 @@
    全部留空時顯示「車款照片準備中」；只填部分時，缺的位置顯示淡色底塊。
    ========================================================= */
 window.HY_FLEET_PHOTOS = {
-  crafter:  ['', '', ''],   // 福斯 The New Crafter 九人座
+  crafter:  ['assets/img/fleet/crafter-1.webp', 'assets/img/fleet/crafter-2.webp', 'assets/img/fleet/crafter-3.webp'],   // 福斯 The New Crafter 九人座
   t6:       ['', '', ''],   // 福斯 T6 九人座
   staria:   ['assets/img/fleet/staria-1.webp', 'assets/img/fleet/staria-2.webp', 'assets/img/fleet/staria-3.webp'],   // Hyundai Staria 九人座
   vito:     ['', '', ''],   // 賓士 Vito 九人座（黑）
