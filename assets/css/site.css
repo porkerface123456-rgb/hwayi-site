@@ -879,3 +879,5 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 .lp-gallery[data-car="staria"] .lp-slot-main img { object-position: 40% 72%; }
 /* Crafter 主圖：車頭在左側 */
 .lp-gallery[data-car="crafter"] .lp-slot-main img { object-position: 12% center; }
+/* V250D 主圖：直式照片，車頭在下半部 */
+.lp-gallery[data-car="v250d"] .lp-slot-main img { object-position: 40% 70%; }

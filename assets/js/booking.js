@@ -212,8 +212,11 @@
     $('overcap').hidden = !(s.bags > lim.bags);
     Array.prototype.forEach.call(document.querySelectorAll('.cap[data-car]'), function (el) {
       var c = HY.CARS[el.getAttribute('data-car')];
-      el.hidden = !(c.maxPax && c.maxBags);  /* 數字提供前先不顯示 */
-      el.innerHTML = '<span class="nobr">載客 ' + c.maxPax + ' 位</span>・<span class="nobr">行李 ' + c.maxBags + ' 件</span>';
+      var parts = [];  /* 只顯示已提供的數字 */
+      if (c.maxPax) parts.push('<span class="nobr">載客 ' + c.maxPax + ' 位</span>');
+      if (c.maxBags) parts.push('<span class="nobr">行李 ' + c.maxBags + ' 件</span>');
+      el.hidden = !parts.length;
+      el.innerHTML = parts.join('・');
     });
 
     var E = validate(), keys = errKeys(E), show = s.tried;

@@ -30,7 +30,7 @@ window.HY = (function () {
     t6: { name: '福斯 T6', sub: '九人座', quote: false, maxPax: null, maxBags: null },
     staria: { name: 'Hyundai Staria', sub: '九人座', quote: false, maxPax: 9, maxBags: 8 },
     vito: { name: '賓士 Vito', sub: '九人座（黑）', quote: false, maxPax: null, maxBags: null },
-    v250: { name: '賓士 V250D', sub: '頂級移動式頭等艙（黑）', quote: true, maxPax: null, maxBags: null },
+    v250: { name: '賓士 V250D', sub: '頂級移動式頭等艙（黑）', quote: true, maxPax: 3, maxBags: null },
     sprinter: { name: '賓士 Sprinter', sub: '九人座', quote: true, maxPax: 9, maxBags: 8 }
   };
   /* 舊版草稿的車種代號 */
