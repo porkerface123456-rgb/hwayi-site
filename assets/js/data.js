@@ -2,6 +2,16 @@
 window.HY = (function () {
   'use strict';
 
+  /* 語言：<html lang="ja"> 的頁面用日文字典（assets/js/i18n-ja.js），其他用中文原文。
+     t('中文原文 {n}', { n: 3 })：查字典，找不到就用原文；{名稱} 會換成對應的值 */
+  var LANG = /^ja/i.test(document.documentElement.lang || '') ? 'ja' : 'zh';
+  function t(s, v) {
+    var dict = LANG === 'ja' ? (window.HY_I18N_JA || {}) : {};
+    var r = Object.prototype.hasOwnProperty.call(dict, s) ? dict[s] : s;
+    if (v) r = String(r).replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? v[k] : m; });
+    return r;
+  }
+
   /* 各縣市 → 桃園機場，每車單趟（來源：店家價目表）。雙北不分鄉鎮區，以「全區」表示 */
   var ALL = '全區';
   var PRICES = {
@@ -90,8 +100,18 @@ window.HY = (function () {
       return res;
     }).finally(function () { if (timer) clearTimeout(timer); });
   }
-  function submitBooking(payload) { payload.kind = 'booking'; return post(payload); }
-  function submitFeedback(payload) { payload.kind = 'feedback'; return post(payload); }
+  /* 日文網站送出的資料，在備註／意見內容前加上標記，管理員一看就知道要用日文回覆 */
+  var JA_MARK = '【日本語サイト】';
+  function submitBooking(payload) {
+    payload.kind = 'booking';
+    if (LANG === 'ja') { payload.lang = 'ja'; payload.note = JA_MARK + (payload.note || ''); }
+    return post(payload);
+  }
+  function submitFeedback(payload) {
+    payload.kind = 'feedback';
+    if (LANG === 'ja') { payload.lang = 'ja'; payload.message = JA_MARK + (payload.message || ''); }
+    return post(payload);
+  }
 
   var ICON = {
     arrow: '<svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
@@ -100,7 +120,7 @@ window.HY = (function () {
   };
 
   return {
-    PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, CAR_ALIAS: CAR_ALIAS, BAG_LIMIT: 8, REPLY_TIME: '一天',
+    LANG: LANG, t: t, PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, CAR_ALIAS: CAR_ALIAS, BAG_LIMIT: 8, REPLY_TIME: '一天',
     HANDOFF_KEY: 'hy-quote-handoff', DRAFT_KEY: 'hy-booking-draft',
     LINE_URL: 'https://line.me/ti/p/~kiki939779',
     counties: counties, areasOf: areasOf, priceOf: priceOf, isAll: isAll, placeOf: placeOf, fmt: fmt, esc: esc,

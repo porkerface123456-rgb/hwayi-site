@@ -91,29 +91,31 @@
   function validate() {
     var s = state, E = {}, now = HY.twNow();
     var isPick = s.type === 'pick', isRound = s.type === 'round';
-    if (!s.date) E.date = '請選擇日期';
-    else if (s.date < now.date) E.date = '日期不能早於今天';
-    if (!s.time) E.time = isPick ? '請填寫班機抵達時間' : '請填寫上車時間';
-    else if (s.date === now.date && s.time <= now.hm) E.time = '這個時間已經過了，請選擇稍晚的時間';
-    if (isPick && !s.flight.trim()) E.flight = '接機需要航班編號，司機才能掌握班機實際抵達時間';
+    if (!s.date) E.date = HY.t('請選擇日期');
+    else if (s.date < now.date) E.date = HY.t('日期不能早於今天');
+    if (!s.time) E.time = HY.t(isPick ? '請填寫班機抵達時間' : '請填寫上車時間');
+    else if (s.date === now.date && s.time <= now.hm) E.time = HY.t('這個時間已經過了，請選擇稍晚的時間');
+    if (isPick && !s.flight.trim()) E.flight = HY.t('接機需要航班編號，司機才能掌握班機實際抵達時間');
     if (isRound) {
-      if (!s.rdate) E.rdate = '請選擇回程日期';
-      else if (s.date && s.rdate < s.date) E.rdate = '回程日期不能早於去程';
-      if (!s.rtime) E.rtime = '請填寫回程班機抵達時間';
-      else if (s.rdate && s.rdate === s.date && s.time && s.rtime <= s.time) E.rtime = '回程時間要晚於去程上車時間';
-      if (!s.rflight.trim()) E.rflight = '回程接機需要航班編號，司機才能掌握班機抵達時間';
+      if (!s.rdate) E.rdate = HY.t('請選擇回程日期');
+      else if (s.date && s.rdate < s.date) E.rdate = HY.t('回程日期不能早於去程');
+      if (!s.rtime) E.rtime = HY.t('請填寫回程班機抵達時間');
+      else if (s.rdate && s.rdate === s.date && s.time && s.rtime <= s.time) E.rtime = HY.t('回程時間要晚於去程上車時間');
+      if (!s.rflight.trim()) E.rflight = HY.t('回程接機需要航班編號，司機才能掌握班機抵達時間');
     }
-    if (!s.addr.trim()) E.addr = '請填寫詳細地址，司機才找得到您';
-    if (!s.name.trim()) E.name = '請填寫姓名';
+    if (!s.addr.trim()) E.addr = HY.t('請填寫詳細地址，司機才找得到您');
+    if (!s.name.trim()) E.name = HY.t('請填寫姓名');
     var digits = normPhone(s.phone);
-    if (!digits && !s.line.trim()) E.phone = '手機或 LINE ID 請至少填一項，客服才能聯絡您';
+    if (!digits && !s.line.trim()) E.phone = HY.t('手機或 LINE ID 請至少填一項，客服才能聯絡您');
     else if (digits) {
       var tw = /^0\d{8,9}$/.test(digits) || /^\+886\d{8,9}$/.test(digits);
       var intl = /^\+\d{8,15}$/.test(digits);
-      if (/^09/.test(digits) && digits.length !== 10) E.phone = '手機號碼是 10 碼，例如 0912-345-678';
-      else if (!(tw || intl)) E.phone = '電話格式不太對，例如 0912-345-678 或 +81 90-1234-5678';
+      /* 日文版：0 開頭又不是台灣手機（09 + 8 碼），多半是忘了加國碼的日本號碼 */
+      if (HY.LANG === 'ja' && /^0/.test(digits) && !/^09\d{8}$/.test(digits)) E.phone = HY.t('日本的電話請加國碼 +81，並去掉開頭的 0');
+      else if (/^09/.test(digits) && digits.length !== 10) E.phone = HY.t('手機號碼是 10 碼，例如 0912-345-678');
+      else if (!(tw || intl)) E.phone = HY.t('電話格式不太對，例如 0912-345-678 或 +81 90-1234-5678');
     }
-    if (s.email.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s.email.trim())) E.email = 'Email 格式不太對，例如 name@example.com';
+    if (s.email.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s.email.trim())) E.email = HY.t('Email 格式不太對，例如 name@example.com');
     return E;
   }
   function errKeys(E) { return ERR_ORDER.filter(function (k) { return E[k]; }); }
@@ -122,31 +124,30 @@
     var s = state, isPick = s.type === 'pick', isRound = s.type === 'round', trips = isRound ? 2 : 1, area = currentArea();
     var base = s.county === OTHER ? 0 : HY.priceOf(s.county, area);
     var quote = HY.CARS[s.car].quote || s.county === OTHER;
-    var reason = s.county === OTHER ? '此地區不在價目表內，由專人報價。'
-      : '這台車由專人報價。';
+    var reason = HY.t(s.county === OTHER ? '此地區不在價目表內，由專人報價。' : '這台車由專人報價。');
     var seats = Math.min(s.seats, s.pax);
-    if (quote && (seats || s.stops)) reason += '加購項目會一併計入報價。';
-    if (quote) reason += '送出後，專人會在' + HY.REPLY_TIME + '內回覆金額。';
-    var place = s.county === OTHER ? OTHER : HY.placeOf(s.county, area);
-    var ap = HY.AIRPORTS[s.airport].short;
+    if (quote && (seats || s.stops)) reason += HY.t('加購項目會一併計入報價。');
+    if (quote) reason += HY.t('送出後，專人會在{t}內回覆金額。', { t: HY.REPLY_TIME });
+    var place = HY.t(s.county === OTHER ? OTHER : HY.placeOf(s.county, area));
+    var ap = HY.t(HY.AIRPORTS[s.airport].short);
     var seatFee = seats * 100 * trips, stopFee = s.stops * 100;
     var apExtra = HY.AIRPORTS[s.airport].extra || 0, apFee = apExtra * trips;
-    var amt = function (n) { return quote ? HY.fmt(n) + '（併入報價）' : HY.fmt(n); };
-    var lines = [{ k: (isRound ? '來回' : '單程') + ' × ' + trips + ' 趟', v: quote ? '專人報價' : HY.fmt(base * trips) }];
-    if (apFee) lines.push({ k: '松山機場加價' + (trips > 1 ? ' × ' + trips + ' 趟' : ''), v: amt(apFee) });
-    if (seats) lines.push({ k: '安全座椅 × ' + seats + (trips > 1 ? '（來回）' : ''), v: amt(seatFee) });
-    if (s.stops) lines.push({ k: '中途停靠 × ' + s.stops, v: amt(stopFee) });
+    var amt = function (n) { return quote ? HY.fmt(n) + HY.t('（併入報價）') : HY.fmt(n); };
+    var lines = [{ k: HY.t('{a} × {n} 趟', { a: HY.t(isRound ? '來回' : '單程'), n: trips }), v: quote ? HY.t('專人報價') : HY.fmt(base * trips) }];
+    if (apFee) lines.push({ k: HY.t('松山機場加價') + (trips > 1 ? HY.t(' × {n} 趟', { n: trips }) : ''), v: amt(apFee) });
+    if (seats) lines.push({ k: HY.t('安全座椅 × {n}', { n: seats }) + (trips > 1 ? HY.t('（來回）') : ''), v: amt(seatFee) });
+    if (s.stops) lines.push({ k: HY.t('中途停靠 × {n}', { n: s.stops }), v: amt(stopFee) });
     return {
       from: isPick ? ap : place, to: isPick ? place : ap, isRound: isRound, place: place, seats: seats,
       lines: lines, quote: quote, reason: reason,
-      total: quote ? '專人報價' : HY.fmt(base * trips + apFee + seatFee + stopFee)
+      total: quote ? HY.t('專人報價') : HY.fmt(base * trips + apFee + seatFee + stopFee)
     };
   }
   function routeHTML(p) { return HY.esc(p.from) + (p.isRound ? HY.ICON.both : HY.ICON.arrow) + HY.esc(p.to); }
 
   /* ---------- 畫面 ---------- */
   function label(id, text, required) {
-    $(id).innerHTML = HY.esc(text) + '<span class="req">' + (required ? '必填' : '選填') + '</span>';
+    $(id).innerHTML = HY.esc(HY.t(text)) + '<span class="req">' + HY.t(required ? '必填' : '選填') + '</span>';
   }
   function markField(k, bad, msg) {
     var el = $('f-' + k), er = $('e-' + k);
@@ -164,13 +165,13 @@
   }
   function fillCounties() {
     $('f-county').innerHTML = HY.counties().concat([OTHER]).map(function (c) {
-      return '<option value="' + HY.esc(c) + '">' + HY.esc(c) + '</option>';
+      return '<option value="' + HY.esc(c) + '">' + HY.esc(HY.t(c)) + '</option>';
     }).join('');
   }
   function fillAreas() {
     var sel = $('f-area'), opts = areaOpts();
     if (sel.getAttribute('data-county') !== state.county) {
-      sel.innerHTML = opts.map(function (o) { return '<option value="' + HY.esc(o) + '">' + HY.esc(o) + '</option>'; }).join('');
+      sel.innerHTML = opts.map(function (o) { return '<option value="' + HY.esc(o) + '">' + HY.esc(HY.t(o)) + '</option>'; }).join('');
       sel.setAttribute('data-county', state.county);
     }
     sel.value = currentArea();
@@ -196,7 +197,7 @@
     label('l-time', isPick ? '班機抵達時間' : '上車時間', true);
     label('l-flight', isRound ? '去程航班編號' : '航班編號', isPick);
     label('l-addr', isPick ? '下車地址' : (isRound ? '上車地址（回程也送回這裡）' : '上車地址'), true);
-    $('legend-place').textContent = isPick ? '下車地點' : (isRound ? '上下車地點' : '上車地點');
+    $('legend-place').textContent = HY.t(isPick ? '下車地點' : (isRound ? '上下車地點' : '上車地點'));
     $('f-date').min = now.date;
     $('f-rdate').min = s.date || now.date;
     $('return-fields').hidden = !isRound;
@@ -207,14 +208,14 @@
 
     var lim = carLimits();
     stepper('pax', 1, lim.pax); stepper('bags', 0, 12); stepper('seats', 0, seatsMax()); stepper('stops', 0, 3);
-    $('pax-hint').textContent = '這台車最多 ' + lim.pax + ' 位';
+    $('pax-hint').textContent = HY.t('這台車最多 {n} 位', { n: lim.pax });
     $('overcap-n').textContent = lim.bags;
     $('overcap').hidden = !(s.bags > lim.bags);
     Array.prototype.forEach.call(document.querySelectorAll('.cap[data-car]'), function (el) {
       var c = HY.CARS[el.getAttribute('data-car')];
       var parts = [];  /* 只顯示已提供的數字 */
-      if (c.maxPax) parts.push('<span class="nobr">載客 ' + c.maxPax + ' 位</span>');
-      if (c.maxBags) parts.push('<span class="nobr">行李 ' + c.maxBags + ' 件</span>');
+      if (c.maxPax) parts.push('<span class="nobr">' + HY.t('載客 {n} 位', { n: c.maxPax }) + '</span>');
+      if (c.maxBags) parts.push('<span class="nobr">' + HY.t('行李 {n} 件', { n: c.maxBags }) + '</span>');
       el.hidden = !parts.length;
       el.innerHTML = parts.join('・');
     });
@@ -235,16 +236,16 @@
     var es = $('t-errors');
     if (show && keys.length) {
       es.hidden = false;
-      es.innerHTML = '<strong>還有 ' + keys.length + ' 項需要處理</strong>' +
+      es.innerHTML = '<strong>' + HY.t('還有 {n} 項需要處理', { n: keys.length }) + '</strong>' +
         keys.slice(0, 3).map(function (k) {
-          return '<a href="#f-' + k + '" data-focus="f-' + k + '">' + HY.esc(NAMES[k] + '：' + E[k]) + '</a>';
+          return '<a href="#f-' + k + '" data-focus="f-' + k + '">' + HY.esc(HY.t(NAMES[k]) + '：' + E[k]) + '</a>';
         }).join('') +
-        (keys.length > 3 ? '<span class="hint">另外還有 ' + (keys.length - 3) + ' 項，請往下檢查</span>' : '');
+        (keys.length > 3 ? '<span class="hint">' + HY.t('另外還有 {n} 項，請往下檢查', { n: keys.length - 3 }) + '</span>' : '');
     } else { es.hidden = true; es.innerHTML = ''; }
     $('m-errors').hidden = !(show && keys.length);
-    $('m-errors').textContent = show && keys.length ? '還有 ' + keys.length + ' 項需要處理，已捲到第一個欄位' : '';
+    $('m-errors').textContent = show && keys.length ? HY.t('還有 {n} 項需要處理，已捲到第一個欄位', { n: keys.length }) : '';
 
-    var submitLabel = s.sending ? '送出中…' : (s.ref ? '更新預約' : '送出預約');
+    var submitLabel = HY.t(s.sending ? '送出中…' : (s.ref ? '更新預約' : '送出預約'));
     Array.prototype.forEach.call(document.querySelectorAll('.js-submit'), function (b) {
       b.textContent = submitLabel; b.disabled = s.sending; b.setAttribute('aria-busy', String(s.sending));
     });
@@ -259,33 +260,33 @@
 
     $('m-sheet').hidden = !sheetOpen;
     $('m-toggle').setAttribute('aria-expanded', String(sheetOpen));
-    $('m-toggle-hint').textContent = sheetOpen ? '收合明細' : '看明細';
+    $('m-toggle-hint').textContent = HY.t(sheetOpen ? '收合明細' : '看明細');
 
     if (s.submitted) renderDone(p);
   }
 
   function when(date, time) {
-    var wd = '日一二三四五六'.charAt(new Date(date + 'T12:00:00').getDay());
+    var wd = HY.t('日一二三四五六').charAt(new Date(date + 'T12:00:00').getDay());
     return date.slice(5).replace('-', '/') + '（' + wd + '）' + time;
   }
   function renderDone(p) {
     var s = state, isPick = s.type === 'pick', isRound = s.type === 'round';
-    $('done-title').textContent = s.updated ? '已更新您的預約' : '已收到您的預約';
+    $('done-title').textContent = HY.t(s.updated ? '已更新您的預約' : '已收到您的預約');
     $('done-ref').textContent = s.ref;
     var rows = [
-      ['服務', isRound ? '來回接送' : (isPick ? '接機' : '送機')],
-      ['路線', p.from + (isRound ? ' ⇄ ' : ' → ') + p.to],
-      [isPick ? '接機' : (isRound ? '去程' : '送機'), { data: when(s.date, s.time) + (s.flight ? '・' + s.flight.toUpperCase() : '') }]
+      [HY.t('服務'), HY.t(isRound ? '來回接送' : (isPick ? '接機' : '送機'))],
+      [HY.t('路線'), p.from + (isRound ? ' ⇄ ' : ' → ') + p.to],
+      [HY.t(isPick ? '接機' : (isRound ? '去程' : '送機')), { data: when(s.date, s.time) + (s.flight ? '・' + s.flight.toUpperCase() : '') }]
     ];
-    if (isRound) rows.push(['回程', { data: when(s.rdate, s.rtime) + '・' + s.rflight.toUpperCase() }]);
-    rows.push([isPick ? '下車地址' : '上車地址', p.place + ' ' + s.addr]);
-    rows.push(['人數／行李', s.pax + ' 位・' + s.bags + ' 件']);
-    rows.push(['車種', HY.CARS[s.car].name]);
-    if (s.bags > carLimits().bags) rows.push(['提醒', '行李較多，可能需要兩台車，客服會與您確認']);
-    if (p.quote) rows.push(['報價', '專人會在' + HY.REPLY_TIME + '內以 LINE 或電話回覆金額']);
-    if (p.seats || s.stops) rows.push(['加購', [p.seats ? '安全座椅 ' + p.seats + ' 座' : '', s.stops ? '中途停靠 ' + s.stops + ' 點' : ''].filter(Boolean).join('・')]);
-    rows.push(['聯絡人', [s.name, s.phone, s.line ? 'LINE ' + s.line : ''].filter(Boolean).join('・')]);
-    if (s.note.trim()) rows.push(['備註', s.note]);
+    if (isRound) rows.push([HY.t('回程'), { data: when(s.rdate, s.rtime) + '・' + s.rflight.toUpperCase() }]);
+    rows.push([HY.t(isPick ? '下車地址' : '上車地址'), p.place + ' ' + s.addr]);
+    rows.push([HY.t('人數／行李'), HY.t('{p} 位・{b} 件', { p: s.pax, b: s.bags })]);
+    rows.push([HY.t('車種'), HY.t(HY.CARS[s.car].name)]);
+    if (s.bags > carLimits().bags) rows.push([HY.t('提醒'), HY.t('行李較多，可能需要兩台車，客服會與您確認')]);
+    if (p.quote) rows.push([HY.t('報價'), HY.t('專人會在{t}內以 LINE 或電話回覆金額', { t: HY.REPLY_TIME })]);
+    if (p.seats || s.stops) rows.push([HY.t('加購'), [p.seats ? HY.t('安全座椅 {n} 座', { n: p.seats }) : '', s.stops ? HY.t('中途停靠 {n} 點', { n: s.stops }) : ''].filter(Boolean).join('・')]);
+    rows.push([HY.t('聯絡人'), [s.name, s.phone, s.line ? 'LINE ' + s.line : ''].filter(Boolean).join('・')]);
+    if (s.note.trim()) rows.push([HY.t('備註'), s.note]);
     $('done-summary').innerHTML = rows.map(function (r) {
       var v = typeof r[1] === 'object' ? '<span class="data">' + HY.esc(r[1].data) + '</span>' : HY.esc(r[1]);
       return '<div><dt>' + HY.esc(r[0]) + '</dt><dd>' + v + '</dd></div>';
@@ -333,7 +334,7 @@
       $('done-title').focus();
     }, function () {
       set({ sending: false });
-      var msg = '送出失敗，請再試一次，或直接撥 03-5550113。';
+      var msg = HY.t('送出失敗，請再試一次，或直接撥 03-5550113。');
       $('m-errors').hidden = false;
       $('m-errors').textContent = msg;
       $('t-errors').hidden = false;
@@ -414,7 +415,7 @@
   });
   $('btn-copy').addEventListener('click', function () {
     var btn = this, ref = state.ref;
-    var done = function () { btn.textContent = '已複製'; setTimeout(function () { btn.textContent = '複製編號'; }, 2000); };
+    var done = function () { btn.textContent = HY.t('已複製'); setTimeout(function () { btn.textContent = HY.t('複製編號'); }, 2000); };
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(ref).then(done, function () { fallbackCopy(ref); done(); });
     } else { fallbackCopy(ref); done(); }
@@ -439,21 +440,21 @@
     if (!h || !(Date.now() - h.at < HANDOFF_TTL)) return false;
     if (h.car && !HY.CARS[h.car]) h.car = HY.CAR_ALIAS[h.car];
     if (h.car && HY.CARS[h.car] && !h.county) {
-      if (state.ref && !state.submitted) { handoffMsg = { text: '您正在修改預約 ' + state.ref + '，首頁選擇的車種沒有套用。', undo: false }; render(); return true; }
+      if (state.ref && !state.submitted) { handoffMsg = { text: HY.t('您正在修改預約 {r}，首頁選擇的車種沒有套用。', { r: state.ref }), undo: false }; render(); return true; }
       var prevCar = { car: state.car };
       if (state.submitted) state = blank(state);
       state.car = h.car;
       var mp = carLimits(h.car).pax; if (state.pax > mp) state.pax = mp;
-      handoffMsg = { text: '已帶入首頁選擇的車種：' + HY.CARS[h.car].name + '。', undo: prevCar.car !== h.car ? prevCar : false };
+      handoffMsg = { text: HY.t('已帶入首頁選擇的車種：{c}。', { c: HY.t(HY.CARS[h.car].name) }), undo: prevCar.car !== h.car ? prevCar : false };
       save(); syncInputs(); render();
       return true;
     }
     if (HY.counties().indexOf(h.county) < 0) return false;
     var airport = HY.AIRPORTS[h.airport] ? h.airport : 'T1';
     var area = HY.areasOf(h.county).indexOf(h.area) >= 0 ? h.area : HY.areasOf(h.county)[0];
-    var text = HY.placeOf(h.county, area) + '・' + HY.AIRPORTS[airport].short;
+    var text = HY.t(HY.placeOf(h.county, area)) + '・' + HY.t(HY.AIRPORTS[airport].short);
     if (state.ref && !state.submitted) {
-      handoffMsg = { text: '您正在修改預約 ' + state.ref + '，首頁選擇的「' + text + '」沒有套用。', undo: false };
+      handoffMsg = { text: HY.t('您正在修改預約 {r}，首頁選擇的「{x}」沒有套用。', { r: state.ref, x: text }), undo: false };
       render();
       return true;
     }
@@ -463,7 +464,7 @@
     state.county = h.county; state.area = area; state.airport = airport;
     var same = prev.county === state.county && prev.area === area && prev.airport === airport;
     handoffMsg = {
-      text: (started ? '已開始新的預約，並帶入首頁選擇：' : '已帶入首頁選擇：') + text + '。',
+      text: HY.t(started ? '已開始新的預約，並帶入首頁選擇：{x}。' : '已帶入首頁選擇：{x}。', { x: text }),
       undo: (!started && !same) ? prev : false
     };
     save(); syncInputs(); render();

@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>送迎のご予約｜華誼租車 新竹店</title>
+<meta name="description" content="台湾・桃園空港／松山空港送迎のオンライン予約。料金をその場で試算でき、送信後に担当者が LINE またはお電話で確認します。">
+<meta name="theme-color" content="#0B0D10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>:root{--font-sans:"Noto Sans JP",-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif}body{word-break:auto-phrase;line-break:strict}</style>
+</head>
+<body class="page-booking">
+<a class="skip" href="#main">メインコンテンツへ移動</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.html" aria-label="華誼租車 ホーム">
+      <img class="brand-logo" src="../assets/img/logo.png" alt="華誼租車" width="130" height="52">
+    </a>
+    <nav class="nav" aria-label="メインメニュー">
+      <a href="index.html#service">空港送迎</a>
+      <a href="booking.html" aria-current="page">ご予約</a>
+      <a href="index.html#fleet">車種紹介</a>
+      <a href="index.html#prices">料金案内</a>
+      <a href="index.html#charter">貸切チャーター</a>
+      <a href="index.html#faq">よくある質問</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang" role="group" aria-label="言語">
+        <button type="button" data-lang="zh" aria-pressed="false" data-href="../booking.html" lang="zh-Hant">中文</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="ja" aria-pressed="true">日本語</button>
+      </div>
+      <a class="header-phone" href="tel:+88635550113">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        <span><b>+886-3-555-0113</b><small>24時間予約ダイヤル</small></span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="メニューを開く">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="mobile-menu wrap" hidden>
+    <nav aria-label="メインメニュー（モバイル）">
+      <a href="index.html">ホーム</a>
+      <a href="index.html#service">空港送迎</a>
+      <a href="booking.html" aria-current="page">ご予約</a>
+      <a href="index.html#fleet">車種紹介</a>
+      <a href="index.html#prices">料金案内</a>
+      <a href="index.html#charter">貸切チャーター</a>
+      <a href="index.html#faq">よくある質問</a>
+      <a href="index.html#feedback">ご意見・ご感想</a>
+      <a href="tel:+88635550113">24時間予約ダイヤル +886-3-555-0113</a>
+    </nav>
+    <div class="lang" role="group" aria-label="言語">
+      <button type="button" data-lang="zh" aria-pressed="false" data-href="../booking.html" lang="zh-Hant">中文</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <button type="button" data-lang="ja" aria-pressed="true">日本語</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <!-- ===== 填寫 ===== -->
+  <div id="view-form" class="booking">
+    <div class="booking-head">
+      <h1 class="lp-h2 page-title" id="form-title" tabindex="-1">オンライン予約</h1>
+      <p class="booking-intro">行程を入力すると、料金がその場で試算されます。送信後に担当者が LINE またはお電話で確認し、確認が取れた時点で予約完了となります。</p>
+      <div id="edit-banner" class="notice" role="status" hidden>
+        <span>予約 <b id="edit-ref" class="data"></b> を変更中です。送信すると元の内容が置き換えられ、予約が重複することはありません。</span>
+        <button type="button" class="btn-text" id="btn-cancel-edit">変更をやめる</button>
+      </div>
+      <div id="notice" class="notice" role="status" hidden>
+        <span id="notice-text"></span>
+        <button type="button" class="btn-text" id="notice-undo" hidden>元に戻す</button>
+        <button type="button" class="btn-text" id="notice-close">閉じる</button>
+      </div>
+    </div>
+
+    <div class="booking-grid">
+      <form id="booking-form" novalidate aria-label="予約フォーム">
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">1／4</span>行程</legend>
+            <div class="field">
+              <span class="field-label" id="lbl-type">サービス</span>
+              <div class="seg" role="radiogroup" aria-labelledby="lbl-type">
+                <label class="seg-opt"><input type="radio" name="type" value="send"><span>空港行き<small>空港へお送り</small></span></label>
+                <label class="seg-opt"><input type="radio" name="type" value="pick"><span>空港お迎え<small>空港から</small></span></label>
+                <label class="seg-opt"><input type="radio" name="type" value="round"><span>往復<small>お送り＋お迎え</small></span></label>
+              </div>
+            </div>
+            <div class="field">
+              <span class="field-label" id="lbl-airport">空港</span>
+              <div class="seg seg-4" role="radiogroup" aria-labelledby="lbl-airport">
+                <label class="seg-opt"><input type="radio" name="airport" value="T1"><span>桃園 T1<small>第1ターミナル</small></span></label>
+                <label class="seg-opt"><input type="radio" name="airport" value="T2"><span>桃園 T2<small>第2ターミナル</small></span></label>
+                <label class="seg-opt"><input type="radio" name="airport" value="T3"><span>桃園 T3<small>第3ターミナル</small></span></label>
+                <label class="seg-opt"><input type="radio" name="airport" value="TSA"><span>松山<small>台北</small></span></label>
+              </div>
+            </div>
+            <div class="grid-3">
+              <div class="field">
+                <label class="field-label" for="f-date" id="l-date"></label>
+                <input class="input data" type="date" id="f-date" name="date">
+                <p class="field-error" id="e-date" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-time" id="l-time"></label>
+                <input class="input data" type="time" id="f-time" name="time">
+                <p class="field-error" id="e-time" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-flight" id="l-flight"></label>
+                <input class="input data" type="text" id="f-flight" name="flight" placeholder="例：CI 100" autocomplete="off" autocapitalize="characters">
+                <p class="field-error" id="e-flight" hidden></p>
+              </div>
+            </div>
+            <p class="hint" id="send-tip">乗車時刻の目安：国際線は出発の3時間前までに空港へ着くのが一般的です。そこから移動時間をさかのぼってご指定ください。迷う場合は、確認の際に担当者がご提案します。</p>
+            <div class="grid-3" id="return-fields" hidden>
+              <div class="field">
+                <label class="field-label" for="f-rdate">復路（お迎え）の日付<span class="req">必須</span></label>
+                <input class="input data" type="date" id="f-rdate" name="rdate">
+                <p class="field-error" id="e-rdate" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-rtime">復路便の到着時刻<span class="req">必須</span></label>
+                <input class="input data" type="time" id="f-rtime" name="rtime">
+                <p class="field-error" id="e-rtime" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-rflight">復路の便名<span class="req">必須</span></label>
+                <input class="input data" type="text" id="f-rflight" name="rflight" placeholder="例：CI 101" autocomplete="off" autocapitalize="characters">
+                <p class="field-error" id="e-rflight" hidden></p>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">2／4</span><span id="legend-place">乗車場所</span></legend>
+            <div class="grid-2">
+              <div class="field">
+                <label class="field-label" for="f-county">県・市</label>
+                <select class="select" id="f-county" name="county"></select>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-area">地区</label>
+                <select class="select" id="f-area" name="area"></select>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="f-addr" id="l-addr"></label>
+              <input class="input" type="text" id="f-addr" name="addr" autocomplete="street-address" placeholder="通り名・番地・建物名">
+              <p class="field-error" id="e-addr" hidden></p>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <span class="field-label" id="lbl-pax">乗客人数</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-pax">
+                    <button type="button" data-step="pax" data-dir="-1" aria-label="乗客人数を減らす"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-pax" aria-live="polite"></output>
+                    <button type="button" data-step="pax" data-dir="1" aria-label="乗客人数を増やす"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint" id="pax-hint">この車は最大8名</span>
+                </div>
+              </div>
+              <div class="field">
+                <span class="field-label" id="lbl-bags">荷物の数</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-bags">
+                    <button type="button" data-step="bags" data-dir="-1" aria-label="荷物の数を減らす"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-bags" aria-live="polite"></output>
+                    <button type="button" data-step="bags" data-dir="1" aria-label="荷物の数を増やす"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">28インチのスーツケース換算</span>
+                </div>
+              </div>
+            </div>
+            <p class="notice" id="overcap" role="status" hidden><span>荷物が <span id="overcap-n">8</span> 個を超えると、この車に積みきれない場合があります。事前に <a href="https://line.me/ti/p/~kiki939779">LINE でご確認</a>いただくか、備考欄に「2台希望」とご記入ください。</span></p>
+          </fieldset>
+        </div>
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">3／4</span>車種・オプション</legend>
+            <div class="seg seg-wide seg-cars" role="radiogroup" aria-label="車種">
+              <label class="seg-opt"><input type="radio" name="car" value="crafter"><span>VW The New Crafter<small>VIP仕様ハイルーフ・カラオケ</small><small class="cap" data-car="crafter"></small><small class="data">料金表どおり</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="t6"><span>VW T6<small>7人乗り</small><small class="cap" data-car="t6"></small><small class="data">料金表どおり</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="staria"><span>ヒョンデ Staria<small>9人乗り</small><small class="cap" data-car="staria"></small><small class="data">料金表どおり</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="vito"><span>ベンツ Vito<small>7人乗り（グレー）</small><small class="cap" data-car="vito"></small><small class="data">料金表どおり</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="v250"><span>ベンツ V250D<small>走るファーストクラス</small><small class="cap" data-car="v250"></small><small class="data">個別見積もり</small></span></label>
+              <label class="seg-opt"><input type="radio" name="car" value="sprinter"><span>ベンツ Sprinter<small>9人乗り</small><small class="cap" data-car="sprinter"></small><small class="data">個別見積もり</small></span></label>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <span class="field-label" id="lbl-seats">チャイルドシート／ジュニアシート</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-seats">
+                    <button type="button" data-step="seats" data-dir="-1" aria-label="チャイルドシートを減らす"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-seats" aria-live="polite"></output>
+                    <button type="button" data-step="seats" data-dir="1" aria-label="チャイルドシートを増やす"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">1台 <span class="data price">+NT$100</span></span>
+                </div>
+              </div>
+              <div class="field">
+                <span class="field-label" id="lbl-stops">途中立ち寄り</span>
+                <div class="stepper-row">
+                  <div class="stepper" role="group" aria-labelledby="lbl-stops">
+                    <button type="button" data-step="stops" data-dir="-1" aria-label="途中立ち寄りを減らす"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output id="v-stops" aria-live="polite"></output>
+                    <button type="button" data-step="stops" data-dir="1" aria-label="途中立ち寄りを増やす"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="hint">10km以内・1か所 <span class="data price">+NT$100</span></span>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="fs-block">
+          <fieldset class="fs">
+            <legend class="fs-legend"><span class="fs-step">4／4</span>ご連絡先</legend>
+            <div class="grid-2">
+              <div class="field">
+                <label class="field-label" for="f-name">お名前<span class="req">必須</span></label>
+                <input class="input" type="text" id="f-name" name="name" autocomplete="name">
+                <p class="field-error" id="e-name" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-phone">携帯電話番号<span class="req">LINE ID とどちらか必須</span></label>
+                <input class="input data" type="tel" id="f-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+81 90-1234-5678">
+                <p class="hint">日本の携帯電話は国番号 +81 を付け、先頭の0を除いてご入力ください（例：+81 90-1234-5678）</p>
+                <p class="field-error" id="e-phone" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-line">LINE ID<span class="req">携帯電話番号とどちらか必須</span></label>
+                <input class="input" type="text" id="f-line" name="line" autocomplete="off" autocapitalize="off" placeholder="例：kiki939779">
+              </div>
+              <div class="field">
+                <label class="field-label" for="f-email">メールアドレス<span class="req">任意</span></label>
+                <input class="input" type="email" id="f-email" name="email" autocomplete="email" inputmode="email">
+                <p class="field-error" id="e-email" hidden></p>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="f-note">備考<span class="req">任意</span></label>
+              <textarea class="textarea" id="f-note" name="note" rows="3" placeholder="例：ベビーカー、大きな荷物、ネームボードでのお出迎え希望、車種の指定など"></textarea>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- 手機與平板：送出按鈕也放在表單最後，按 Enter 也能送出 -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block js-submit">予約を送信</button>
+        </div>
+      </form>
+
+      <!-- 桌機：行程單 -->
+      <aside class="ticket" aria-labelledby="ticket-h">
+        <h2 class="ticket-title" id="ticket-h">ご予約内容</h2>
+        <p class="ticket-route data" id="t-route"></p>
+        <dl class="tl" id="t-lines"></dl>
+        <div class="ticket-total"><span class="muted">合計（1台あたり）</span><span class="data price" id="t-total" aria-live="polite"></span></div>
+        <p class="hint" id="t-quote" hidden></p>
+        <div class="err-summary" id="t-errors" role="alert" hidden></div>
+        <button type="submit" form="booking-form" class="btn btn-primary btn-block js-submit">予約を送信</button>
+        <a class="btn-text" href="https://line.me/ti/p/~kiki939779">LINE で直接予約：kiki939779</a>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ===== 完成 ===== -->
+  <section id="view-done" class="done" aria-labelledby="done-title" hidden>
+    <h1 class="lp-h2 page-title" id="done-title" tabindex="-1">ご予約を受け付けました</h1>
+    <p class="done-lead">1日以内に担当者が LINE またはお電話で、車両と最終料金をご連絡します。確認が取れた時点で予約完了となります。</p>
+    <div class="ref-row">
+      <span class="ref-label">予約番号</span>
+      <span class="data ref" id="done-ref"></span>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-copy">番号をコピー</button>
+    </div>
+    <dl class="spec" id="done-summary"></dl>
+    <div class="done-total"><span class="muted">概算料金（1台あたり）</span><span class="data price" id="done-total"></span></div>
+    <ol class="next">
+      <li>LINE（ID：<strong>kiki939779</strong>）を友だち追加して予約番号をお送りいただくと、確認がスムーズです。</li>
+      <li>ご出発の前日に、ドライバー名と車両ナンバーをお知らせします。</li>
+      <li>1日以内に連絡がない場合は、24時間ダイヤル <a class="data nobr" href="tel:+88635550113">+886-3-555-0113</a> までお電話ください。</li>
+    </ol>
+    <div class="done-actions">
+      <a class="btn btn-line" href="https://line.me/ti/p/~kiki939779">LINE で予約番号を送る</a>
+      <button type="button" class="btn btn-secondary" id="btn-edit">予約内容を変更</button>
+      <button type="button" class="btn-text" id="btn-reset">新しく予約する</button>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="footer-brand">華誼租車</p>
+      <p>新竹店・華誼国際旅行社</p>
+    </div>
+    <div>
+      <p class="footer-title">サービス</p>
+      <ul>
+        <li><a href="index.html#service">空港送迎</a></li>
+        <li><a href="index.html#charter">貸切チャーター</a></li>
+        <li><a href="index.html#prices">料金案内</a></li>
+        <li><a href="booking.html">オンライン予約</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">お問い合わせ</p>
+      <ul>
+        <li><a href="tel:+88635550113">予約ダイヤル +886-3-555-0113</a></li>
+        <li><a href="https://line.me/ti/p/~kiki939779">LINE／WeChat kiki939779</a></li>
+        <li><a href="https://maps.google.com/?q=新竹縣竹北市中華路340-8號">台湾 新竹県竹北市<span class="nobr">中華路340-8号</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-legal"><p>甲種旅行業（台湾）登録番号：交観甲第885600号</p></div>
+</footer>
+
+<!-- 手機與平板：行程合計列 -->
+<div class="mbar mbar-booking" id="mbar">
+  <div class="mbar-sheet" id="m-sheet" hidden>
+    <p class="ticket-route data" id="m-route"></p>
+    <dl class="tl" id="m-lines"></dl>
+    <p class="hint" id="m-quote" hidden></p>
+  </div>
+  <p class="mbar-err" id="m-errors" role="alert" hidden></p>
+  <div class="mbar-row">
+    <button type="button" class="mbar-total" id="m-toggle" aria-expanded="false" aria-controls="m-sheet">
+      <small>合計・<span id="m-toggle-hint">明細</span><svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></small>
+      <span class="data price" id="m-total"></span>
+    </button>
+    <a class="btn btn-line mbar-line" href="https://line.me/ti/p/~kiki939779" aria-label="LINE で予約する">LINE</a>
+    <button type="submit" form="booking-form" class="btn btn-primary js-submit">予約を送信</button>
+  </div>
+</div>
+
+<script src="../assets/js/i18n-ja.js"></script>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/booking.js"></script>
+</body>
+</html>

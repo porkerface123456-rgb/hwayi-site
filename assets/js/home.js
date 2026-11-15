@@ -12,25 +12,25 @@
 
   /* ---------- 查價器 ---------- */
   var qc = $('q-county'), qa = $('q-area'), qair = $('q-airport');
-  qc.innerHTML = HY.counties().map(function (c) { return '<option>' + HY.esc(c) + '</option>'; }).join('');
+  qc.innerHTML = HY.counties().map(function (c) { return '<option value="' + HY.esc(c) + '">' + HY.esc(HY.t(c)) + '</option>'; }).join('');
   qc.value = '新竹';
 
   function fillAreas(keep) {
     var areas = HY.areasOf(qc.value);
-    qa.innerHTML = areas.map(function (a) { return '<option>' + HY.esc(a) + '</option>'; }).join('');
+    qa.innerHTML = areas.map(function (a) { return '<option value="' + HY.esc(a) + '">' + HY.esc(HY.t(a)) + '</option>'; }).join('');
     qa.value = keep && areas.indexOf(keep) >= 0 ? keep : areas[0];
     qa.disabled = HY.isAll(qc.value);
   }
 
   function updateQuote() {
     var county = qc.value, area = qa.value, ap = qair.value;
-    var to = HY.AIRPORTS[ap].short;
-    $('q-route').innerHTML = HY.esc(HY.placeOf(county, area)) + HY.ICON.arrow + HY.esc(to);
+    var to = HY.t(HY.AIRPORTS[ap].short);
+    $('q-route').innerHTML = HY.esc(HY.t(HY.placeOf(county, area))) + HY.ICON.arrow + HY.esc(to);
     var price = $('q-price');
     var extra = HY.AIRPORTS[ap].extra || 0;
     price.textContent = HY.fmt(HY.priceOf(county, area) + extra);
     price.classList.remove('is-quote');
-    $('q-note').textContent = extra ? '含松山機場加價 ' + HY.fmt(extra) : '';
+    $('q-note').textContent = extra ? HY.t('含松山機場加價 {x}', { x: HY.fmt(extra) }) : '';
   }
 
   fillAreas('竹北');
@@ -46,7 +46,7 @@
   var current = '新竹';
 
   tabs.innerHTML = counties.map(function (c, i) {
-    return '<button type="button" role="tab" class="tab" id="tab-' + i + '" aria-controls="board" data-county="' + HY.esc(c) + '">' + HY.esc(c) + '</button>';
+    return '<button type="button" role="tab" class="tab" id="tab-' + i + '" aria-controls="board" data-county="' + HY.esc(c) + '">' + HY.esc(HY.t(c)) + '</button>';
   }).join('');
 
   function selectCounty(c, focus) {
@@ -58,8 +58,8 @@
       if (on) { board.setAttribute('aria-labelledby', b.id); if (focus) b.focus(); }
     });
     rows.innerHTML = HY.PRICES[c].map(function (r) {
-      return '<a class="board-row" href="booking.html" data-area="' + HY.esc(r[0][0]) + '" aria-label="' + HY.esc(r[0].join('、') + ' ' + HY.fmt(r[1]) + '，預約這一區') + '">' +
-        '<span class="board-areas">' + HY.esc(r[0].join('、')) + '</span>' +
+      return '<a class="board-row" href="booking.html" data-area="' + HY.esc(r[0][0]) + '" aria-label="' + HY.esc(HY.t(r[0].join('、')) + ' ' + HY.fmt(r[1]) + HY.t('，預約這一區')) + '">' +
+        '<span class="board-areas">' + HY.esc(HY.t(r[0].join('、'))) + '</span>' +
         '<span class="board-price data">' + HY.fmt(r[1]) + '<svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>';
     }).join('');
   }

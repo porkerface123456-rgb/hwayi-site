@@ -46,6 +46,10 @@
 (function () {
   'use strict';
   var photos = window.HY_FLEET_PHOTOS || {};
+  /* 網站內的照片路徑以網站根目錄為準；日文版在 ja/ 底下，要從 fleet-photos.js 的位置推回根目錄 */
+  var cfg = document.querySelector('script[src*="fleet-photos.js"]');
+  var base = cfg ? cfg.getAttribute('src').replace(/assets\/js\/fleet-photos\.js.*$/, '') : '';
+  function resolve(u) { return /^assets\//.test(u) ? base + u : u; }
   Array.prototype.forEach.call(document.querySelectorAll('.lp-gallery[data-car]'), function (g) {
     var urls = (photos[g.getAttribute('data-car')] || []).map(function (u) { return String(u || '').trim(); });
     var valid = urls.filter(function (u) { return /^(https?:\/\/|assets\/)/.test(u); });
@@ -61,13 +65,13 @@
       if (!/^(https?:\/\/|assets\/)/.test(url)) return;
       var ph = slot.querySelector('.lp-slot-ph');
       var img = new Image();
-      img.alt = name + ' 照片 ' + (i + 1);
+      img.alt = window.HY ? HY.t('{name} 照片 {n}', { name: name, n: i + 1 }) : name + ' 照片 ' + (i + 1);
       /* 不用 lazy：圖庫在「準備中」狀態時是隱藏的，lazy 圖片會永遠不載入 */
       img.decoding = 'async';
       img.referrerPolicy = 'no-referrer';
       img.onload = function () { slot.classList.add('has-photo'); if (ph) ph.hidden = true; loaded++; setState(); };
       img.onerror = function () { img.remove(); slot.classList.remove('has-photo'); if (ph) ph.hidden = false; };
-      img.src = url;
+      img.src = resolve(url);
       slot.appendChild(img);
     });
   });

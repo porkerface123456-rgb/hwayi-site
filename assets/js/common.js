@@ -1,4 +1,4 @@
-/* 共用：手機選單、語言切換（翻譯尚未提供，暫時只切換狀態） */
+/* 共用：手機選單、語言切換（中文 ↔ 日文；按鈕上的 data-href 指向另一種語言的同一頁） */
 (function () {
   'use strict';
   var btn = document.querySelector('.menu-btn');
@@ -7,7 +7,8 @@
   function setMenu(open) {
     if (!btn || !menu) return;
     btn.setAttribute('aria-expanded', String(open));
-    btn.setAttribute('aria-label', open ? '關閉選單' : '開啟選單');
+    var ja = window.HY && HY.LANG === 'ja';
+    btn.setAttribute('aria-label', open ? (ja ? 'メニューを閉じる' : '關閉選單') : (ja ? 'メニューを開く' : '開啟選單'));
     menu.hidden = !open;
   }
   if (btn && menu) {
@@ -22,6 +23,8 @@
   var langBtns = document.querySelectorAll('[data-lang]');
   Array.prototype.forEach.call(langBtns, function (b) {
     b.addEventListener('click', function () {
+      var href = b.getAttribute('data-href');
+      if (href) { window.location.href = href + window.location.hash; return; }
       var v = b.getAttribute('data-lang');
       Array.prototype.forEach.call(langBtns, function (x) {
         x.setAttribute('aria-pressed', String(x.getAttribute('data-lang') === v));

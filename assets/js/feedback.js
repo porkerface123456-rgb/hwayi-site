@@ -23,23 +23,23 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var text = msg.value.trim();
-    if (text.length < 5) { showErr(text ? '請再多寫幾個字，至少 5 個字' : '請填寫意見內容'); msg.focus(); return; }
+    if (text.length < 5) { showErr(HY.t(text ? '請再多寫幾個字，至少 5 個字' : '請填寫意見內容')); msg.focus(); return; }
     showErr('');
     var data = {
       type: (form.querySelector('input[name="fbtype"]:checked') || {}).value,
       rate: $('fb-rate').value, date: $('fb-date').value,
       name: $('fb-name').value.trim(), contact: $('fb-contact').value.trim(), message: text
     };
-    btn.disabled = true; btn.textContent = '送出中…';
+    btn.disabled = true; btn.textContent = HY.t('送出中…');
     HY.submitFeedback(data).then(function () {
       form.hidden = true;
       $('fb-done-msg').textContent = data.contact
-        ? '我們已收到您的意見，專人會透過「' + data.contact + '」與您聯繫。'
-        : '我們已收到您的意見，會轉給相關同仁處理。';
+        ? HY.t('我們已收到您的意見，專人會透過「{c}」與您聯繫。', { c: data.contact })
+        : HY.t('我們已收到您的意見，會轉給相關同仁處理。');
       $('fb-done').hidden = false; $('fb-done').focus();
     }, function () {
-      showErr('送出失敗，請稍後再試，或直接 LINE：kiki939779');
-    }).then(function () { btn.disabled = false; btn.textContent = '送出意見'; });
+      showErr(HY.t('送出失敗，請稍後再試，或直接 LINE：kiki939779'));
+    }).then(function () { btn.disabled = false; btn.textContent = HY.t('送出意見'); });
   });
 
   $('fb-again').addEventListener('click', function () {
