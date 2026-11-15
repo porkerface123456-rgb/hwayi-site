@@ -875,3 +875,5 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 
 /* Sprinter 主圖：車頭偏右，讓右側大燈不被裁掉 */
 .lp-gallery[data-car="sprinter"] .lp-slot-main img { object-position: 70% center; }
+/* Staria 主圖：直式照片，車身在下半部 */
+.lp-gallery[data-car="staria"] .lp-slot-main img { object-position: 40% 72%; }
