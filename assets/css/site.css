@@ -894,3 +894,7 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 /* 車種卡片：長字串在卡片內換行，不撐破欄寬（日文版車名較長） */
 .seg-cars .seg-opt { min-width: 0; }
 .seg-cars .seg-opt > span { min-width: 0; width: 100%; overflow-wrap: anywhere; }
+/* 查價結果路線：地名與機場各自不拆行，整段可換行（英文地名較長） */
+.quote-route { flex-wrap: wrap; row-gap: 0; }
+/* 手機底部列：金額不被擠掉 */
+.mbar-total .price { white-space: nowrap; }

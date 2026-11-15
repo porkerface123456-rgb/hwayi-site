@@ -2,11 +2,12 @@
 window.HY = (function () {
   'use strict';
 
-  /* 語言：<html lang="ja"> 的頁面用日文字典（assets/js/i18n-ja.js），其他用中文原文。
+  /* 語言：<html lang="ja"> 用日文字典（i18n-ja.js），<html lang="en"> 用英文字典（i18n-en.js），其他用中文原文。
      t('中文原文 {n}', { n: 3 })：查字典，找不到就用原文；{名稱} 會換成對應的值 */
-  var LANG = /^ja/i.test(document.documentElement.lang || '') ? 'ja' : 'zh';
+  var htmlLang = document.documentElement.lang || '';
+  var LANG = /^ja/i.test(htmlLang) ? 'ja' : (/^en/i.test(htmlLang) ? 'en' : 'zh');
   function t(s, v) {
-    var dict = LANG === 'ja' ? (window.HY_I18N_JA || {}) : {};
+    var dict = LANG === 'ja' ? (window.HY_I18N_JA || {}) : (LANG === 'en' ? (window.HY_I18N_EN || {}) : {});
     var r = Object.prototype.hasOwnProperty.call(dict, s) ? dict[s] : s;
     if (v) r = String(r).replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? v[k] : m; });
     return r;
@@ -58,6 +59,11 @@ window.HY = (function () {
   function isAll(c) { var a = areasOf(c); return a.length === 1 && a[0] === ALL; }
   /* 顯示用地名：雙北顯示「台北市／新北市」，其他為縣市＋鄉鎮區 */
   function placeOf(c, area) { return isAll(c) ? c + '市' : c + area; }
+  /* 顯示用地名（依語言）：英文為「Zhubei, Hsinchu」，中日文沿用 placeOf */
+  function placeLabel(c, area) {
+    if (LANG !== 'en') return t(placeOf(c, area));
+    return isAll(c) ? t(c + '市') : t(area) + ', ' + t(c);
+  }
   function fmt(n) { return 'NT$' + Number(n).toLocaleString('en-US'); }
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -100,16 +106,16 @@ window.HY = (function () {
       return res;
     }).finally(function () { if (timer) clearTimeout(timer); });
   }
-  /* 日文網站送出的資料，在備註／意見內容前加上標記，管理員一看就知道要用日文回覆 */
-  var JA_MARK = '【日本語サイト】';
+  /* 日文／英文網站送出的資料，在備註／意見內容前加上標記，管理員一看就知道要用哪種語言回覆 */
+  var LANG_MARK = { ja: '【日本語サイト】', en: '【English site】' }[LANG];
   function submitBooking(payload) {
     payload.kind = 'booking';
-    if (LANG === 'ja') { payload.lang = 'ja'; payload.note = JA_MARK + (payload.note || ''); }
+    if (LANG_MARK) { payload.lang = LANG; payload.note = LANG_MARK + (payload.note || ''); }
     return post(payload);
   }
   function submitFeedback(payload) {
     payload.kind = 'feedback';
-    if (LANG === 'ja') { payload.lang = 'ja'; payload.message = JA_MARK + (payload.message || ''); }
+    if (LANG_MARK) { payload.lang = LANG; payload.message = LANG_MARK + (payload.message || ''); }
     return post(payload);
   }
 
@@ -123,7 +129,7 @@ window.HY = (function () {
     LANG: LANG, t: t, PRICES: PRICES, AIRPORTS: AIRPORTS, CARS: CARS, CAR_ALIAS: CAR_ALIAS, BAG_LIMIT: 8, REPLY_TIME: '一天',
     HANDOFF_KEY: 'hy-quote-handoff', DRAFT_KEY: 'hy-booking-draft',
     LINE_URL: 'https://line.me/ti/p/~kiki939779',
-    counties: counties, areasOf: areasOf, priceOf: priceOf, isAll: isAll, placeOf: placeOf, fmt: fmt, esc: esc,
+    counties: counties, areasOf: areasOf, priceOf: priceOf, isAll: isAll, placeOf: placeOf, placeLabel: placeLabel, fmt: fmt, esc: esc,
     twNow: twNow, submitBooking: submitBooking, submitFeedback: submitFeedback, ICON: ICON
   };
 })();

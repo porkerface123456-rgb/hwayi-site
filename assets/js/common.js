@@ -7,8 +7,8 @@
   function setMenu(open) {
     if (!btn || !menu) return;
     btn.setAttribute('aria-expanded', String(open));
-    var ja = window.HY && HY.LANG === 'ja';
-    btn.setAttribute('aria-label', open ? (ja ? 'メニューを閉じる' : '關閉選單') : (ja ? 'メニューを開く' : '開啟選單'));
+    var t = window.HY ? HY.t : function (s) { return s; };
+    btn.setAttribute('aria-label', t(open ? '關閉選單' : '開啟選單'));
     menu.hidden = !open;
   }
   if (btn && menu) {

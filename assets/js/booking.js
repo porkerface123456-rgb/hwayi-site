@@ -110,8 +110,8 @@
     else if (digits) {
       var tw = /^0\d{8,9}$/.test(digits) || /^\+886\d{8,9}$/.test(digits);
       var intl = /^\+\d{8,15}$/.test(digits);
-      /* 日文版：0 開頭又不是台灣手機（09 + 8 碼），多半是忘了加國碼的日本號碼 */
-      if (HY.LANG === 'ja' && /^0/.test(digits) && !/^09\d{8}$/.test(digits)) E.phone = HY.t('日本的電話請加國碼 +81，並去掉開頭的 0');
+      /* 日文／英文版：0 開頭又不是台灣手機（09 + 8 碼），多半是忘了加國碼的外國號碼 */
+      if (HY.LANG !== 'zh' && /^0/.test(digits) && !/^09\d{8}$/.test(digits)) E.phone = HY.t('國外電話請加國碼，並去掉開頭的 0');
       else if (/^09/.test(digits) && digits.length !== 10) E.phone = HY.t('手機號碼是 10 碼，例如 0912-345-678');
       else if (!(tw || intl)) E.phone = HY.t('電話格式不太對，例如 0912-345-678 或 +81 90-1234-5678');
     }
@@ -128,7 +128,7 @@
     var seats = Math.min(s.seats, s.pax);
     if (quote && (seats || s.stops)) reason += HY.t('加購項目會一併計入報價。');
     if (quote) reason += HY.t('送出後，專人會在{t}內回覆金額。', { t: HY.REPLY_TIME });
-    var place = HY.t(s.county === OTHER ? OTHER : HY.placeOf(s.county, area));
+    var place = s.county === OTHER ? HY.t(OTHER) : HY.placeLabel(s.county, area);
     var ap = HY.t(HY.AIRPORTS[s.airport].short);
     var seatFee = seats * 100 * trips, stopFee = s.stops * 100;
     var apExtra = HY.AIRPORTS[s.airport].extra || 0, apFee = apExtra * trips;
@@ -238,7 +238,7 @@
       es.hidden = false;
       es.innerHTML = '<strong>' + HY.t('還有 {n} 項需要處理', { n: keys.length }) + '</strong>' +
         keys.slice(0, 3).map(function (k) {
-          return '<a href="#f-' + k + '" data-focus="f-' + k + '">' + HY.esc(HY.t(NAMES[k]) + '：' + E[k]) + '</a>';
+          return '<a href="#f-' + k + '" data-focus="f-' + k + '">' + HY.esc(HY.t(NAMES[k]) + HY.t('：') + E[k]) + '</a>';
         }).join('') +
         (keys.length > 3 ? '<span class="hint">' + HY.t('另外還有 {n} 項，請往下檢查', { n: keys.length - 3 }) + '</span>' : '');
     } else { es.hidden = true; es.innerHTML = ''; }
@@ -266,8 +266,8 @@
   }
 
   function when(date, time) {
-    var wd = HY.t('日一二三四五六').charAt(new Date(date + 'T12:00:00').getDay());
-    return date.slice(5).replace('-', '/') + '（' + wd + '）' + time;
+    var wd = HY.t('日,一,二,三,四,五,六').split(',')[new Date(date + 'T12:00:00').getDay()];
+    return date.slice(5).replace('-', '/') + HY.t('（{w}）', { w: wd }) + time;
   }
   function renderDone(p) {
     var s = state, isPick = s.type === 'pick', isRound = s.type === 'round';
@@ -284,8 +284,8 @@
     rows.push([HY.t('車種'), HY.t(HY.CARS[s.car].name)]);
     if (s.bags > carLimits().bags) rows.push([HY.t('提醒'), HY.t('行李較多，可能需要兩台車，客服會與您確認')]);
     if (p.quote) rows.push([HY.t('報價'), HY.t('專人會在{t}內以 LINE 或電話回覆金額', { t: HY.REPLY_TIME })]);
-    if (p.seats || s.stops) rows.push([HY.t('加購'), [p.seats ? HY.t('安全座椅 {n} 座', { n: p.seats }) : '', s.stops ? HY.t('中途停靠 {n} 點', { n: s.stops }) : ''].filter(Boolean).join('・')]);
-    rows.push([HY.t('聯絡人'), [s.name, s.phone, s.line ? 'LINE ' + s.line : ''].filter(Boolean).join('・')]);
+    if (p.seats || s.stops) rows.push([HY.t('加購'), [p.seats ? HY.t('安全座椅 {n} 座', { n: p.seats }) : '', s.stops ? HY.t('中途停靠 {n} 點', { n: s.stops }) : ''].filter(Boolean).join(HY.t('・'))]);
+    rows.push([HY.t('聯絡人'), [s.name, s.phone, s.line ? 'LINE ' + s.line : ''].filter(Boolean).join(HY.t('・'))]);
     if (s.note.trim()) rows.push([HY.t('備註'), s.note]);
     $('done-summary').innerHTML = rows.map(function (r) {
       var v = typeof r[1] === 'object' ? '<span class="data">' + HY.esc(r[1].data) + '</span>' : HY.esc(r[1]);
@@ -452,7 +452,7 @@
     if (HY.counties().indexOf(h.county) < 0) return false;
     var airport = HY.AIRPORTS[h.airport] ? h.airport : 'T1';
     var area = HY.areasOf(h.county).indexOf(h.area) >= 0 ? h.area : HY.areasOf(h.county)[0];
-    var text = HY.t(HY.placeOf(h.county, area)) + '・' + HY.t(HY.AIRPORTS[airport].short);
+    var text = HY.placeLabel(h.county, area) + HY.t('・') + HY.t(HY.AIRPORTS[airport].short);
     if (state.ref && !state.submitted) {
       handoffMsg = { text: HY.t('您正在修改預約 {r}，首頁選擇的「{x}」沒有套用。', { r: state.ref, x: text }), undo: false };
       render();

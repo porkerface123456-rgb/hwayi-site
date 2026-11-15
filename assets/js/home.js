@@ -25,7 +25,7 @@
   function updateQuote() {
     var county = qc.value, area = qa.value, ap = qair.value;
     var to = HY.t(HY.AIRPORTS[ap].short);
-    $('q-route').innerHTML = HY.esc(HY.t(HY.placeOf(county, area))) + HY.ICON.arrow + HY.esc(to);
+    $('q-route').innerHTML = '<span class="nobr">' + HY.esc(HY.placeLabel(county, area)) + '</span>' + HY.ICON.arrow + '<span class="nobr">' + HY.esc(to) + '</span>';
     var price = $('q-price');
     var extra = HY.AIRPORTS[ap].extra || 0;
     price.textContent = HY.fmt(HY.priceOf(county, area) + extra);
@@ -49,6 +49,8 @@
     return '<button type="button" role="tab" class="tab" id="tab-' + i + '" aria-controls="board" data-county="' + HY.esc(c) + '">' + HY.esc(HY.t(c)) + '</button>';
   }).join('');
 
+  function areaList(list) { return list.map(function (a) { return HY.t(a); }).join(HY.t('、')); }
+
   function selectCounty(c, focus) {
     current = c;
     Array.prototype.forEach.call(tabs.children, function (b) {
@@ -58,8 +60,8 @@
       if (on) { board.setAttribute('aria-labelledby', b.id); if (focus) b.focus(); }
     });
     rows.innerHTML = HY.PRICES[c].map(function (r) {
-      return '<a class="board-row" href="booking.html" data-area="' + HY.esc(r[0][0]) + '" aria-label="' + HY.esc(HY.t(r[0].join('、')) + ' ' + HY.fmt(r[1]) + HY.t('，預約這一區')) + '">' +
-        '<span class="board-areas">' + HY.esc(HY.t(r[0].join('、'))) + '</span>' +
+      return '<a class="board-row" href="booking.html" data-area="' + HY.esc(r[0][0]) + '" aria-label="' + HY.esc(areaList(r[0]) + ' ' + HY.fmt(r[1]) + HY.t('，預約這一區')) + '">' +
+        '<span class="board-areas">' + HY.esc(areaList(r[0])) + '</span>' +
         '<span class="board-price data">' + HY.fmt(r[1]) + '<svg class="i i-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>';
     }).join('');
   }
