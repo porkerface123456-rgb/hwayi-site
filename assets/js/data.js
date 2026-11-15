@@ -26,12 +26,12 @@ window.HY = (function () {
   /* 六種車款。quote: true = 專人報價，其餘依價目表 */
   var CARS = {
     /* maxPax／maxBags：各車載客與行李上限（28 吋計）。null = 尚未提供，暫用最多 8 位、8 件 */
-    crafter: { name: '福斯 The New Crafter', sub: 'VIP 高頂改裝・KTV', quote: false, maxPax: null, maxBags: null },
+    crafter: { name: '福斯 The New Crafter', sub: 'VIP 高頂改裝・KTV', quote: false, maxPax: 9, maxBags: 9 },
     t6: { name: '福斯 T6', sub: '七人座', quote: false, maxPax: 7, maxBags: 7 },
-    staria: { name: 'Hyundai Staria', sub: '九人座', quote: false, maxPax: 9, maxBags: 8 },
+    staria: { name: 'Hyundai Staria', sub: '九人座', quote: false, maxPax: 9, maxBags: 9 },
     vito: { name: '賓士 Vito', sub: '七人座（灰）', quote: false, maxPax: 7, maxBags: 7 },
     v250: { name: '賓士 V250D', sub: '頂級移動式頭等艙（黑）', quote: true, maxPax: 3, maxBags: null },
-    sprinter: { name: '賓士 Sprinter', sub: '九人座', quote: true, maxPax: 9, maxBags: 8 }
+    sprinter: { name: '賓士 Sprinter', sub: '九人座', quote: true, maxPax: 9, maxBags: 9 }
   };
   /* 舊版草稿的車種代號 */
   var CAR_ALIAS = { std: 't6', nanny: 'crafter' };
