@@ -6,7 +6,7 @@
    ========================================================= */
 window.HY_FLEET_PHOTOS = {
   crafter:  ['assets/img/fleet/crafter-1.webp', 'assets/img/fleet/crafter-2.webp', 'assets/img/fleet/crafter-3.webp'],   // 福斯 The New Crafter 九人座
-  t6:       ['', '', ''],   // 福斯 T6 九人座
+  t6:       ['assets/img/fleet/t6-1.webp', 'assets/img/fleet/t6-2.webp', ''],   // 福斯 T6 九人座
   staria:   ['assets/img/fleet/staria-1.webp', 'assets/img/fleet/staria-2.webp', 'assets/img/fleet/staria-3.webp'],   // Hyundai Staria 九人座
   vito:     ['', '', ''],   // 賓士 Vito 九人座（黑）
   v250d:    ['assets/img/fleet/v250d-1.webp', 'assets/img/fleet/v250d-2.webp', 'assets/img/fleet/v250d-3.webp'],   // 賓士 V250D 頂級移動式頭等艙（黑）

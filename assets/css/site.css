@@ -881,3 +881,8 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 .lp-gallery[data-car="crafter"] .lp-slot-main img { object-position: 12% center; }
 /* V250D 主圖：直式照片，車頭在下半部 */
 .lp-gallery[data-car="v250d"] .lp-slot-main img { object-position: 40% 70%; }
+/* T6 主圖：車頭在左側 */
+.lp-gallery[data-car="t6"] .lp-slot-main img { object-position: 20% center; }
+/* T6 側面圖：白底照片完整顯示，不裁切車頭車尾 */
+.lp-gallery[data-car="t6"] .lp-slot[data-slot="2"].has-photo { background: #FFFFFF; }
+.lp-gallery[data-car="t6"] .lp-slot[data-slot="2"] img { object-fit: contain; }
