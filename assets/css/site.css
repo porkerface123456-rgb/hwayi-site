@@ -872,3 +872,6 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 /* 預約頁車種：六款，手機兩欄、平板以上三欄 */
 .seg-cars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 640px) { .seg-cars { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Sprinter 主圖：車頭偏右，讓右側大燈不被裁掉 */
+.lp-gallery[data-car="sprinter"] .lp-slot-main img { object-position: 70% center; }

@@ -48,7 +48,7 @@
   var photos = window.HY_FLEET_PHOTOS || {};
   Array.prototype.forEach.call(document.querySelectorAll('.lp-gallery[data-car]'), function (g) {
     var urls = (photos[g.getAttribute('data-car')] || []).map(function (u) { return String(u || '').trim(); });
-    var valid = urls.filter(function (u) { return /^https?:\/\//.test(u); });
+    var valid = urls.filter(function (u) { return /^(https?:\/\/|assets\/)/.test(u); });
     var name = ((g.parentNode.querySelector('.lp-fleet-text h3') || {}).textContent || '').trim();
     var loaded = 0;
 
@@ -58,11 +58,11 @@
 
     Array.prototype.forEach.call(g.querySelectorAll('.lp-slot'), function (slot, i) {
       var url = urls[i] || '';
-      if (!/^https?:\/\//.test(url)) return;
+      if (!/^(https?:\/\/|assets\/)/.test(url)) return;
       var ph = slot.querySelector('.lp-slot-ph');
       var img = new Image();
       img.alt = name + ' 照片 ' + (i + 1);
-      img.loading = 'lazy';
+      /* 不用 lazy：圖庫在「準備中」狀態時是隱藏的，lazy 圖片會永遠不載入 */
       img.decoding = 'async';
       img.referrerPolicy = 'no-referrer';
       img.onload = function () { slot.classList.add('has-photo'); if (ph) ph.hidden = true; loaded++; setState(); };
