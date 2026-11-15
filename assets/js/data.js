@@ -31,7 +31,7 @@ window.HY = (function () {
     staria: { name: 'Hyundai Staria', sub: '九人座', quote: false, maxPax: null, maxBags: null },
     vito: { name: '賓士 Vito', sub: '九人座（黑）', quote: false, maxPax: null, maxBags: null },
     v250: { name: '賓士 V250D', sub: '頂級移動式頭等艙（黑）', quote: true, maxPax: null, maxBags: null },
-    sprinter: { name: '賓士 Sprinter', sub: '九人座', quote: true, maxPax: null, maxBags: null }
+    sprinter: { name: '賓士 Sprinter', sub: '九人座', quote: true, maxPax: 9, maxBags: 8 }
   };
   /* 舊版草稿的車種代號 */
   var CAR_ALIAS = { std: 't6', nanny: 'crafter' };
