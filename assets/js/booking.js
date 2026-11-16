@@ -208,7 +208,10 @@
 
     var lim = carLimits();
     stepper('pax', 1, lim.pax); stepper('bags', 0, 12); stepper('seats', 0, seatsMax()); stepper('stops', 0, 3);
-    $('pax-hint').textContent = HY.t('這台車最多 {n} 位', { n: lim.pax });
+    /* 到達上限時提示：超過請改用 LINE 由專人安排 */
+    $('pax-hint').innerHTML = s.pax >= lim.pax
+      ? HY.t('這台車最多 {n} 位，超過請{link}', { n: lim.pax, link: '<a href="' + HY.LINE_URL + '">' + HY.t('LINE 專人聯絡') + '</a>' })
+      : HY.esc(HY.t('這台車最多 {n} 位', { n: lim.pax }));
     $('overcap-n').textContent = lim.bags;
     $('overcap').hidden = !(s.bags > lim.bags);
     Array.prototype.forEach.call(document.querySelectorAll('.cap[data-car]'), function (el) {

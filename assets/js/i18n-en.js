@@ -126,6 +126,8 @@ window.HY_I18N_EN = {
   '（來回）': ' (round trip)',
   '中途停靠 × {n}': 'Extra stop × {n}',
   '這台車最多 {n} 位': 'Up to {n} passengers',
+  '這台車最多 {n} 位，超過請{link}': 'Up to {n} passengers. For more, {link}',
+  'LINE 專人聯絡': 'contact us on LINE',
   '載客 {n} 位': '{n} passengers',
   '行李 {n} 件': '{n} bags',
 

@@ -901,3 +901,6 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 /* 機場五選一（桃園 T1・T2・T3、松山、台中）：手機一排三個，平板以上一排五個 */
 .seg-airports { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (min-width: 640px) { .seg-airports { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+/* 價目表下方：特殊路線導向 LINE */
+.lp-pricenote { margin-top: var(--s-2); font-size: var(--fs-small); color: var(--lp-text-2); }
+.lp-pricenote a { color: var(--lp-gold-text); font-weight: 700; }
