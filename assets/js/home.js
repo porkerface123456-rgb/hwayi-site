@@ -30,7 +30,7 @@
     var extra = HY.AIRPORTS[ap].extra || 0;
     price.textContent = HY.fmt(HY.priceOf(county, area) + extra);
     price.classList.remove('is-quote');
-    $('q-note').textContent = extra ? HY.t('含松山機場加價 {x}', { x: HY.fmt(extra) }) : '';
+    $('q-note').textContent = extra ? HY.t('含{a}加價 {x}', { a: to, x: HY.fmt(extra) }) : '';
   }
 
   fillAreas('竹北');

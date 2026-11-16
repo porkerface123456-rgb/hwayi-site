@@ -134,7 +134,7 @@
     var apExtra = HY.AIRPORTS[s.airport].extra || 0, apFee = apExtra * trips;
     var amt = function (n) { return quote ? HY.fmt(n) + HY.t('（併入報價）') : HY.fmt(n); };
     var lines = [{ k: HY.t('{a} × {n} 趟', { a: HY.t(isRound ? '來回' : '單程'), n: trips }), v: quote ? HY.t('專人報價') : HY.fmt(base * trips) }];
-    if (apFee) lines.push({ k: HY.t('松山機場加價') + (trips > 1 ? HY.t(' × {n} 趟', { n: trips }) : ''), v: amt(apFee) });
+    if (apFee) lines.push({ k: HY.t('{a}加價', { a: ap }) + (trips > 1 ? HY.t(' × {n} 趟', { n: trips }) : ''), v: amt(apFee) });
     if (seats) lines.push({ k: HY.t('安全座椅 × {n}', { n: seats }) + (trips > 1 ? HY.t('（來回）') : ''), v: amt(seatFee) });
     if (s.stops) lines.push({ k: HY.t('中途停靠 × {n}', { n: s.stops }), v: amt(stopFee) });
     return {

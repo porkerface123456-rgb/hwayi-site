@@ -31,7 +31,9 @@ window.HY = (function () {
     T1: { name: '桃園機場 第一航廈', short: '桃園 T1' },
     T2: { name: '桃園機場 第二航廈', short: '桃園 T2' },
     T3: { name: '桃園機場 第三航廈', short: '桃園 T3' },
-    TSA: { name: '台北松山機場', short: '松山機場', extra: 300 }
+    /* extra：此機場每趟在價目表上另加的金額 */
+    TSA: { name: '台北松山機場', short: '松山機場', extra: 600 },
+    RMQ: { name: '台中國際機場', short: '台中機場', extra: 700 }
   };
 
   /* 六種車款。quote: true = 專人報價，其餘依價目表 */

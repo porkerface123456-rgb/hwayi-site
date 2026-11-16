@@ -898,3 +898,6 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 .quote-route { flex-wrap: wrap; row-gap: 0; }
 /* 手機底部列：金額不被擠掉 */
 .mbar-total .price { white-space: nowrap; }
+/* 機場五選一（桃園 T1・T2・T3、松山、台中）：手機一排三個，平板以上一排五個 */
+.seg-airports { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (min-width: 640px) { .seg-airports { grid-template-columns: repeat(5, minmax(0, 1fr)); } }

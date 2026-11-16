@@ -53,6 +53,7 @@ window.HY_I18N_EN = {
   '桃園 T2': 'Taoyuan T2',
   '桃園 T3': 'Taoyuan T3',
   '松山機場': 'Songshan Airport',
+  '台中機場': 'Taichung Airport',
 
   /* 車種 */
   '福斯 The New Crafter': 'Volkswagen The New Crafter',
@@ -119,7 +120,7 @@ window.HY_I18N_EN = {
   '來回': 'Round trip',
   '單程': 'One way',
   '專人報價': 'Custom quote',
-  '松山機場加價': 'Songshan Airport surcharge',
+  '{a}加價': '{a} surcharge',
   ' × {n} 趟': ' × {n}',
   '安全座椅 × {n}': 'Child seat × {n}',
   '（來回）': ' (round trip)',
@@ -173,7 +174,7 @@ window.HY_I18N_EN = {
   '已帶入首頁選擇：{x}。': 'We filled in your home page choice: {x}.',
 
   /* 首頁 */
-  '含松山機場加價 {x}': 'Includes {x} Songshan Airport surcharge',
+  '含{a}加價 {x}': 'Includes {x} {a} surcharge',
   '，預約這一區': ', book this area',
 
   /* 意見反饋 */
