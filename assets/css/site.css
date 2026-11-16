@@ -904,3 +904,12 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 /* 價目表下方：特殊路線導向 LINE */
 .lp-pricenote { margin-top: var(--s-2); font-size: var(--fs-small); color: var(--lp-text-2); }
 .lp-pricenote a { color: var(--lp-gold-text); font-weight: 700; }
+
+/* iOS Safari：日期／時間欄位有內建最小寬度，會撐出表單外。改成和其他欄位一樣寬，文字靠左 */
+.input[type="date"], .input[type="time"] {
+  -webkit-appearance: none; appearance: none;
+  display: block; width: 100%; min-width: 0; max-width: 100%;
+  text-align: left; line-height: 48px;
+}
+.input[type="date"]::-webkit-date-and-time-value,
+.input[type="time"]::-webkit-date-and-time-value { text-align: left; margin: 0; }
