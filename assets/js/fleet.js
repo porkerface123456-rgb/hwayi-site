@@ -49,7 +49,8 @@
   /* 網站內的照片路徑以網站根目錄為準；日文版在 ja/ 底下，要從 fleet-photos.js 的位置推回根目錄 */
   var cfg = document.querySelector('script[src*="fleet-photos.js"]');
   var base = cfg ? cfg.getAttribute('src').replace(/assets\/js\/fleet-photos\.js.*$/, '') : '';
-  function resolve(u) { return /^assets\//.test(u) ? base + u : u; }
+  var ver = window.HY_ASSET_V ? '?v=' + window.HY_ASSET_V : '';
+  function resolve(u) { return /^assets\//.test(u) ? base + u + ver : u; }
   Array.prototype.forEach.call(document.querySelectorAll('.lp-gallery[data-car]'), function (g) {
     var urls = (photos[g.getAttribute('data-car')] || []).map(function (u) { return String(u || '').trim(); });
     var valid = urls.filter(function (u) { return /^(https?:\/\/|assets\/)/.test(u); });
