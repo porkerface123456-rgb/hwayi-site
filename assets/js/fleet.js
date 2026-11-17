@@ -53,7 +53,7 @@
   function resolve(u) { return /^assets\//.test(u) ? base + u + ver : u; }
   Array.prototype.forEach.call(document.querySelectorAll('.lp-gallery[data-car]'), function (g) {
     var urls = (photos[g.getAttribute('data-car')] || []).map(function (u) { return String(u || '').trim(); });
-    var valid = urls.filter(function (u) { return /^(https?:\/\/|assets\/)/.test(u); });
+    var valid = urls.filter(function (u) { return /^(https?:\/\/|assets\/|data:image\/)/.test(u); });
     var name = ((g.parentNode.querySelector('.lp-fleet-text h3') || {}).textContent || '').trim();
     var loaded = 0;
 
@@ -63,7 +63,7 @@
 
     Array.prototype.forEach.call(g.querySelectorAll('.lp-slot'), function (slot, i) {
       var url = urls[i] || '';
-      if (!/^(https?:\/\/|assets\/)/.test(url)) return;
+      if (!/^(https?:\/\/|assets\/|data:image\/)/.test(url)) return;
       var ph = slot.querySelector('.lp-slot-ph');
       var img = new Image();
       img.alt = window.HY ? HY.t('{name} 照片 {n}', { name: name, n: i + 1 }) : name + ' 照片 ' + (i + 1);

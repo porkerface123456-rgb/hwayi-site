@@ -5,7 +5,7 @@
    全部留空時顯示「車款照片準備中」；只填部分時，缺的位置顯示淡色底塊。
    ========================================================= */
 /* 照片版本號：網站更新時會自動換新，讓瀏覽器重新下載照片（請勿手動修改） */
-window.HY_ASSET_V = '202611171518';
+window.HY_ASSET_V = '202611171525';
 
 window.HY_FLEET_PHOTOS = {
   crafter:  ['assets/img/fleet/crafter-1.webp', 'assets/img/fleet/crafter-2.webp', 'assets/img/fleet/crafter-3.webp'],   // 福斯 The New Crafter 九人座
