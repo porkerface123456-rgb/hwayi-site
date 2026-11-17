@@ -886,8 +886,8 @@ a.board-row:focus-visible { outline: 2px solid var(--lp-text); outline-offset: -
 /* T6 側面圖：白底照片完整顯示，不裁切車頭車尾 */
 .lp-gallery[data-car="t6"] .lp-slot[data-slot="2"].has-photo { background: #FFFFFF; }
 .lp-gallery[data-car="t6"] .lp-slot[data-slot="2"] img { object-fit: contain; }
-/* Vito 主圖：直式照片，車身在中下方 */
-.lp-gallery[data-car="vito"] .lp-slot-main img { object-position: 55% 62%; }
+/* Vito 主圖：車頭偏右 */
+.lp-gallery[data-car="vito"] .lp-slot-main img { object-position: 60% center; }
 /* T6 只有兩張照片：側面圖佔滿右欄（手機為整列） */
 .lp-gallery[data-car="t6"] .lp-slot[data-slot="2"] { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
 @media (min-width: 640px) { .lp-gallery[data-car="t6"] .lp-slot[data-slot="2"] { grid-column: 2; grid-row: 1 / span 2; aspect-ratio: auto; } }
